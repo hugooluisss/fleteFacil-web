@@ -1,11 +1,5 @@
 $(document).ready(function(){
-	var auxPos = {};
-	navigator.geolocation.getCurrentPosition(function(position){
-		auxPos.latitude = position.coords.latitude;
-		auxPos.longitude = position.coords.longitude;
-	}, function(){
-		alert("No se pudo determinar");
-	});
+	$("#txtFechaServicio").datepicker();
 	getLista();
 	
 	$("#panelTabs li a[href=#add]").click(function(){
@@ -69,7 +63,8 @@ $(document).ready(function(){
 				volumen: $("#txtVolumen").val(),
 				origen: $("#txtOrigen").attr("json"),
 				destino: $("#txtDestino").attr("json"),
-				presupuesto: $("txtPresupuesto").val(),
+				presupuesto: $("#txtPresupuesto").val(),
+				propuestas: $("#selPropuestas").val(),
 				fn: {
 					after: function(datos){
 						if (datos.band){
@@ -116,9 +111,10 @@ $(document).ready(function(){
 				$("#txtVolumen").val(el.volumen);
 				$("#txtPresupuesto").val(el.presupuesto);
 				$("#txtOrigen").attr("json", el.origen);
+				$("#selPropuestas").val(el.propuestas);
 				try{
 					var origen = jQuery.parseJSON(el.origen);
-					$("#txtOrigen").val(origen.referencia);
+					$("#txtOrigen").val(origen.direccion);
 				}catch(err){
 					alert("No se pudo determinar el punto de origen");
 					console.log(el.origen);
@@ -126,8 +122,8 @@ $(document).ready(function(){
 				
 				$("#txtDestino").attr("json", el.destino);
 				try{
-					var origen = jQuery.parseJSON(el.destino);
-					$("#txtDestino").val(destino.referencia);
+					var destino = jQuery.parseJSON(el.destino);
+					$("#txtDestino").val(destino.direccion);
 				}catch(err){
 					alert("No se pudo determinar el punto de destino");
 					console.log(el.destino);
@@ -135,6 +131,10 @@ $(document).ready(function(){
 				
 				
 				$('#panelTabs a[href="#add"]').tab('show');
+			});
+			
+			$("[action=interesados]").click(function(){
+				$("#winInteresados").attr("datos", $(this).attr("datos"));
 			});
 			
 			$("#tblDatos").DataTable({
@@ -156,45 +156,75 @@ $(document).ready(function(){
 	
 	function setMapa(){
 		$("#winMapa").modal();
-		if (mapa == null){
-			marca = new google.maps.Marker({});
-			mapa = new google.maps.Map(document.getElementById('dvMapa'), {
-				center: {lat: auxPos.latitude, lng: auxPos.longitude},
-				scrollwheel: true,
-				fullscreenControl: true,
-				zoom: 12,
-				zoomControl: true
-			});
-			
-			google.maps.event.addListener(mapa, 'click', function(event){
-				var LatLng = event.latLng;
-				marca.setPosition(LatLng);
-				marca.setMap(mapa);
-				posicion.latitude = event.latLng.lat();
-				posicion.longitude = event.latLng.lng();
-				
-				getDireccion(posicion.latitude, posicion.longitude);
-			});
-		}
-		
 		$("#txtDireccion").val();
+		
 		try{
 			var json = campo.attr("json");
 			posicion = jQuery.parseJSON(json);
+			
+			if(posicion == null){
+				navigator.geolocation.getCurrentPosition(function(position){
+					posicion = {};
+					posicion.latitude = position.coords.latitude;
+					posicion.longitude = position.coords.longitude;
+					
+					ubicar();
+				}, function(){
+					alert("No se pudo obtener tu localización");
+				});
+			}else
+				ubicar();
 		}catch(e){
-			posicion = {};
-			posicion.latitude = auxPos.latitude;
-			posicion.longitude = auxPos.longitude;
+			navigator.geolocation.getCurrentPosition(function(position){
+				posicion = {};
+				posicion.latitude = position.coords.latitude;
+				posicion.longitude = position.coords.longitude;
+				
+				ubicar();
+			}, function(){
+				alert("No se pudo obtener tu localización");
+			});
 			
 			console.log(json, e.message);
 		}
 		
-		var LatLng = new google.maps.LatLng(posicion.latitude, posicion.longitude);
 		
-		mapa.setCenter(LatLng);
-		marca.setPosition(LatLng);
-		marca.setMap(mapa);
-		getDireccion(posicion.latitude, posicion.longitude);
+		function ubicar(){
+			if (mapa == null){
+				marca = new google.maps.Marker({});
+				mapa = new google.maps.Map(document.getElementById('dvMapa'), {
+					center: {lat: posicion.latitude, lng: posicion.longitude},
+					scrollwheel: true,
+					fullscreenControl: true,
+					zoom: 12,
+					zoomControl: true
+				});
+				
+				google.maps.event.addListener(mapa, 'click', function(event){
+						var LatLng = event.latLng;
+						
+						marca.setPosition(LatLng);
+						marca.setMap(mapa);
+						posicion.latitude = event.latLng.lat();
+						posicion.longitude = event.latLng.lng();
+						
+						getDireccion(posicion.latitude, posicion.longitude);
+					});
+				
+				var LatLng = new google.maps.LatLng(posicion.latitude, posicion.longitude);
+				mapa.setCenter(LatLng);
+				marca.setPosition(LatLng);
+				marca.setMap(mapa);
+				getDireccion(posicion.latitude, posicion.longitude);
+			}else{
+				var LatLng = new google.maps.LatLng(posicion.latitude, posicion.longitude);
+				mapa.setCenter(LatLng);
+				marca.setPosition(LatLng);
+				marca.setMap(mapa);
+				getDireccion(posicion.latitude, posicion.longitude);
+			}
+		}
+		
 	}
 	
 	function getDireccion(latitude, longitude){
@@ -211,6 +241,21 @@ $(document).ready(function(){
 			}
 		});
 	}
+	
+	
+	
+	
+	$("#winInteresados").on('show.bs.modal', function(e){
+		try{
+			var el = jQuery.parseJSON($("#winInteresados").attr("datos"));
+			
+			$.post("listaInteresados", {
+				"orden": el.idOrden
+			}, function(resp){
+				$("#dvListaInteresados").html(resp);
+			});
+		}catch(e){
+			alert("No se pudo obtener la lista de interesados");
+		}
+	})
 });
-
-google.maps.event.addDomListener(window, 'load', initialize);

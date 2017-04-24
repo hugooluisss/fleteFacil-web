@@ -1,22 +1,22 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-04-20 23:01:21
+<?php /* Smarty version Smarty-3.1.11, created on 2017-04-24 10:23:12
          compiled from "templates/plantillas/layout/default.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:133553109358f82af64d8859-00788255%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:200566164258fe00d0ebd072-68206956%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '88f47345f87357691db158f81dd14f424f0cd759' => 
     array (
       0 => 'templates/plantillas/layout/default.tpl',
-      1 => 1492747278,
+      1 => 1493047391,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '133553109358f82af64d8859-00788255',
+  'nocache_hash' => '200566164258fe00d0ebd072-68206956',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_58f82af684ff23_51968331',
+  'unifunc' => 'content_58fe00d11911f8_58347199',
   'variables' => 
   array (
     'PAGE' => 0,
@@ -24,7 +24,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_58f82af684ff23_51968331')) {function content_58f82af684ff23_51968331($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_58fe00d11911f8_58347199')) {function content_58fe00d11911f8_58347199($_smarty_tpl) {?><!DOCTYPE html>
 <html>
 	<head>
 	<meta charset="utf-8">
@@ -158,7 +158,7 @@ img/logo.png" alt="User Image" style="background: white"/>
 					<?php }?>
 					
 					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()==1){?>
-					<li class="<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array('transportistas'))){?>active<?php }?> treeview">
+					<li class="<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array('transportistas','ordenes'))){?>active<?php }?> treeview">
 						<a href="#">
 							<span>Catálogos</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>

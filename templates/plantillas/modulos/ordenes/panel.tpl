@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Estados</h1>
+		<h1 class="page-header">Ordenes de transporte</h1>
 	</div>
 </div>
 
@@ -57,17 +57,31 @@
 						</div>
 						<label for="txtPlazo" class="col-lg-2 col-lg-offset-1">Plazo</label>
 						<div class="col-lg-3">
-							<input type="date" id="txtPlazo" name="txtPlazo" class="form-control"/>
+							<input type="text" id="txtPlazo" name="txtPlazo" class="form-control"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="txtPeso" class="col-lg-2">Peso</label>
 						<div class="col-lg-3">
-							<input type="date" id="txtPeso" name="txtPeso" class="form-control" />
+							<input type="text" id="txtPeso" name="txtPeso" class="form-control" />
 						</div>
 						<label for="txtVolumen" class="col-lg-2 col-lg-offset-1">Volumen</label>
 						<div class="col-lg-3">
-							<input type="date" id="txtVolumen" name="txtVolumen" class="form-control"/>
+							<input type="text" id="txtVolumen" name="txtVolumen" class="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="txtPresupuesto" class="col-lg-2">Presupuesto</label>
+						<div class="col-lg-3">
+							<input type="text" id="txtPresupuesto" name="txtPresupuesto" class="form-control text-right" />
+						</div>
+						<label for="selPropuestas" class="col-lg-offset-1 col-lg-2">Propuestas</label>
+						<div class="col-lg-2">
+							<select class="form-control" id="selPropuestas" name="selPropuestas">
+								{for $cont=$start to 25}
+									<option value="{$cont}">{$cont}
+								{/for}
+							</select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -77,7 +91,7 @@
 						</div>
 						<label for="txtDestino" class="col-lg-2">Destino</label>
 						<div class="col-lg-4">
-							<input type="text" id="txtDestino" name="txtDestino" class="form-control" readonly="true"/>
+							<input type="text" id="txtDestino" name="txtDestino" class="form-control" readonly="true" />
 						</div>
 					</div>
 				</div>
@@ -92,3 +106,4 @@
 </div>
 
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winMapa.tpl"}
+{include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winInteresados.tpl"}

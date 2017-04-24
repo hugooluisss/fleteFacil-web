@@ -109,7 +109,7 @@
 					{/if}
 					
 					{if $PAGE.usuario->getPerfil() eq 1}
-					<li class="{if in_array($PAGE.modulo, array('transportistas'))}active{/if} treeview">
+					<li class="{if in_array($PAGE.modulo, array('transportistas', 'ordenes'))}active{/if} treeview">
 						<a href="#">
 							<span>Catálogos</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>

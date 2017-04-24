@@ -1,25 +1,25 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-04-20 09:31:10
+<?php /* Smarty version Smarty-3.1.11, created on 2017-04-24 10:19:50
          compiled from "templates/plantillas/modulos/transportistas/panel.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:49992302358f832ec779ce1-35607530%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:47906611658fe1796f08272-61005739%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9c196b8f2383dcb9a7a6f46da66008ba5c332cd7' => 
     array (
       0 => 'templates/plantillas/modulos/transportistas/panel.tpl',
-      1 => 1492698657,
+      1 => 1493040030,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '49992302358f832ec779ce1-35607530',
+  'nocache_hash' => '47906611658fe1796f08272-61005739',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_58f832ec7d6a64_67914680',
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_58fe1796f3cc85_46174456',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_58f832ec7d6a64_67914680')) {function content_58f832ec7d6a64_67914680($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_58fe1796f3cc85_46174456')) {function content_58fe1796f3cc85_46174456($_smarty_tpl) {?><div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Transportistas</h1>
 	</div>

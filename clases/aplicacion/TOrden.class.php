@@ -18,6 +18,7 @@ class TOrden{
 	private $origen;
 	private $destino;
 	private $presupuesto;
+	private $propuestas;
 	
 	/**
 	* Constructor de la clase
@@ -310,7 +311,33 @@ class TOrden{
 	*/
 	
 	public function getPresupuesto(){
-		return $this->presupuesto;
+		return $this->presupuesto == ''?0:$this->presupuesto;
+	}
+	
+	/**
+	* Establece el total de propuestas a recibir
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setPropuestas($val = 0){
+		$this->propuestas = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna el total de propuestas a recibir
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getPropuestas(){
+		return $this->propuestas == ''?3:$this->propuestas;
 	}
 	
 	/**
@@ -341,16 +368,17 @@ class TOrden{
 		$sql = "UPDATE orden
 			SET
 				idUsuario = ".$this->usuario->getId().",
-				idEstado = ".$this->getEstado->getId().",
+				idEstado = ".$this->estado->getId().",
 				descripcion = '".$this->getDescripcion()."',
 				requisitos = '".$this->getRequisitos()."',
 				fechaservicio = '".$this->getFechaServicio()."',
 				plazo = '".$this->getPlazo()."',
 				peso = '".$this->getPeso()."',
 				volumen = '".$this->getVolumen()."',
-				getOrigen = '".$this->getOrigen()."',
-				getDestino = '".$this->getDestino()."',
-				presupuesto = ".$this->getDescripcion()."
+				origen = '".$this->getOrigen()."',
+				destino = '".$this->getDestino()."',
+				presupuesto = ".$this->getPresupuesto().",
+				propuestas = ".$this->getPropuestas()."
 			WHERE idorden = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);

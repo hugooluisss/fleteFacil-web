@@ -17,6 +17,7 @@ TOrden = function(){
 				"origen": datos.origen,
 				"destino": datos.destino,
 				"presupuesto": datos.presupuesto,
+				"propuestas": datos.propuestas,
 				"action": "add"
 			}, function(data){
 				if (data.band == 'false')
