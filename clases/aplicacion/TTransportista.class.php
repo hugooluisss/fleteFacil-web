@@ -12,6 +12,7 @@ class TTransportista{
 	private $representante;
 	private $email;
 	private $celular;
+	private $pass;
 	private $visible;
 	
 	/**
@@ -165,6 +166,32 @@ class TTransportista{
 	}
 	
 	/**
+	* Establece el password
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setPass($val = ""){
+		$this->pass = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna el password
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getPass(){
+		return $this->pass;
+	}
+	
+	/**
 	* Guarda los datos en la base de datos, si no existe un identificador entonces crea el objeto
 	*
 	* @autor Hugo
@@ -192,7 +219,8 @@ class TTransportista{
 				nombre = '".$this->getNombre()."',
 				representante = '".$this->getRepresentante()."',
 				email = '".$this->getEmail()."',
-				celular = '".$this->getCelular()."'
+				celular = '".$this->getCelular()."',
+				pass = '".$this->getPass()."'
 			WHERE idTransportista = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);

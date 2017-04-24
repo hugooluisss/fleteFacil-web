@@ -1,37 +1,34 @@
 <?php
 global $objModulo;
 switch($objModulo->getId()){
-	case 'listaTransportistas':
+	case 'listaEstados':
 		$db = TBase::conectaDB();
-		$rs = $db->query("select * from transportista a where a.visible = true");
+		
+		$rs = $db->query("select * from estado order by idEstado");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
 			$row['json'] = json_encode($row);
 			
 			array_push($datos, $row);
 		}
+		
 		$smarty->assign("lista", $datos);
 	break;
-	case 'ctransportistas':
+	case 'cestados':
 		switch($objModulo->getAction()){
 			case 'add':
-				$db = TBase::conectaDB();
-				$obj = new TTransportista();
-				
+				$obj = new TEstado();
 				$obj->setId($_POST['id']);
 				$obj->setNombre($_POST['nombre']);
-				$obj->setRepresentante($_POST['representante']);
-				$obj->setEmail($_POST['email']);
-				$obj->setCelular($_POST['celular']);
-				$obj->setPass($_POST['pass']);
+				$obj->setColor($_POST['color']);
 				
 				$smarty->assign("json", array("band" => $obj->guardar()));
 			break;
 			case 'del':
-				$obj = new TTransportista($_POST['id']);
+				$obj = new TEstado($_POST['id']);
 				$smarty->assign("json", array("band" => $obj->eliminar()));
 			break;
 		}
 	break;
-}
+};
 ?>

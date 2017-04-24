@@ -29,6 +29,9 @@
 		<link rel="stylesheet" href="{$PAGE.ruta}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 		<link rel="stylesheet" href="{$PAGE.ruta}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 		<link rel="stylesheet" href="{$PAGE.ruta}plugins/upload/css/jquery.fileupload.css">
+		
+		<script src="https://maps.googleapis.com/maps/api/js?key={$PAGE.maps}"></script>
+		
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -94,12 +97,13 @@
 				<ul class="sidebar-menu">
 					<li class="header">MENÚ PRINCIPAL</li>
 					{if $PAGE.usuario->getPerfil() eq 1}
-					<li class="{if in_array($PAGE.modulo, array('admonUsuarios', 'sucursales'))}active{/if} treeview">
+					<li class="{if in_array($PAGE.modulo, array('admonUsuarios', 'estados'))}active{/if} treeview">
 						<a href="#">
 							<span>Administración</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
 							<li {if $PAGE.modulo eq 'admonUsuarios'}class="active"{/if}><a href="admonUsuarios"><i class="fa fa-users"></i> Usuarios</a></li>
+							<li {if $PAGE.modulo eq 'estados'}class="active"{/if}><a href="estados"><i class="fa fa-certificate"></i> Estados</a></li>
 						</ul>
 					</li>
 					{/if}
@@ -112,7 +116,7 @@
 						<ul class="treeview-menu">
 							<li {if $PAGE.modulo eq 'transportistas'}class="active"{/if}><a href="transportistas"><i class="fa fa-truck" aria-hidden="true"></i>
  Transportistas</a></li>
-							<li {if $PAGE.modulo eq 'clientes'}class="active"{/if}><a href="clientes"><i class="fa fa-user"></i> Clientes</a></li>
+							<li {if $PAGE.modulo eq 'ordenes'}class="active"{/if}><a href="ordenes"><i class="fa fa-clone"></i> Ordenes</a></li>
 							
 						</ul>
 					</li>

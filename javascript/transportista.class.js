@@ -10,6 +10,7 @@ TTransportista = function(){
 				"representante": datos.representante,
 				"email": datos.email, 
 				"celular": datos.celular,
+				"pass": datos.pass,
 				"action": "add"
 			}, function(data){
 				if (data.band == 'false')

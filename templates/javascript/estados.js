@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$('#txtColor').colorpicker();
 	getLista();
 	
 	$("#panelTabs li a[href=#add]").click(function(){
@@ -14,30 +15,21 @@ $(document).ready(function(){
 	$("#frmAdd").validate({
 		debug: true,
 		rules: {
-			txtEmail: {
-				required: true,
-				email: true
-			},
 			txtNombre: "required",
-			txtRepresentante: "required",
-			txtCelular: {
-				required: true,
-				digits: true
-			},
-			txtPass: "required"
+			txtColor: "required",
 		},
 		wrapper: 'span', 
+		messages: {
+			txtNombre: "Este campo es necesario",
+			txtColor: "Este campo es necesario",
+		},
 		submitHandler: function(form){
-		
-			var obj = new TTransportista;
-			obj.add({
-				id: $("#id").val(), 
-				nombre: $("#txtNombre").val(), 
-				representante: $("#txtRepresentante").val(), 
-				email: $("#txtEmail").val(),
-				celular: $("#txtCelular").val(),
-				pass: $("#txtPass").val(),
-				fn: {
+			var obj = new TEstado;
+			obj.add(
+				$("#id").val(), 
+				$("#txtNombre").val(),
+				$("#txtColor").val(),
+				{
 					after: function(datos){
 						if (datos.band){
 							getLista();
@@ -48,19 +40,19 @@ $(document).ready(function(){
 						}
 					}
 				}
-			});
+			);
         }
 
     });
 		
 	function getLista(){
-		$.get("listaTransportistas", function( data ) {
+		$.get("listaEstados", function( data ) {
 			$("#dvLista").html(data);
 			
 			$("[action=eliminar]").click(function(){
 				if(confirm("¿Seguro?")){
-					var obj = new TTransportista;
-					obj.del($(this).attr("identificador"), {
+					var obj = new TEstado;
+					obj.del($(this).attr("item"), {
 						after: function(data){
 							getLista();
 						}
@@ -71,23 +63,21 @@ $(document).ready(function(){
 			$("[action=modificar]").click(function(){
 				var el = jQuery.parseJSON($(this).attr("datos"));
 				
-				$("#id").val(el.idTransportista);
+				$("#id").val(el.idEstado);
 				$("#txtNombre").val(el.nombre);
-				$("#txtEmail").val(el.email);
-				$("#txtRepresentante").val(el.representante);
-				$("#txtCelular").val(el.celular);
+				$("#txtColor").val(el.color);
 				$('#panelTabs a[href="#add"]').tab('show');
 			});
 			
-			$("#tblDatos").DataTable({
+			$("#tblEstados").DataTable({
 				"responsive": true,
 				"language": espaniol,
-				"paging": true,
+				"paging": false,
 				"lengthChange": false,
 				"ordering": true,
 				"info": true,
 				"autoWidth": false
 			});
 		});
-	}
+	};
 });

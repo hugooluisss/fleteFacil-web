@@ -89,7 +89,8 @@ $datosPlantilla = array(
 	"modulo" => $modulo,
 	"scriptsJS" => $objModulo->getScriptsJS(),
 	"usuario" => $pageSesion,
-	"url" => $ini['sistema']['url']);
+	"url" => $ini['sistema']['url'],
+	"maps" => $ini['sistema']['maps']);
 
 foreach($_GET as $indice => $valor){
 	$_GET[$indice] = ereg_replace('\\"', "",$_GET[$indice]);
