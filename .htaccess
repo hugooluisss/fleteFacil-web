@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /
+RewriteBase /fleteFacil-web/
 
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f

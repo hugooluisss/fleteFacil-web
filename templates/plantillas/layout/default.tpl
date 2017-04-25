@@ -167,7 +167,7 @@
     <script src="{$PAGE.ruta}plugins/knob/jquery.knob.js"></script>
     <!-- daterangepicker -->
     <script src="{$PAGE.ruta}plugins/daterangepicker/daterangepicker.js"></script>
-    <script src="{$PAGE.ruta}moment.min.js"></script>
+    <!--<script src="{$PAGE.ruta}plugins/moment.min.js"></script>-->
     <!-- datepicker -->
 
     <!-- Bootstrap WYSIHTML5 -->
