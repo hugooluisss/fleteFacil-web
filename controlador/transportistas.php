@@ -31,6 +31,28 @@ switch($objModulo->getId()){
 				$obj = new TTransportista($_POST['id']);
 				$smarty->assign("json", array("band" => $obj->eliminar()));
 			break;
+			case 'login':
+				$db = TBase::conectaDB();
+				$sql = "select idTransportista, pass from transportista where upper(email) = upper('".$_POST['usuario']."') and visible = true";
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+				$result = array('band' => false, 'mensaje' => 'Error al consultar los datos');
+				if($rs->num_rows < 1)
+					$result = array('band' => false, 'mensaje' => 'El usuario no existe');
+				else{
+					$row = $rs->fetch_assoc();
+					if(strtoupper($row['pass']) <> strtoupper($_POST['pass'])){
+						$result = array('band' => false, 'mensaje' => 'Contraseña inválida');
+					}else{
+						$obj = new TTransportista($row['idTransportista']);
+						if ($obj->getId() == '')
+							$result = array('band' => false, 'mensaje' => 'Acceso denegado');
+						else
+							$result = array('band' => true, 'transportista' => $row['idTransportista']);
+					}
+				}
+				$smarty->assign("json", $result);
+			break;
 		}
 	break;
 }

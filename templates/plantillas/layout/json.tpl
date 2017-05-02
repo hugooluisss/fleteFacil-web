@@ -1,3 +1,1 @@
-{if $json neq ''}
-{json_encode($json)}
-{/if}
+{if $json neq ''}{json_encode($json)}{/if}
