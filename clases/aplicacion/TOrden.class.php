@@ -7,6 +7,7 @@
 
 class TOrden{
 	private $idOrden;
+	private $folio;
 	public $estado;
 	public $usuario;
 	private $descripcion;
@@ -19,6 +20,7 @@ class TOrden{
 	private $destino;
 	private $presupuesto;
 	private $propuestas;
+	private $hora;
 	
 	/**
 	* Constructor de la clase
@@ -341,6 +343,58 @@ class TOrden{
 	}
 	
 	/**
+	* Establece el folio
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setFolio($val = ''){
+		$this->folio = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna el folio
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getFolio(){
+		return $this->folio;
+	}
+	
+	/**
+	* Establece la hora
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setHora($val = '00:00'){
+		$this->hora = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna la hora
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getHora(){
+		return $this->hora;
+	}
+	
+	/**
 	* Guarda los datos en la base de datos, si no existe un identificador entonces crea el objeto
 	*
 	* @autor Hugo
@@ -378,7 +432,9 @@ class TOrden{
 				origen = '".$this->getOrigen()."',
 				destino = '".$this->getDestino()."',
 				presupuesto = ".$this->getPresupuesto().",
-				propuestas = ".$this->getPropuestas()."
+				propuestas = ".$this->getPropuestas().",
+				folio = '".$this->getFolio()."',
+				hora = '".$this->getHora()."'
 			WHERE idorden = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);

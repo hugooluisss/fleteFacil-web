@@ -37,6 +37,7 @@ $(document).ready(function(){
 	$("#frmAdd").validate({
 		debug: true,
 		rules: {
+			txtFolio: "required",
 			selOperador: "required",
 			selEstado: "required",
 			txtDescripcion: "required",
@@ -65,6 +66,8 @@ $(document).ready(function(){
 				destino: $("#txtDestino").attr("json"),
 				presupuesto: $("#txtPresupuesto").val(),
 				propuestas: $("#selPropuestas").val(),
+				folio: $("#txtFolio").val(),
+				hora: $("#txtHora").val(),
 				fn: {
 					after: function(datos){
 						if (datos.band){
@@ -112,6 +115,8 @@ $(document).ready(function(){
 				$("#txtPresupuesto").val(el.presupuesto);
 				$("#txtOrigen").attr("json", el.origen);
 				$("#selPropuestas").val(el.propuestas);
+				$("#txtFolio").val(el.folio);
+				$("#txtHora").val(el.hora);
 				try{
 					var origen = jQuery.parseJSON(el.origen);
 					$("#txtOrigen").val(origen.direccion);

@@ -63,6 +63,8 @@ switch($objModulo->getId()){
 				$obj->setDestino($_POST['destino']);
 				$obj->setPresupuesto($_POST['presupuesto']);
 				$obj->setPropuestas($_POST['propuestas']);
+				$obj->setFolio($_POST['folio']);
+				$obj->setHora($_POST['hora']);
 				
 				$smarty->assign("json", array("band" => $obj->guardar()));
 			break;

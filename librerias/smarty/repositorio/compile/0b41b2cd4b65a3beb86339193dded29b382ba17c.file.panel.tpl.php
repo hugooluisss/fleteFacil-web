@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-04-24 10:34:30
+<?php /* Smarty version Smarty-3.1.11, created on 2017-05-02 08:43:34
          compiled from "templates/plantillas/modulos/ordenes/panel.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:206417601958fe011148e3f1-79399947%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0b41b2cd4b65a3beb86339193dded29b382ba17c' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/panel.tpl',
-      1 => 1493048067,
+      1 => 1493732612,
       2 => 'file',
     ),
   ),
@@ -49,7 +49,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	<div id="add" class="tab-pane fade">
 		<form role="form" id="frmAdd" class="form-horizontal" onsubmit="javascript: return false;">
 			<div class="box">
-				<div class="box-body">			
+				<div class="box-body">
+					<div class="form-group">
+						<label for="txtFolio" class="col-lg-2">Folio</label>
+						<div class="col-lg-4">
+							<input type="text" id="txtFolio" name="txtFolio" class="form-control" placeholder="" />
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="selTipo" class="col-lg-2">Estado</label>
 						<div class="col-lg-4">
@@ -97,17 +103,23 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="txtFechaServicio" class="col-lg-2">Fecha</label>
+						<label for="txtFechaServicio" class="col-lg-2">Fecha cargo</label>
 						<div class="col-lg-3">
 							<input type="date" id="txtFechaServicio" name="txtFechaServicio" class="form-control" placeholder="Y-m-d" />
 						</div>
-						<label for="txtPlazo" class="col-lg-2 col-lg-offset-1">Plazo</label>
+						<label for="txtHora" class="col-lg-2 col-lg-offset-1">Hora presentación</label>
+						<div class="col-lg-3">
+							<input type="time" id="txtHora" name="txtHora" class="form-control" placeholder="H:m" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="txtPlazo" class="col-lg-2">Plazo de pago</label>
 						<div class="col-lg-3">
 							<input type="text" id="txtPlazo" name="txtPlazo" class="form-control"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="txtPeso" class="col-lg-2">Peso</label>
+						<label for="txtPeso" class="col-lg-2">Peso (Ton)</label>
 						<div class="col-lg-3">
 							<input type="text" id="txtPeso" name="txtPeso" class="form-control" />
 						</div>
@@ -117,7 +129,7 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="txtPresupuesto" class="col-lg-2">Presupuesto</label>
+						<label for="txtPresupuesto" class="col-lg-2">Presupuesto disponible</label>
 						<div class="col-lg-3">
 							<input type="text" id="txtPresupuesto" name="txtPresupuesto" class="form-control text-right" />
 						</div>

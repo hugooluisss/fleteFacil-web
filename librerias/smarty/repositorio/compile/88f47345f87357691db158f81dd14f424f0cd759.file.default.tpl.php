@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-04-24 10:23:12
+<?php /* Smarty version Smarty-3.1.11, created on 2017-04-26 08:57:45
          compiled from "templates/plantillas/layout/default.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:200566164258fe00d0ebd072-68206956%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '88f47345f87357691db158f81dd14f424f0cd759' => 
     array (
       0 => 'templates/plantillas/layout/default.tpl',
-      1 => 1493047391,
+      1 => 1493081339,
       2 => 'file',
     ),
   ),
@@ -231,8 +231,8 @@ plugins/knob/jquery.knob.js"></script>
     <!-- daterangepicker -->
     <script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
 plugins/daterangepicker/daterangepicker.js"></script>
-    <script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
-moment.min.js"></script>
+    <!--<script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
+plugins/moment.min.js"></script>-->
     <!-- datepicker -->
 
     <!-- Bootstrap WYSIHTML5 -->

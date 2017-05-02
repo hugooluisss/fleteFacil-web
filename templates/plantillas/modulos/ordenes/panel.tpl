@@ -19,7 +19,13 @@
 	<div id="add" class="tab-pane fade">
 		<form role="form" id="frmAdd" class="form-horizontal" onsubmit="javascript: return false;">
 			<div class="box">
-				<div class="box-body">			
+				<div class="box-body">
+					<div class="form-group">
+						<label for="txtFolio" class="col-lg-2">Folio</label>
+						<div class="col-lg-4">
+							<input type="text" id="txtFolio" name="txtFolio" class="form-control" placeholder="" />
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="selTipo" class="col-lg-2">Estado</label>
 						<div class="col-lg-4">
@@ -51,17 +57,23 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="txtFechaServicio" class="col-lg-2">Fecha</label>
+						<label for="txtFechaServicio" class="col-lg-2">Fecha cargo</label>
 						<div class="col-lg-3">
 							<input type="date" id="txtFechaServicio" name="txtFechaServicio" class="form-control" placeholder="Y-m-d" />
 						</div>
-						<label for="txtPlazo" class="col-lg-2 col-lg-offset-1">Plazo</label>
+						<label for="txtHora" class="col-lg-2 col-lg-offset-1">Hora presentación</label>
+						<div class="col-lg-3">
+							<input type="time" id="txtHora" name="txtHora" class="form-control" placeholder="H:m" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="txtPlazo" class="col-lg-2">Plazo de pago</label>
 						<div class="col-lg-3">
 							<input type="text" id="txtPlazo" name="txtPlazo" class="form-control"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="txtPeso" class="col-lg-2">Peso</label>
+						<label for="txtPeso" class="col-lg-2">Peso (Ton)</label>
 						<div class="col-lg-3">
 							<input type="text" id="txtPeso" name="txtPeso" class="form-control" />
 						</div>
@@ -71,7 +83,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="txtPresupuesto" class="col-lg-2">Presupuesto</label>
+						<label for="txtPresupuesto" class="col-lg-2">Presupuesto disponible</label>
 						<div class="col-lg-3">
 							<input type="text" id="txtPresupuesto" name="txtPresupuesto" class="form-control text-right" />
 						</div>
