@@ -459,5 +459,78 @@ class TOrden{
 		
 		return $rs?true:false;
 	}
+	
+	/**
+	* Establece como aceptada por un transportista
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function aceptar($transportista = ''){
+		if ($this->getId() == '') return false;
+		$obj = new TTransportista($transportista);
+		if ($obj->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "insert into interesado(idOrden, idTransportista) values (".$this->getId().", ".$obj->getId().")";
+		$rs1 = $db->query($sql) or errorMySQL($db, $sql);
+		
+		$sql = "select count(*) as total from interesado where idOrden = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$row = $rs->fetch_assoc();
+		
+		if ($row['total'] >= $this->getPropuestas()){
+			$this->estado->setId(3);
+			$this->guardar();
+		}
+		
+		return $rs1?true:false;
+	}
+	
+	/**
+	* Asigna la orden a un transportista
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function asignar($transportista = ''){
+		if ($this->getId() == '') return false;
+		$obj = new TTransportista($transportista);
+		if ($obj->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "insert into asignado(idOrden, idTransportista) values (".$this->getId().", ".$obj->getId().")";
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+
+		$this->estado->setId(4);
+		$this->guardar();
+		
+		return $rs?true:false;
+	}
+	
+	/**
+	* Termina la orden
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function terminar($comentario = ''){
+		if ($this->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "update asignado set comentarios = '".$comentario."' where idOrden = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+
+		$this->estado->setId(5);
+		$this->guardar();
+		
+		return $rs?true:false;
+	}
 }
 ?>

@@ -34,4 +34,20 @@ TTransportista = function(){
 			}
 		}, "json");
 	};
+	
+	this.asignar = function(datos){
+		if (datos.fn.before !== undefined) datos.fn.before();
+		
+		$.post('cordenes', {
+				"orden": datos.orden,
+				"transportista": datos.transportista,
+				"action": "asignar"
+			}, function(data){
+				if (data.band == false)
+					console.log(data.mensaje);
+					
+				if (datos.fn.after !== undefined)
+					datos.fn.after(data);
+			}, "json");
+	};
 };

@@ -6,6 +6,10 @@ $(document).ready(function(){
 		$("#frmAdd").get(0).reset();
 		$("#id").val("");
 		$("form:not(.filter) :input:visible:enabled:first").focus();
+		
+		$("#selEstado").find("option").each(function(){
+			$(this).prop("disabled", false);
+		});
 	});
 	
 	$("#btnReset").click(function(){
@@ -105,6 +109,11 @@ $(document).ready(function(){
 				$("#id").val(el.idOrden);
 				$("#selOperador").val(el.idUsuario);
 				$("#selEstado").val(el.idEstado);
+				
+				$("#selEstado").find("option").each(function(){
+					if ($(this).attr("value") < el.idEstado)
+						$(this).prop("disabled", true);
+				});
 				
 				$("#txtDescripcion").val(el.descripcion);
 				$("#txtRequisitos").val(el.requisitos);
@@ -258,6 +267,25 @@ $(document).ready(function(){
 				"orden": el.idOrden
 			}, function(resp){
 				$("#dvListaInteresados").html(resp);
+				
+				$("#dvListaInteresados").find("[action=asignar]").click(function(){
+					var el = jQuery.parseJSON($(this).attr("datos"));
+					if(confirm("¿Seguro de asignar la orden de transporte al transportista?")){
+						var obj = new TTransportista;
+						obj.asignar({
+							"orden": el.idOrden,
+							"transportista": el.idTransportista,
+							fn: {
+								after: function(resp){
+									if (resp.band){
+										alert("La orden fué asignada");
+										$("#winInteresados").modal("hide");
+									}
+								}
+							}
+						});
+					}
+				});
 			});
 		}catch(e){
 			alert("No se pudo obtener la lista de interesados");

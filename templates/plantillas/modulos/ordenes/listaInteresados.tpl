@@ -6,6 +6,11 @@
 			<th>Representante</th>
 			<th>Email</th>
 			<th>Celular</th>
+			{if $estado neq 4}
+				<th>Asignar</th>
+			{else}
+				<th>Asignado</th>
+			{/if}
 		</tr>
 	</thead>
 	<tbody>
@@ -16,6 +21,17 @@
 				<td>{$row.representante}</td>
 				<td>{$row.email}</td>
 				<td>{$row.celular}</td>
+				{if $estado neq 4}
+					<td class="text-center">
+						<button type="button" class="btn btn-success" action="asignar" title="Asignar orden" datos='{$row.json}'><i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+					</td>
+				{else}
+					<td class="text-center">
+						{if $row.asignado}
+							<i class="fa fa-check text-success" aria-hidden="true"></i>
+						{/if}
+					</td>
+				{/if}
 			</tr>
 		{/foreach}
 	</tbody>
