@@ -524,7 +524,7 @@ class TOrden{
 		if ($this->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "update asignado set comentarios = '".$comentario."' where idOrden = ".$this->getId();
+		$sql = "update asignado set comentarios = '".$comentario."', entrega = now() where idOrden = ".$this->getId();
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 
 		$this->estado->setId(5);
