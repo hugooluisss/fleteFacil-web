@@ -21,7 +21,7 @@ class TMail{
 		global $ini;
 		$this->destinos = array();
 		$this->contestarA = "";
-		$this->origen = array("nombre" => "REOSA", "correo" => "info@reosa.com");
+		$this->origen = array("nombre" => "Flete Facil", "correo" => "app@fletefacil.cl");
 		
 		$this->permitir = true;
 	}
@@ -75,7 +75,7 @@ class TMail{
 			$msg .= '--PHP-alt-'.$random_hash.$salto;
 			$msg .= 'Content-Type: text/html; charset="iso-8859-1"'.$salto;
 			$msg .= 'Content-Transfer-Encoding: 7bit'.$salto.$salto;
-			$msg .= $this->msg;
+			$msg .= $this->msg.$salto;
 			$msg .= '--PHP-alt-'.$random_hash.'--'.$salto;
 			#este es el fin del mensaje
 			

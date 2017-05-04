@@ -29,7 +29,7 @@ define('ADODB_ERROR_LOG_TYPE',2);
 require_once('librerias/phpMailer/PHPMailerAutoload.php');
 require('librerias/fpdf/fpdf.php');
 require('librerias/fpdf/tfpdf.php');
-require('librerias/upload/uploadHandler.php');
+//require('librerias/upload/uploadHandler.php');
 require('librerias/bmptojpg.php');
 require('librerias/excelRead/reader.php');
 

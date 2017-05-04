@@ -69,15 +69,10 @@ switch($objModulo->getId()){
 	case 'listaOrdenesAdjudicadas':
 		$db = TBase::conectaDB();
 		
-		$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) join asignado c using(idOrden) where idEstado = 4 and c.idTransportista = ".$_POST['transportista']);
+		$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) join asignado c using(idOrden) where idEstado = 4 and c.idTransportista = ".$_POST['transportista'];
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
-		
-			$sql = "select count(*) as total from interesado where idOrden = ".$row['idOrden'];
-			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
-			$row2 = $rs2->fetch_assoc();
-			
-			$row['interesados'] = $row2['total'] == ''?0:$row2['total'];
 			$row['origen_json'] = json_decode($row['origen']);
 			$row['destino_json'] = json_decode($row['destino']);
 			$row['json'] = json_encode($row);

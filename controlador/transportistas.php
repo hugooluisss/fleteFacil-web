@@ -53,6 +53,33 @@ switch($objModulo->getId()){
 				}
 				$smarty->assign("json", $result);
 			break;
+			case 'recuperarPass':
+				$db = TBase::conectaDB();
+				global $ini;
+				$sql = "select idTransportista from transportista where email = upper('".$_POST['correo']."') and visible = true";
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+				if ($rs->num_rows >= 1){
+					$row = $rs->fetch_assoc();
+					$transportista = new TTransportista($row['idTransportista']);
+					
+					$datos = array();
+					$datos['transportista.nombre'] = $transportista->getNombre();
+					$datos['transportista.pass'] = $transportista->getPass();
+					$datos['transportista.email'] = $transportista->getEmail();
+					$datos['sitio.url'] = $ini["sistema"]["url"];
+					
+					$email = new TMail();
+					$email->setTema("Recuperación de contraseña");
+					#$email->setOrigen("Grupo Domi", $ini['mail']['user']);
+					$email->addDestino($transportista->getEmail(), utf8_decode($transportista->getNombre()));
+					
+					$email->setBodyHTML(utf8_decode($email->construyeMail(file_get_contents("repositorio/mail/recuperarPass.html"), $datos)));
+					
+					echo json_encode(array("band" => $email->send(), "mensaje" => "Se trató de enviar"));
+				}else
+					echo json_encode(array("band" => false));
+			break;
 		}
 	break;
 }

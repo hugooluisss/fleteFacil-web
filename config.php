@@ -1,5 +1,5 @@
 <?php
-define('SISTEMA', 'REOSA');
+define('SISTEMA', 'FleteFacil');
 define('VERSION', 'v 1.0');
 define('ALIAS', '');
 define('AUTOR', 'Hugo Luis Santiago Altamirano');
