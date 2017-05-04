@@ -30,7 +30,7 @@ switch($objModulo->getId()){
 		$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado)");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
-		
+			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
 			$sql = "select count(*) as total from interesado where idOrden = ".$row['idOrden'];
 			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
 			$row2 = $rs2->fetch_assoc();
@@ -51,7 +51,8 @@ switch($objModulo->getId()){
 		$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado = 2 and idOrden not in (select idOrden  from interesado where idTransportista = ".$_POST['transportista'].")");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
-		
+			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
+			
 			$sql = "select count(*) as total from interesado where idOrden = ".$row['idOrden'];
 			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
 			$row2 = $rs2->fetch_assoc();
@@ -73,6 +74,8 @@ switch($objModulo->getId()){
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
+			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
+			
 			$row['origen_json'] = json_decode($row['origen']);
 			$row['destino_json'] = json_decode($row['destino']);
 			$row['json'] = json_encode($row);
