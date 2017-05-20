@@ -20,6 +20,7 @@ TOrden = function(){
 				"propuestas": datos.propuestas,
 				"folio": datos.folio,
 				"hora": datos.hora,
+				"regiones": datos.regiones,
 				"action": "add"
 			}, function(data){
 				if (data.band == 'false')

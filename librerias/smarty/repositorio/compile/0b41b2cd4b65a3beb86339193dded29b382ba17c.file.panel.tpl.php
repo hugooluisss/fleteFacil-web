@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-03 09:15:57
+<?php /* Smarty version Smarty-3.1.11, created on 2017-05-17 11:56:30
          compiled from "templates/plantillas/modulos/ordenes/panel.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:206417601958fe011148e3f1-79399947%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0b41b2cd4b65a3beb86339193dded29b382ba17c' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/panel.tpl',
-      1 => 1493751933,
+      1 => 1495040135,
       2 => 'file',
     ),
   ),
@@ -24,6 +24,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'usuarios' => 0,
     'start' => 0,
     'cont' => 0,
+    'regiones' => 0,
+    'orden' => 0,
     'PAGE' => 0,
   ),
   'has_nocache_code' => false,
@@ -157,6 +159,26 @@ $_smarty_tpl->tpl_vars['cont']->first = $_smarty_tpl->tpl_vars['cont']->iteratio
 							<input type="text" id="txtDestino" name="txtDestino" class="form-control" readonly="true" />
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="selRegion" class="col-lg-2">Transportistas de las regiones</label>
+						<div class="col-lg-4">
+							<select class="form-control" id="selRegion" name="selRegion" multiple="true">
+								<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['item']->_loop = false;
+ $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
+ $_from = $_smarty_tpl->tpl_vars['regiones']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
+$_smarty_tpl->tpl_vars['item']->_loop = true;
+ $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
+?>
+									<option value="<?php echo $_smarty_tpl->tpl_vars['item']->value['idRegion'];?>
+"><?php echo $_smarty_tpl->tpl_vars['item']->value['nombre'];?>
+</option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+					<div id="dvReporteFinal">
+					</div>
 				</div>
 				<div class="box-footer">
 					<button type="reset" id="btnReset" class="btn btn-default">Cancelar</button>
@@ -167,7 +189,8 @@ $_smarty_tpl->tpl_vars['cont']->first = $_smarty_tpl->tpl_vars['cont']->iteratio
 		</form>
 	</div>
 </div>
-
+<input type="hidden" id="auxOrden" value="<?php echo $_smarty_tpl->tpl_vars['orden']->value;?>
+"/>
 <?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/ordenes/winMapa.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
 
 <?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/ordenes/winInteresados.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>

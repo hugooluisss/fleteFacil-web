@@ -21,6 +21,7 @@ class TOrden{
 	private $presupuesto;
 	private $propuestas;
 	private $hora;
+	public $regiones;
 	
 	/**
 	* Constructor de la clase
@@ -32,6 +33,7 @@ class TOrden{
 	public function TOrden($id = ''){
 		$this->estado = new TEstado(1);
 		$this->usuario = new TUsuario();
+		$this->regiones = array();
 		$this->setId($id);
 		
 		return true;
@@ -66,7 +68,28 @@ class TOrden{
 				break;
 			}
 		}
+		$this->getRegiones();
+		return true;
+	}
+	
+	/**
+	* Carga las regiones
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getRegiones(){
+		if ($this->getId() == '') return false;
 		
+		$db = TBase::conectaDB();
+		$sql = "select idRegion from ordenregion where idOrden = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$this->regiones = array();
+		while($row = $rs->fetch_assoc()){
+			$this->regiones[$row['idRegion']] = new TRegion($row['idRegion']);
+		}
 		return true;
 	}
 	
@@ -524,13 +547,36 @@ class TOrden{
 		if ($this->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "update asignado set comentarios = '".$comentario."', entrega = now() where idOrden = ".$this->getId();
+		$sql = "update asignado set comentarios = '".$comentario."' where idOrden = ".$this->getId();
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 
 		$this->estado->setId(5);
 		$this->guardar();
 		
 		return $rs?true:false;
+	}
+	
+	/**
+	* Guardar regiones
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function guardarRegiones(){
+		if ($this->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "delete from ordenregion where idOrden = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		foreach($this->regiones as $region){
+			$sql = "insert into ordenregion (idOrden, idRegion) values (".$this->getId().", ".$region->getId().")";
+			$rs = $db->query($sql) or errorMySQL($db, $sql);
+		}
+		
+		return true;
 	}
 }
 ?>

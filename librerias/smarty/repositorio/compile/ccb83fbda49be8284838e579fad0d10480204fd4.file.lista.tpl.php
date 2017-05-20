@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-02 08:42:23
+<?php /* Smarty version Smarty-3.1.11, created on 2017-05-19 19:38:50
          compiled from "templates/plantillas/modulos/ordenes/lista.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3359384658fe01128d1c32-60026005%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'ccb83fbda49be8284838e579fad0d10480204fd4' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/lista.tpl',
-      1 => 1493060687,
+      1 => 1495240711,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 		<table id="tblDatos" class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>#</th>
+					<th>Folio</th>
 					<th>Nombre</th>
 					<th>Origen</th>
 					<th>Destino</th>
@@ -45,7 +45,7 @@ $_smarty_tpl->tpl_vars["row"]->_loop = true;
 ?>
 					<tr>
 						<td style="border-left: 2px solid <?php echo $_smarty_tpl->tpl_vars['row']->value['color'];?>
-"><?php echo $_smarty_tpl->tpl_vars['row']->value['idOrden'];?>
+"><?php echo $_smarty_tpl->tpl_vars['row']->value['folio'];?>
 </td>
 						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['nombre'];?>
 </td>

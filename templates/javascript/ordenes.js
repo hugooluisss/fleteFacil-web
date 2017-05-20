@@ -10,6 +10,8 @@ $(document).ready(function(){
 		$("#selEstado").find("option").each(function(){
 			$(this).prop("disabled", false);
 		});
+		
+		$("#dvReporteFinal").html("");
 	});
 	
 	$("#btnReset").click(function(){
@@ -72,6 +74,7 @@ $(document).ready(function(){
 				propuestas: $("#selPropuestas").val(),
 				folio: $("#txtFolio").val(),
 				hora: $("#txtHora").val(),
+				regiones: $("#selRegion").val(),
 				fn: {
 					after: function(datos){
 						if (datos.band){
@@ -109,12 +112,12 @@ $(document).ready(function(){
 				$("#id").val(el.idOrden);
 				$("#selOperador").val(el.idUsuario);
 				$("#selEstado").val(el.idEstado);
-				
+				/*
 				$("#selEstado").find("option").each(function(){
 					if ($(this).attr("value") < el.idEstado)
 						$(this).prop("disabled", true);
 				});
-				
+				*/
 				$("#txtDescripcion").val(el.descripcion);
 				$("#txtRequisitos").val(el.requisitos);
 				$("#txtFechaServicio").val(el.fechaservicio);
@@ -126,6 +129,19 @@ $(document).ready(function(){
 				$("#selPropuestas").val(el.propuestas);
 				$("#txtFolio").val(el.folio);
 				$("#txtHora").val(el.hora);
+				
+				$("#selRegion").val(el.regiones);
+				
+				$("#dvReporteFinal").html("");
+				if(el.idEstado == 5){
+					$.post("reporteFinal", {
+						"idOrden": el.idOrden
+					}, function(codigo){
+						$("#dvReporteFinal").html(codigo);
+					});
+				}
+				
+				
 				try{
 					var origen = jQuery.parseJSON(el.origen);
 					$("#txtOrigen").val(origen.direccion);
@@ -151,15 +167,22 @@ $(document).ready(function(){
 				$("#winInteresados").attr("datos", $(this).attr("datos"));
 			});
 			
-			$("#tblDatos").DataTable({
+			var tabla = $("#tblDatos").DataTable({
 				"responsive": true,
 				"language": espaniol,
 				"paging": false,
 				"lengthChange": false,
 				"ordering": true,
+				"order": [[0, "desc"]],
 				"info": true,
 				"autoWidth": false
 			});
+			
+			if ($("#auxOrden").val() != ''){
+				tabla.columns(0).search($("#auxOrden").val()).draw();
+				
+				$("#auxOrden").val("");
+			}
 		});
 	};
 	
@@ -210,7 +233,7 @@ $(document).ready(function(){
 					center: {lat: posicion.latitude, lng: posicion.longitude},
 					scrollwheel: true,
 					fullscreenControl: true,
-					zoom: 12,
+					zoom: 7,
 					zoomControl: true
 				});
 				
@@ -241,6 +264,32 @@ $(document).ready(function(){
 		
 	}
 	
+	$("#txtBuscarDireccion").keyup(function(e){
+		if(e.keyCode == 13){
+			var str = $("#txtBuscarDireccion").val() + " chile";
+			$("#txtBuscarDireccion").prop("disabled", true);
+			
+			$.get("https://maps.googleapis.com/maps/api/geocode/json?language=es&address=" + str + "&key=AIzaSyACOp_nFCQAIBJwb58so1Ru_AJ8apWv0sY", function(resp){
+				$("#txtBuscarDireccion").prop("disabled", false);
+				if (resp.results.length == 0)
+					alert("No hay resultados");
+				else{
+					var lugar = resp.results[0];
+					posicion.latitude = lugar.geometry.location.lat;
+					posicion.longitude = lugar.geometry.location.lng;
+					
+					var LatLng = new google.maps.LatLng(posicion.latitude, posicion.longitude);
+					mapa.setCenter(LatLng);
+					marca.setPosition(LatLng);
+					marca.setMap(mapa);
+					//getDireccion(posicion.latitude, posicion.longitude);
+					
+					$("#txtDireccion").val(lugar.formatted_address);
+				}
+			});
+		}
+	});
+	
 	function getDireccion(latitude, longitude){
 		var geocoder = new google.maps.Geocoder();
 		geocoder.geocode({'latLng': new google.maps.LatLng(latitude, longitude)}, function (results, status){
@@ -255,9 +304,6 @@ $(document).ready(function(){
 			}
 		});
 	}
-	
-	
-	
 	
 	$("#winInteresados").on('show.bs.modal', function(e){
 		try{

@@ -3,7 +3,7 @@
 		<table id="tblDatos" class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>#</th>
+					<th>Folio</th>
 					<th>Nombre</th>
 					<th>Origen</th>
 					<th>Destino</th>
@@ -14,7 +14,7 @@
 			<tbody>
 				{foreach from=$lista item="row"}
 					<tr>
-						<td style="border-left: 2px solid {$row.color}">{$row.idOrden}</td>
+						<td style="border-left: 2px solid {$row.color}">{$row.folio}</td>
 						<td>{$row.nombre}</td>
 						<td>{$row.origen_json->direccion}</td>
 						<td>{$row.destino_json->direccion}</td>

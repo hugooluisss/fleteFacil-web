@@ -11,6 +11,7 @@ TTransportista = function(){
 				"email": datos.email, 
 				"celular": datos.celular,
 				"pass": datos.pass,
+				"regiones": datos.regiones,
 				"action": "add"
 			}, function(data){
 				if (data.band == 'false')

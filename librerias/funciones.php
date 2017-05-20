@@ -81,4 +81,16 @@ function eliminarDir($carpeta){
     
     rmdir($carpeta);
 }
+
+function saveImage($code = '', $nombre){
+	if ($code == '')
+		return false;
+		
+	$file = fopen($nombre, "w");
+	fputs($file, base64_decode($code));
+	
+	fclose($file);
+	
+	return true;
+}
 ?>

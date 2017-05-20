@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-03 09:15:57
+<?php /* Smarty version Smarty-3.1.11, created on 2017-05-13 08:57:08
          compiled from "templates/plantillas/modulos/ordenes/winMapa.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:6539918405909e61d3513a3-19922621%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '245c1b0b3911d5a24813849061da9f83b172ba27' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/winMapa.tpl',
-      1 => 1493040030,
+      1 => 1494683826,
       2 => 'file',
     ),
   ),
@@ -15,9 +15,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
-  'has_nocache_code' => false,
   'version' => 'Smarty-3.1.11',
   'unifunc' => 'content_5909e61d354087_31525406',
+  'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5909e61d354087_31525406')) {function content_5909e61d354087_31525406($_smarty_tpl) {?><div class="modal fade" id="winMapa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -27,6 +27,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 				<h5 class="modal-title" id="exampleModalLabel">Ubicar punto</h5>
 			</div>
 			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<input type="text" class="form-control" placeholder="Escribe la dirección a buscar" id="txtBuscarDireccion"/>
+					</div>
+				</div>
+				<br />
 				<div class="row">
 					<div id="dvMapa" class="col-xs-12" style="height: 300px">&nbsp;</div>
 				</div>

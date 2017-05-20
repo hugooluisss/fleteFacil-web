@@ -106,6 +106,18 @@
 							<input type="text" id="txtDestino" name="txtDestino" class="form-control" readonly="true" />
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="selRegion" class="col-lg-2">Transportistas de las regiones</label>
+						<div class="col-lg-4">
+							<select class="form-control" id="selRegion" name="selRegion" multiple="true">
+								{foreach key=key item=item from=$regiones}
+									<option value="{$item.idRegion}">{$item.nombre}</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+					<div id="dvReporteFinal">
+					</div>
 				</div>
 				<div class="box-footer">
 					<button type="reset" id="btnReset" class="btn btn-default">Cancelar</button>
@@ -116,6 +128,6 @@
 		</form>
 	</div>
 </div>
-
+<input type="hidden" id="auxOrden" value="{$orden}"/>
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winMapa.tpl"}
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winInteresados.tpl"}

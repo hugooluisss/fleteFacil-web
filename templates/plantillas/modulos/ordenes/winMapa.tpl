@@ -7,6 +7,12 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
+					<div class="col-xs-12">
+						<input type="text" class="form-control" placeholder="Escribe la dirección a buscar" id="txtBuscarDireccion"/>
+					</div>
+				</div>
+				<br />
+				<div class="row">
 					<div id="dvMapa" class="col-xs-12" style="height: 300px">&nbsp;</div>
 				</div>
 				<br />

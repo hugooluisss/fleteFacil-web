@@ -37,6 +37,23 @@ switch($objModulo->getId()){
 		$smarty->assign("app", $usuario->getApp());
 		$smarty->assign("apm", $usuario->getApm());
 	break;
+	case 'notificaciones': case 'notificacionespanel':
+		$db = TBase::conectaDB();
+		global $userSesion;
+		
+		$sql = "select * from notificacion a join notificacionusuario b using(idNotificacion) where idUsuario = ".$userSesion->getId()." order by fecha desc";
+		
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		$datos = array();
+		while($row = $rs->fetch_assoc()){
+			$row['json'] = json_encode($row);
+			
+			array_push($datos, $row);
+		}
+		$smarty->assign("lista", $datos);
+		$smarty->assign("json", $datos);
+	break;
 	case 'cusuarios':
 		switch($objModulo->getAction()){
 			case 'add':

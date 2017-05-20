@@ -22,4 +22,20 @@ $conf['cusuarios'] = array(
 	'descripcion' => 'Controlador de usuarios',
 	'seguridad' => true,
 	'capa' => LAYOUT_JSON);
+	
+$conf['notificaciones'] = array(
+	'controlador' => 'usuarios.php',
+	'vista' => 'notificaciones/panel.tpl',
+	'descripcion' => 'Lista de avisos',
+	'seguridad' => true,
+	#'js' => array('estado.class.js'),
+	'jsTemplate' => array('notificaciones.js'),
+	'capa' => LAYOUT_DEFECTO);
+	
+$conf['notificacionespanel'] = array(
+	'controlador' => 'usuarios.php',
+	'vista' => 'notificaciones/panel.tpl',
+	'descripcion' => 'Lista de notificaciones',
+	'seguridad' => true,
+	'capa' => LAYOUT_AJAX);
 ?>

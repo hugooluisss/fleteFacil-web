@@ -37,6 +37,7 @@ $(document).ready(function(){
 				email: $("#txtEmail").val(),
 				celular: $("#txtCelular").val(),
 				pass: $("#txtPass").val(),
+				regiones: $("#selRegion").val(),
 				fn: {
 					after: function(datos){
 						if (datos.band){
@@ -76,6 +77,8 @@ $(document).ready(function(){
 				$("#txtEmail").val(el.email);
 				$("#txtRepresentante").val(el.representante);
 				$("#txtCelular").val(el.celular);
+				$("#txtPass").val(el.pass);
+				$("#selRegion").val(el.regiones);
 				$('#panelTabs a[href="#add"]').tab('show');
 			});
 			

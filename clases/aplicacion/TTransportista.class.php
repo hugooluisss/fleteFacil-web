@@ -14,6 +14,7 @@ class TTransportista{
 	private $celular;
 	private $pass;
 	private $visible;
+	public $regiones;
 	
 	/**
 	* Constructor de la clase
@@ -23,6 +24,7 @@ class TTransportista{
 	* @param int $id identificador del objeto
 	*/
 	public function TTransportista($id = ''){
+		$this->regiones = array();
 		$this->setId($id);		
 		return true;
 	}
@@ -46,6 +48,29 @@ class TTransportista{
 			$this->$field = $val;
 		}
 		
+		$this->getRegiones();
+		
+		return true;
+	}
+	
+	/**
+	* Carga las regiones
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getRegiones(){
+		if ($this->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "select idRegion from transportistaregion where idTransportista = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$this->regiones = array();
+		while($row = $rs->fetch_assoc()){
+			array_push($this->regiones, new TRegion($row['idRegion']));
+		}
 		return true;
 	}
 	
@@ -248,6 +273,29 @@ class TTransportista{
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return $rs?true:false;
+	}
+	
+	/**
+	* Guardar regiones
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function guardarRegiones(){
+		if ($this->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "delete from transportistaregion where idTransportista = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		foreach($this->regiones as $region){
+			$sql = "insert into transportistaregion (idTransportista, idRegion) values (".$this->getId().", ".$region->getId().")";
+			$rs = $db->query($sql) or errorMySQL($db, $sql);
+		}
+		
+		return true;
 	}
 }
 ?>

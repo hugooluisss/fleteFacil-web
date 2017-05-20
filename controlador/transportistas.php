@@ -1,11 +1,28 @@
 <?php
 global $objModulo;
 switch($objModulo->getId()){
+	case 'transportistas':
+		$db = TBase::conectaDB();
+		
+		$rs = $db->query("select * from region where visible = true");
+		$datos = array();
+		while($row = $rs->fetch_assoc()){
+			array_push($datos, $row);
+		}
+		
+		$smarty->assign("regiones", $datos);
+	break;
 	case 'listaTransportistas':
 		$db = TBase::conectaDB();
 		$rs = $db->query("select * from transportista a where a.visible = true");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
+			$sql = "select idRegion from transportistaregion where idTransportista = ".$row['idTransportista'];
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			$row['regiones'] = array();
+			while($row2 = $rs2->fetch_assoc())
+				array_push($row['regiones'], $row2['idRegion']);
+				
 			$row['json'] = json_encode($row);
 			
 			array_push($datos, $row);
@@ -25,7 +42,17 @@ switch($objModulo->getId()){
 				$obj->setCelular($_POST['celular']);
 				$obj->setPass($_POST['pass']);
 				
-				$smarty->assign("json", array("band" => $obj->guardar()));
+				$band = $obj->guardar();
+				if ($band){
+					$obj->regiones = array();				
+					foreach($_POST['regiones'] as $region){
+						$obj->regiones[$region] = new TRegion($region);
+					}
+					
+					$obj->guardarRegiones();
+				}
+					
+				$smarty->assign("json", array("band" => $band));
 			break;
 			case 'del':
 				$obj = new TTransportista($_POST['id']);
@@ -79,6 +106,39 @@ switch($objModulo->getId()){
 					echo json_encode(array("band" => $email->send(), "mensaje" => "Se trató de enviar"));
 				}else
 					echo json_encode(array("band" => false));
+			break;
+			case 'getData':
+				$db = TBase::conectaDB();
+				
+				$sql = "select * from transportista where idTransportista = ".$_POST['id'];
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				$row = $rs->fetch_assoc();
+				
+				$sql = "select * from region";
+				$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+				
+				$row['regiones'] = array();
+				while($row2 = $rs2->fetch_assoc()){
+					$rs3 = $db->query("select idTransportista from transportistaregion where idRegion = ".$row2['idRegion']." and idTransportista = ".$_POST['id']) or errorMySQL($db, $sql);
+					
+					$row2["checked"] = $rs3->num_rows > 0?1:0;
+					
+					array_push($row['regiones'], $row2);
+				}
+					
+				$smarty->assign("json", $row);
+			break;
+			case 'addRegion':
+				$transportista = new TTransportista($_POST['transportista']);
+				$transportista->regiones[$_POST['region']] = new TRegion($_POST['region']);
+				$smarty->assign("json", array("band" => $transportista->guardarRegiones()));
+			break;
+			case 'delRegion':
+				$transportista = new TTransportista($_POST['transportista']);
+				
+				unset($transportista->regiones[$_POST['region']]);
+				
+				$smarty->assign("json", array("band" => $transportista->guardarRegiones()));
 			break;
 		}
 	break;

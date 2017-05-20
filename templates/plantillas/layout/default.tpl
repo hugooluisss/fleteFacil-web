@@ -45,9 +45,9 @@
 			<!-- Logo -->
 			<a href="panelPrincipal" class="logo">
 				<!-- mini logo for sidebar mini 50x50 pixels -->
-				<span class="logo-lg"><b>Flete Facil</b></span>
+				<span class="logo-lg"><b>Syncro CL</b></span>
 				<!-- logo for regular state and mobile devices -->
-				<span class="logo-mini"><b>FF</b></span>
+				<span class="logo-mini"><b>Syncro</b></span>
 			</a>
 			<!-- Header Navbar: style can be found in header.less -->
 			<nav class="navbar navbar-static-top" role="navigation">
@@ -97,13 +97,14 @@
 				<ul class="sidebar-menu">
 					<li class="header">MENÚ PRINCIPAL</li>
 					{if $PAGE.usuario->getPerfil() eq 1}
-					<li class="{if in_array($PAGE.modulo, array('admonUsuarios', 'estados'))}active{/if} treeview">
+					<li class="{if in_array($PAGE.modulo, array('admonUsuarios', 'estados', 'regiones'))}active{/if} treeview">
 						<a href="#">
 							<span>Administración</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
 							<li {if $PAGE.modulo eq 'admonUsuarios'}class="active"{/if}><a href="admonUsuarios"><i class="fa fa-users"></i> Usuarios</a></li>
 							<li {if $PAGE.modulo eq 'estados'}class="active"{/if}><a href="estados"><i class="fa fa-certificate"></i> Estados</a></li>
+							<li {if $PAGE.modulo eq 'regiones'}class="active"{/if}><a href="regiones"><i class="fa fa-map-pin"></i> Regiones</a></li>
 						</ul>
 					</li>
 					{/if}
@@ -230,6 +231,7 @@
     {foreach from=$PAGE.scriptsJS item=script}
 		<script type="text/javascript" src="{$script}?m={rand()}"></script>
 	{/foreach}
+	<script type="text/javascript" src="templates/javascript/index.js?m={rand()}"></script>
 
     {if $PAGE.debug}
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.3.1/less.min.js" type="text/javascript"></script>

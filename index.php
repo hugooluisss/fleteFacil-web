@@ -32,6 +32,7 @@ require('librerias/fpdf/tfpdf.php');
 //require('librerias/upload/uploadHandler.php');
 require('librerias/bmptojpg.php');
 require('librerias/excelRead/reader.php');
+require_once('librerias/pushbots/PushBots.class.php');
 
 ini_set("include_path", ini_get("include_path").PATH_SEPARATOR.dirname(__FILE__)."/librerias/pear/");
 includeDir("clases/framework/");

@@ -14,14 +14,14 @@ class TMail{
 	private $destinos;
 	private $origen;
 	private $contestarA;
-	private $adjuntos;
+	public $adjuntos;
 	private $tema;
 
 	public function TMail(){
 		global $ini;
 		$this->destinos = array();
 		$this->contestarA = "";
-		$this->origen = array("nombre" => "Flete Facil", "correo" => "app@fletefacil.cl");
+		$this->origen = array("nombre" => "Syncro", "correo" => "app@syncro.cl");
 		
 		$this->permitir = true;
 	}
@@ -68,7 +68,6 @@ class TMail{
 			$headers .= "Reply-To: <".($this->contestarA == ''?$this->origen['correo']:$this->contestarA).">;\r\n";
 			$headers .= "Content-Type: multipart/mixed; boundary=\"PHP-mixed-".$random_hash."\"";
 			
-			
 			#Esta es la parte del mensaje
 			$msg = "--PHP-mixed-".$random_hash.$salto;
 			$msg .= 'Content-Type: multipart/alternative; boundary="PHP-alt-'.$random_hash.'"'.$salto; 
@@ -83,14 +82,14 @@ class TMail{
 			foreach($this->adjuntos as $adjunto){
 				$msg .= '--PHP-mixed-'.$random_hash.$salto;
 		
-				$msg .= 'Content-Type: application/x-pdf; name="'.$adjunto['nombre'].'"'.$salto;
+				$msg .= 'Content-Type: application/image-jpeg; name="'.$adjunto['nombre'].'"'.$salto;
 				$msg .= 'Content-Transfer-Encoding: base64'.$salto;
 				$msg .= 'Content-Disposition: attachment'.$salto;
 		
 				$msg .= chunk_split(base64_encode(file_get_contents($adjunto['ruta'])));
 				$msg .= '--PHP-mixed-'.$random_hash.'--'.$salto;
 			}
-			
+			//file_put_contents("repositorio/email.txt", $msg);
 			$emailBand = true;
 			foreach($this->destinos as $destino)
 				if ($emailBand)

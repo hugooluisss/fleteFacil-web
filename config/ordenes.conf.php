@@ -24,6 +24,13 @@ $conf['listaOrdenesTransportista'] = array(
 	'seguridad' => true,
 	'capa' => LAYOUT_JSON);
 	
+$conf['listaOrdenesPostuladas'] = array(
+	'controlador' => 'ordenes.php',
+	'vista' => 'ordenes/lista.tpl',
+	'descripcion' => 'Lista de ordenesTransportista',
+	'seguridad' => true,
+	'capa' => LAYOUT_JSON);
+	
 $conf['listaOrdenesAdjudicadas'] = array(
 	'controlador' => 'ordenes.php',
 	'vista' => 'ordenes/lista.tpl',
@@ -36,5 +43,12 @@ $conf['cordenes'] = array(
 	'descripcion' => 'Controlador de ordenes',
 	'seguridad' => true,
 	'capa' => LAYOUT_JSON);
+	
+$conf['reporteFinal'] = array(
+	'controlador' => 'ordenes.php',
+	'vista' => 'ordenes/reporte.tpl',
+	'descripcion' => 'Reporte enviado por el usuario al finalizar la orden',
+	'seguridad' => true,
+	'capa' => LAYOUT_AJAX);
 
 ?>
