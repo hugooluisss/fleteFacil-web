@@ -59,6 +59,11 @@
 				<!-- Navbar Right Menu -->
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
+						<li class="dropdown notifications-menu" title="Notificaciones">
+							<a href="notificaciones">
+								<i class="fa fa-bell-o"></i>
+							</a>
+						</li>
 						<li class="dropdown user user-menu">
 							<!-- Menu Toggle Button -->
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">

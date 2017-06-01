@@ -112,7 +112,7 @@ switch($objModulo->getId()){
 	case 'listaOrdenesAdjudicadas':
 		$db = TBase::conectaDB();
 		
-		$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) join asignado c using(idOrden) where idEstado = 4 and c.idTransportista = ".$_POST['transportista'];
+		$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) join asignado c using(idOrden) where idEstado in (4, 5) and c.idTransportista = ".$_POST['transportista'];
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
@@ -254,8 +254,8 @@ switch($objModulo->getId()){
 					
 					$email = new TMail();
 					$email->setTema("Orden terminada");
-					//$email->addDestino($obj->usuario->getEmail(), utf8_decode($obj->usuario->getNombre()));
-					$email->addDestino("hugooluisss@gmail.com", "Hugo Santiago");
+					$email->addDestino($obj->usuario->getEmail(), utf8_decode($obj->usuario->getNombre()));
+					//$email->addDestino("hugooluisss@gmail.com", "Hugo Santiago");
 					
 					$directorio = "repositorio/ordenesTerminadas/orden_".$obj->getId()."/";
 					$gestor_dir = opendir($directorio);

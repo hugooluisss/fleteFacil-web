@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-17 21:05:15
+<?php /* Smarty version Smarty-3.1.11, created on 2017-06-01 11:26:02
          compiled from "templates/plantillas/layout/default.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:200566164258fe00d0ebd072-68206956%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '88f47345f87357691db158f81dd14f424f0cd759' => 
     array (
       0 => 'templates/plantillas/layout/default.tpl',
-      1 => 1495072416,
+      1 => 1496334361,
       2 => 'file',
     ),
   ),
@@ -104,6 +104,11 @@ plugins/upload/css/jquery.fileupload.css">
 				<!-- Navbar Right Menu -->
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
+						<li class="dropdown notifications-menu" title="Notificaciones">
+							<a href="notificaciones">
+								<i class="fa fa-bell-o"></i>
+							</a>
+						</li>
 						<li class="dropdown user user-menu">
 							<!-- Menu Toggle Button -->
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
