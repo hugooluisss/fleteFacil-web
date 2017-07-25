@@ -137,6 +137,18 @@
 						</ul>
 					</li>
 					{/if}
+					
+					{if in_array($PAGE.usuario->getPerfil(), array(1, 2))}
+					<li class="{if in_array($PAGE.modulo, array('estadoTransportistas'))}active{/if} treeview">
+						<a href="#">
+							<span>Reportes</span> <i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li {if $PAGE.modulo eq 'estadoTransportistas'}class="active"{/if}><a href="estadoTransportistas"><i class="fa fa-clone"></i> Transportistas por estado</a></li>
+							
+						</ul>
+					</li>
+					{/if}
 				</ul>
 			</section>
 			<!-- /.sidebar -->

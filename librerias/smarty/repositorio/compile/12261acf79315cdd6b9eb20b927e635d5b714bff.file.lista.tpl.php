@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-03 12:19:35
+<?php /* Smarty version Smarty-3.1.11, created on 2017-07-05 23:07:01
          compiled from "templates/plantillas/modulos/transportistas/lista.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:224740053590a1127017f46-34395958%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '12261acf79315cdd6b9eb20b927e635d5b714bff' => 
     array (
       0 => 'templates/plantillas/modulos/transportistas/lista.tpl',
-      1 => 1493040030,
+      1 => 1499314019,
       2 => 'file',
     ),
   ),
@@ -15,14 +15,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_590a11271402e2_08855486',
   'variables' => 
   array (
     'lista' => 0,
     'row' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_590a11271402e2_08855486',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_590a11271402e2_08855486')) {function content_590a11271402e2_08855486($_smarty_tpl) {?><div class="box">
 	<div class="box-body">
@@ -42,8 +42,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 foreach ($_from as $_smarty_tpl->tpl_vars["row"]->key => $_smarty_tpl->tpl_vars["row"]->value){
 $_smarty_tpl->tpl_vars["row"]->_loop = true;
 ?>
-					<tr>
-						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['idTransportista'];?>
+					<tr title="<?php echo $_smarty_tpl->tpl_vars['row']->value['estado'];?>
+">
+						<td style="border-left: 3px solid <?php echo $_smarty_tpl->tpl_vars['row']->value['color'];?>
+"><?php echo $_smarty_tpl->tpl_vars['row']->value['idTransportista'];?>
 </td>
 						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['nombre'];?>
 </td>

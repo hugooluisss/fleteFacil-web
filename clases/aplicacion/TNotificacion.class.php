@@ -152,7 +152,10 @@ class TNotificacion{
 			case 'T':
 				$this->tipoemisor = $tipo;
 				$this->receptor = new TTransportista($receptor);
-				return $this->enviar();
+				if ($this->receptor->isVisible() and $this->receptor->getSituacion() <> 3)
+					return $this->enviar();
+				else
+					return true;
 			break;
 		}
 	}

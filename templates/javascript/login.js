@@ -27,4 +27,21 @@ $(document).ready(function(){
 
     });
 	
+	
+	$("#btnSeguimiento").click(function(){
+		$("#btnSeguimiento").text("Espera mientras buscamos tu orden").prop("disabled", true);
+		
+		$.post("cordenes", {
+			"folio": prompt("Escribe el número de folio de tu orden", ""),
+			"action": "buscarPorFolio"
+		}, function(resp){
+			if (resp.id == '' || resp.id == null || resp.id == undefined)
+				alert("La orden no fue encontrada");
+			else{
+				$("#winSeguimiento").attr("datos", resp.json).modal();
+			}
+		}, "json").done(function(){
+			$("#btnSeguimiento").text("Sigue tu orden de carga").prop("disabled", false);
+		});
+	});
 });

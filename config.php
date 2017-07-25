@@ -16,8 +16,8 @@ define('LAYOUT_TOPNAV', 'layout/topnav.tpl');
 $conf['inicio'] = array(
 	'descripcion' => '',
 	'seguridad' => false,
-	'js' => array('usuario.class.js'),
-	'jsTemplate' => array('login.js'),
+	'js' => array('usuario.class.js', 'orden.class.js'),
+	'jsTemplate' => array('login.js', 'seguimiento.js'),
 	'capa' => 'layout/login.tpl');
 
 $conf['logout'] = array(

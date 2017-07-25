@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-06-01 11:26:02
+<?php /* Smarty version Smarty-3.1.11, created on 2017-07-19 19:30:19
          compiled from "templates/plantillas/layout/default.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:200566164258fe00d0ebd072-68206956%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '88f47345f87357691db158f81dd14f424f0cd759' => 
     array (
       0 => 'templates/plantillas/layout/default.tpl',
-      1 => 1496334361,
+      1 => 1500484457,
       2 => 'file',
     ),
   ),
@@ -182,6 +182,18 @@ img/logo.png" alt="User Image" style="background: white"/>
 						</a>
 						<ul class="treeview-menu">
 							<li <?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='ordenes'){?>class="active"<?php }?>><a href="ordenes"><i class="fa fa-clone"></i> Panel</a></li>
+							
+						</ul>
+					</li>
+					<?php }?>
+					
+					<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil(),array(1,2))){?>
+					<li class="<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array('estadoTransportistas'))){?>active<?php }?> treeview">
+						<a href="#">
+							<span>Reportes</span> <i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li <?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='estadoTransportistas'){?>class="active"<?php }?>><a href="estadoTransportistas"><i class="fa fa-clone"></i> Transportistas por estado</a></li>
 							
 						</ul>
 					</li>

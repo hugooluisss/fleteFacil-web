@@ -461,6 +461,37 @@ class TOrden{
 			WHERE idorden = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		switch($this->estado->getId()){
+			case 5: case 6: case 7:
+				$sql = "select idOrden, idTransportista from asignado a join orden b using(idOrden) where b.idEstado = 4 and idTransportista in (select idTransportista from asignado where idOrden = ".$this->getId().")";
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+				if ($rs->num_rows == 0){
+					$sql = "select idTransportista from asignado where idOrden = ".$this->getId();
+					$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+					$row = $rs->fetch_array();
+					$transportista = new TTransportista($row['idTransportista']);
+					$transportista->setSituacion(1);
+					$transportista->guardar();
+				}
+			break;
+			case 4: #orden asignada
+				$sql = "select idOrden, idTransportista from asignado a join orden b using(idOrden) where b.idEstado = 4 and idTransportista in (select idTransportista from asignado where idOrden = ".$this->getId().")";
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+				if ($rs->num_rows == 0){
+					$sql = "select idTransportista from asignado where idOrden = ".$this->getId();
+					$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+					$row = $rs->fetch_array();
+					$transportista = new TTransportista($row['idTransportista']);
+					$transportista->setSituacion(2);
+					$transportista->guardar();
+				}
+			break;
+		}
 			
 		return $rs?true:false;
 	}
@@ -532,6 +563,9 @@ class TOrden{
 		$this->estado->setId(4);
 		$this->guardar();
 		
+		$obj->setSituacion(2);
+		$obj->guardar();
+		
 		return $rs?true:false;
 	}
 	
@@ -575,6 +609,28 @@ class TOrden{
 			$sql = "insert into ordenregion (idOrden, idRegion) values (".$this->getId().", ".$region->getId().")";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);
 		}
+		
+		return true;
+	}
+	
+	/**
+	* Guarda una posicion
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function addPosicion($latitude = '', $longitude = ''){
+		if ($this->getId() == '') return false;
+		if ($latitude == '') return false;
+		if ($longitude == '') return false;
+		
+		$json = json_decode(file_get_contents("http://maps.google.com/maps/api/geocode/json?address=".$latitude.",".$longitude), true);
+		
+		$db = TBase::conectaDB();
+		$sql = "insert into posicion(idOrden, fecha, latitude, longitude, direccion) values (".$this->getId().", now(), '".$latitude."', '".$longitude."', '".$json['results'][0]['formatted_address']."')";
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return true;
 	}

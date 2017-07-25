@@ -7,7 +7,7 @@ $conf['ordenes'] = array(
 	'descripcion' => 'Ordenes de trabajo',
 	'seguridad' => true,
 	'js' => array('orden.class.js', 'transportista.class.js'),
-	'jsTemplate' => array('ordenes.js'),
+	'jsTemplate' => array('ordenes.js', 'seguimiento.js'),
 	'capa' => LAYOUT_DEFECTO);
 	
 $conf['listaOrdenes'] = array(
@@ -41,7 +41,7 @@ $conf['listaOrdenesAdjudicadas'] = array(
 $conf['cordenes'] = array(
 	'controlador' => 'ordenes.php',
 	'descripcion' => 'Controlador de ordenes',
-	'seguridad' => true,
+	'seguridad' => false,
 	'capa' => LAYOUT_JSON);
 	
 $conf['reporteFinal'] = array(
@@ -51,4 +51,10 @@ $conf['reporteFinal'] = array(
 	'seguridad' => true,
 	'capa' => LAYOUT_AJAX);
 
+$conf['listaPosicionesOrden'] = array(
+	'controlador' => 'ordenes.php',
+	'vista' => 'ordenes/listaPosiciones.tpl',
+	'descripcion' => 'Lista de posiciones de la orden',
+	'seguridad' => false,
+	'capa' => LAYOUT_AJAX);
 ?>

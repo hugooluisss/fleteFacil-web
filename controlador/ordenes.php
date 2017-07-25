@@ -14,7 +14,12 @@ switch($objModulo->getId()){
 		
 		$smarty->assign("usuarios", $datos);
 		
-		$rs = $db->query("select * from estado");
+		global $userSesion;
+		if ($userSesion->getIdTipo() == 1)
+			$rs = $db->query("select * from estado");
+		else
+			$rs = $db->query("select * from estado where idEstado not in (6, 7)");
+			
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
 			$row['json'] = json_encode($row);
@@ -23,7 +28,6 @@ switch($objModulo->getId()){
 		}
 		
 		$smarty->assign("estados", $datos);
-		
 		$rs = $db->query("select * from region where visible = true");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
@@ -39,9 +43,9 @@ switch($objModulo->getId()){
 		$db = TBase::conectaDB();
 		global $userSesion;
 		if ($userSesion->getIdTipo() == 1)
-			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado)");
+			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5)");
 		else
-			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idUsuario = ".$userSesion->getId());
+			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5) and idUsuario = ".$userSesion->getId());
 			
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
@@ -126,6 +130,20 @@ switch($objModulo->getId()){
 		}
 		
 		$smarty->assign("json", $datos);
+	break;
+	case 'listaPosicionesOrden':
+		$db = TBase::conectaDB();
+		
+		$sql = "select * from posicion where idOrden = ".$_POST['orden'];
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$datos = array();
+		while($row = $rs->fetch_assoc()){
+			$row['json'] = json_encode($row);
+			
+			array_push($datos, $row);
+		}
+		
+		$smarty->assign("lista", $datos);
 	break;
 	case 'reporteFinal':
 		$directorio = "repositorio/ordenesTerminadas/orden_".$_POST['idOrden']."/";
@@ -274,6 +292,23 @@ switch($objModulo->getId()){
 				}
 				
 				$smarty->assign("json", array("band" => $band));
+			break;
+			case 'logPosicion':
+				$orden = new TOrden($_POST['orden']);
+				
+				$smarty->assign("json", array("band" => $orden->addPosicion($_POST['latitude'], $_POST['longitude'])));
+			break;
+			case 'buscarPorFolio':
+				$db = TBase::conectaDB();
+		
+				$sql = "select * from orden where folio = '".$_POST['folio']."'";
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				$row = $rs->fetch_assoc();
+				
+				$row['origen_json'] = json_decode($row['origen']);
+				$row['destino_json'] = json_decode($row['destino']);
+				
+				$smarty->assign("json", array("id" => $row['idOrden'], "json" => json_encode($row)));
 			break;
 		}
 	break;

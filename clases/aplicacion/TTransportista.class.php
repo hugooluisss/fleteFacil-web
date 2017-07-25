@@ -8,6 +8,7 @@
 
 class TTransportista{
 	private $idTransportista;
+	private $situacion;
 	private $nombre;
 	private $representante;
 	private $email;
@@ -25,6 +26,7 @@ class TTransportista{
 	*/
 	public function TTransportista($id = ''){
 		$this->regiones = array();
+		$this->idSituacion = 1;
 		$this->setId($id);		
 		return true;
 	}
@@ -217,6 +219,32 @@ class TTransportista{
 	}
 	
 	/**
+	* Establece la situacion
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setSituacion($val = 1){
+		$this->idSituacion = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna el id de la situacion
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getSituacion(){
+		return $this->idSituacion;
+	}
+	
+	/**
 	* Guarda los datos en la base de datos, si no existe un identificador entonces crea el objeto
 	*
 	* @autor Hugo
@@ -225,10 +253,12 @@ class TTransportista{
 	*/
 	
 	public function guardar(){
+		if ($this->getSituacion() == '')
+			$this->setSituacion(1);
 		$db = TBase::conectaDB();
 		
 		if ($this->getId() == ''){
-			$sql = "INSERT INTO transportista(visible) VALUES(1);";
+			$sql = "INSERT INTO transportista(idSituacion, visible) VALUES(".$this->getSituacion().", 1);";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);
 			
 			if (!$rs) return false;
@@ -245,7 +275,8 @@ class TTransportista{
 				representante = '".$this->getRepresentante()."',
 				email = '".$this->getEmail()."',
 				celular = '".$this->getCelular()."',
-				pass = '".$this->getPass()."'
+				pass = '".$this->getPass()."',
+				idSituacion = ".$this->getSituacion()."
 			WHERE idTransportista = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
@@ -296,6 +327,18 @@ class TTransportista{
 		}
 		
 		return true;
+	}
+	
+	/**
+	* Retorna si el transportista está habilitado
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function isVisible(){
+		return $this->visible == 1;
 	}
 }
 ?>

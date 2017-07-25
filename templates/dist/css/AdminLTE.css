@@ -3183,7 +3183,9 @@ table.text-center th {
 }
 .login-page,
 .register-page {
-  background: #fff;
+  background: url('../../img/bg_login.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 .login-box,
 .register-box {
@@ -3214,7 +3216,6 @@ table.text-center th {
   margin: 0;
   text-align: center;
   padding: 0 20px 20px 20px;
-  background: #0043a4;
   color: white;
 }
 .social-auth-links {

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-19 19:38:50
+<?php /* Smarty version Smarty-3.1.11, created on 2017-07-20 11:04:35
          compiled from "templates/plantillas/modulos/ordenes/lista.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3359384658fe01128d1c32-60026005%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'ccb83fbda49be8284838e579fad0d10480204fd4' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/lista.tpl',
-      1 => 1495240711,
+      1 => 1500566672,
       2 => 'file',
     ),
   ),
@@ -30,7 +30,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 			<thead>
 				<tr>
 					<th>Folio</th>
-					<th>Nombre</th>
+					<th>Estado</th>
 					<th>Origen</th>
 					<th>Destino</th>
 					<th>Interesados</th>
@@ -54,14 +54,16 @@ $_smarty_tpl->tpl_vars["row"]->_loop = true;
 						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['destino_json']->direccion;?>
 </td>
 						<td class="text-center">
-							<button type="button" class="btn btn-warning" action="interesados" title="Transportistas interesados" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
+							<button type="button" class="btn btn-warning btn-xs" action="interesados" title="Transportistas interesados" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
 ' data-toggle="modal" data-target="#winInteresados"><?php echo $_smarty_tpl->tpl_vars['row']->value['interesados'];?>
  / <?php echo $_smarty_tpl->tpl_vars['row']->value['propuestas'];?>
 </button>
 						</td>
-						<td class="text-right">
-							<button type="button" class="btn btn-success" action="modificar" title="Modificar" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
+						<td class="text-right" style="width: 80px;">
+							<button type="button" class="btn btn-success btn-xs" action="modificar" title="Modificar" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
 '><i class="fa fa-pencil"></i></button>
+							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#winSeguimiento" action="mapa" title="Consultar transporte" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
+'><i class="fa fa-map-o"></i></button>
 						</td>
 					</tr>
 				<?php } ?>

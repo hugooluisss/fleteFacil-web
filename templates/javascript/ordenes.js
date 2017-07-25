@@ -167,6 +167,10 @@ $(document).ready(function(){
 				$("#winInteresados").attr("datos", $(this).attr("datos"));
 			});
 			
+			$("[action=mapa]").click(function(){
+				$("#winSeguimiento").attr("datos", $(this).attr("datos"));
+			});
+			
 			var tabla = $("#tblDatos").DataTable({
 				"responsive": true,
 				"language": espaniol,
@@ -238,15 +242,15 @@ $(document).ready(function(){
 				});
 				
 				google.maps.event.addListener(mapa, 'click', function(event){
-						var LatLng = event.latLng;
-						
-						marca.setPosition(LatLng);
-						marca.setMap(mapa);
-						posicion.latitude = event.latLng.lat();
-						posicion.longitude = event.latLng.lng();
-						
-						getDireccion(posicion.latitude, posicion.longitude);
-					});
+					var LatLng = event.latLng;
+					
+					marca.setPosition(LatLng);
+					marca.setMap(mapa);
+					posicion.latitude = event.latLng.lat();
+					posicion.longitude = event.latLng.lng();
+					
+					getDireccion(posicion.latitude, posicion.longitude);
+				});
 				
 				var LatLng = new google.maps.LatLng(posicion.latitude, posicion.longitude);
 				mapa.setCenter(LatLng);

@@ -17,6 +17,7 @@
 		<link rel="stylesheet" href="{$PAGE.ruta}plugins/datepicker/datepicker3.css">
 		<link rel="stylesheet" href="{$PAGE.ruta}plugins/daterangepicker/daterangepicker-bs3.css">
 		<link rel="stylesheet" href="{$PAGE.ruta}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+		<script src="https://maps.googleapis.com/maps/api/js?key={$PAGE.maps}"></script>
 		
 		<link rel="stylesheet" href="{$PAGE.ruta}plugins/iCheck/square/blue.css">
 	{if $PAGE.debug}
@@ -39,9 +40,9 @@
 			</div><!-- /.login-logo -->
 			<div class="login-box-body">
 				<div class="login-box-msg">
-					<center><img src="{$PAGE.ruta}img/logo.png" class="img-responsive"/></center>
-					<br />
-					Identificate para iniciar sesión
+					<!--<center><img src="{$PAGE.ruta}img/logo.png" class="img-responsive"/></center>-->
+					<br /><br /><br /><br /><br /><br />
+					<!--Identificate para iniciar sesión-->
 				</div>
 				<br />
 				<form action="#" id="frmLogin" method="post">
@@ -59,11 +60,20 @@
 							<button type="submit" class="btn btn-primary btn-block">Iniciar</button>
 						</div><!-- /.col -->
 					</div>
+					<br />
+					<hr />
+					<br />
+					<div class="row">
+						<div class="col-xs-12">
+							<button type="button" id="btnSeguimiento" class="btn btn-warning btn-block">Sigue tu orden de carga</button>
+						</div>
+					</div>
 				</form>		
 			</div><!-- /.login-box-body -->
 		</div>
     
-    
+		{include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winSeguimiento.tpl"}
+		
 	    <!-- jQuery 2.1.4 -->
 	    <script src="{$PAGE.ruta}plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	    <!-- jQuery UI 1.11.4 -->
@@ -92,7 +102,13 @@
 	    <script src="{$PAGE.ruta}plugins/fastclick/fastclick.min.js"></script>
 	    <!-- AdminLTE App -->
 	    <script src="{$PAGE.ruta}dist/js/app.min.js"></script>
+    	<script type="text/javascript" src="{$PAGE.ruta}plugins/validate/validate.es.js"></script>
 	    <script type="text/javascript" src="{$PAGE.ruta}plugins/validate/validate.js"></script>
+	    
+	    <link rel="stylesheet" href="{$PAGE.ruta}plugins/datatables/dataTables.bootstrap.css">
+		<script src="{$PAGE.ruta}plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="{$PAGE.ruta}plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="{$PAGE.ruta}plugins/datatables/lenguaje/ES-mx.js"></script>
 	    
 	    {foreach from=$PAGE.scriptsJS item=script}
 			<script type="text/javascript" src="{$script}"></script>

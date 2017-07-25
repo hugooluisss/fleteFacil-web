@@ -128,6 +128,8 @@
 		</form>
 	</div>
 </div>
+
 <input type="hidden" id="auxOrden" value="{$orden}"/>
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winMapa.tpl"}
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winInteresados.tpl"}
+{include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winSeguimiento.tpl"}

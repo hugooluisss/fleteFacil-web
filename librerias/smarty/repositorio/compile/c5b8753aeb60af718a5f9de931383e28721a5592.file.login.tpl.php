@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-03 09:15:17
+<?php /* Smarty version Smarty-3.1.11, created on 2017-07-20 10:59:28
          compiled from "templates/plantillas/layout/login.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5315466945909e5f57e7ae6-54594367%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c5b8753aeb60af718a5f9de931383e28721a5592' => 
     array (
       0 => 'templates/plantillas/layout/login.tpl',
-      1 => 1493040030,
+      1 => 1500566366,
       2 => 'file',
     ),
   ),
@@ -15,14 +15,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_5909e5f5a4d884_40309501',
   'variables' => 
   array (
     'PAGE' => 0,
     'script' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5909e5f5a4d884_40309501',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5909e5f5a4d884_40309501')) {function content_5909e5f5a4d884_40309501($_smarty_tpl) {?><!DOCTYPE html>
 <html>
@@ -53,6 +53,8 @@ plugins/datepicker/datepicker3.css">
 plugins/daterangepicker/daterangepicker-bs3.css">
 		<link rel="stylesheet" href="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
 plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+		<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['maps'];?>
+"></script>
 		
 		<link rel="stylesheet" href="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
 plugins/iCheck/square/blue.css">
@@ -101,11 +103,21 @@ img/logo.png" class="img-responsive"/></center>
 							<button type="submit" class="btn btn-primary btn-block">Iniciar</button>
 						</div><!-- /.col -->
 					</div>
+					<br />
+					<hr />
+					<br />
+					<div class="row">
+						<div class="col-xs-12">
+							<button type="button" id="btnSeguimiento" class="btn btn-warning btn-block">Sigue tu orden de carga</button>
+						</div>
+					</div>
 				</form>		
 			</div><!-- /.login-box-body -->
 		</div>
     
-    
+		<?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/ordenes/winSeguimiento.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
+
+		
 	    <!-- jQuery 2.1.4 -->
 	    <script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
 plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -148,8 +160,19 @@ plugins/fastclick/fastclick.min.js"></script>
 	    <!-- AdminLTE App -->
 	    <script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
 dist/js/app.min.js"></script>
+    	<script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
+plugins/validate/validate.es.js"></script>
 	    <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
 plugins/validate/validate.js"></script>
+	    
+	    <link rel="stylesheet" href="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
+plugins/datatables/dataTables.bootstrap.css">
+		<script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
+plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
+plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
+plugins/datatables/lenguaje/ES-mx.js"></script>
 	    
 	    <?php  $_smarty_tpl->tpl_vars['script'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['script']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['PAGE']->value['scriptsJS']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
