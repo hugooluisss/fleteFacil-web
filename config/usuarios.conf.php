@@ -38,4 +38,7 @@ $conf['notificacionespanel'] = array(
 	'descripcion' => 'Lista de notificaciones',
 	'seguridad' => true,
 	'capa' => LAYOUT_AJAX);
+	
+	
+$conf['usuariosempresa'] = $conf['admonUsuarios'];
 ?>

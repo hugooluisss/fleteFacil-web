@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-07-19 19:30:19
+<?php /* Smarty version Smarty-3.1.11, created on 2017-10-30 13:48:57
          compiled from "templates/plantillas/layout/default.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:200566164258fe00d0ebd072-68206956%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '88f47345f87357691db158f81dd14f424f0cd759' => 
     array (
       0 => 'templates/plantillas/layout/default.tpl',
-      1 => 1500484457,
+      1 => 1509392927,
       2 => 'file',
     ),
   ),
@@ -84,7 +84,7 @@ plugins/upload/css/jquery.fileupload.css">
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini">
+	<body class="hold-transition skin-blue-light sidebar-mini">
 	<div class="wrapper">
 		<header class="main-header">
 			<!-- Logo -->
@@ -124,7 +124,7 @@ img/logo.png" alt="User Image" style="background: white"/>
 									<p>
 										<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getNombre();?>
 
-										<small><?php echo $_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getTipo();?>
+										<small><?php echo $_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getNombrePerfil();?>
 </small>
 									</p>
 								</li>
@@ -151,11 +151,12 @@ img/logo.png" alt="User Image" style="background: white"/>
 				<ul class="sidebar-menu">
 					<li class="header">MENÚ PRINCIPAL</li>
 					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()==1){?>
-					<li class="<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array('admonUsuarios','estados','regiones'))){?>active<?php }?> treeview">
+					<li class="<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array("empresas","usuariosempresa",'admonUsuarios','estados','regiones'))){?>active<?php }?> treeview">
 						<a href="#">
 							<span>Administración</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
+							<li <?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array('empresas',"usuariosempresa"))){?>class="active"<?php }?>><a href="empresas"><i class="fa fa-building-o" aria-hidden="true"></i> Empresas</a></li>
 							<li <?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='admonUsuarios'){?>class="active"<?php }?>><a href="admonUsuarios"><i class="fa fa-users"></i> Usuarios</a></li>
 							<li <?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='estados'){?>class="active"<?php }?>><a href="estados"><i class="fa fa-certificate"></i> Estados</a></li>
 							<li <?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='regiones'){?>class="active"<?php }?>><a href="regiones"><i class="fa fa-map-pin"></i> Regiones</a></li>

@@ -8,7 +8,7 @@
 
 class TUsuario{
 	private $idUsuario;
-	private $idTipo;
+	private $idPerfil;
 	private $nombre;
 	private $email;
 	private $pass;
@@ -39,13 +39,11 @@ class TUsuario{
 		if ($id == '') return false;
 		
 		$db = TBase::conectaDB();
-		$rs = $db->query("select * from usuario where idUsuario = ".$id);
+		$sql = "select * from usuario where idUsuario = ".$id;
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		foreach($rs->fetch_assoc() as $field => $val){
-			if ($field == 'idSucursal')
-				$this->sucursal = new TSucursal($val);
-			else
-				$this->$field = $val;
+			$this->$field = $val;
 		}
 		
 		return true;
@@ -64,7 +62,7 @@ class TUsuario{
 	}
 	
 	/**
-	* Establece el valor de tipo de usuario
+	* Establece el valor del perfil
 	*
 	* @autor Hugo
 	* @access public
@@ -72,8 +70,8 @@ class TUsuario{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function setTipo($val = 2){
-		$this->idTipo = $val;
+	public function setPerfil($val = 2){
+		$this->idPerfil = $val;
 		return true;
 	}
 	
@@ -85,8 +83,8 @@ class TUsuario{
 	* @return string Texto
 	*/
 	
-	public function getIdTipo(){
-		return $this->idTipo;
+	public function getPerfil(){
+		return $this->idPerfil;
 	}
 	
 	/**
@@ -97,25 +95,14 @@ class TUsuario{
 	* @return string Texto
 	*/
 	
-	public function getTipo(){
-		if ($this->getIdTipo() == '') return false;
+	public function getNombrePerfil(){
+		if ($this->getPerfil() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$rs = $db->query("select nombre from tipoUsuario where idTipoUsuario = ".$this->getIdTipo());
+		$sql = "select nombre from perfil where idPerfil = ".$this->getPerfil();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$row = $rs->fetch_assoc();
 		return $row['nombre'];
-	}
-	
-	/**
-	* Retorna el tipo como si fuera un perfil
-	*
-	* @autor Hugo
-	* @access public
-	* @return string Texto
-	*/
-	
-	public function getPerfil(){
-		return $this->getIdTipo();
 	}
 		
 	/**
@@ -205,12 +192,14 @@ class TUsuario{
 	*/
 	
 	public function guardar(){
-		if ($this->getIdTipo() == '') return false;
+		if ($this->getPerfil() == '') return false;
 		
 		$db = TBase::conectaDB();
 		
 		if ($this->getId() == ''){
-			$rs = $db->query("INSERT INTO usuario(idTipo, visible) VALUES(".$this->getIdTipo().", true);");
+			$sql = "INSERT INTO usuario(idPerfil, visible) VALUES(".$this->getPerfil().", true);";
+			
+			$rs = $db->query($sql) or errorMySQL($db, $sql);
 			if (!$rs) return false;
 				
 			$this->idUsuario = $db->insert_id;
@@ -221,7 +210,7 @@ class TUsuario{
 		
 		$sql = "UPDATE usuario
 			SET
-				idTipo = ".$this->getIdTipo().",
+				idPerfil = ".$this->getPerfil().",
 				nombre = '".$this->getNombre()."',
 				email = '".$this->getEmail()."',
 				pass = '".$this->getPass()."'
@@ -243,7 +232,8 @@ class TUsuario{
 		if ($this->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$rs = $db->query("update usuario set visible = false where idUsuario = ".$this->getId());
+		$sql = "update usuario set visible = false where idUsuario = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return $rs?true:false;
 	}

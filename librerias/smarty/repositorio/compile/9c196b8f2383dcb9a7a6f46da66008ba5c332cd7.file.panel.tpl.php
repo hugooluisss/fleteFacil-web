@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-05-12 22:59:57
+<?php /* Smarty version Smarty-3.1.11, created on 2017-10-30 13:51:55
          compiled from "templates/plantillas/modulos/transportistas/panel.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1733112260590a1123d0ba73-75725624%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '9c196b8f2383dcb9a7a6f46da66008ba5c332cd7' => 
     array (
       0 => 'templates/plantillas/modulos/transportistas/panel.tpl',
-      1 => 1494647996,
+      1 => 1496336808,
       2 => 'file',
     ),
   ),

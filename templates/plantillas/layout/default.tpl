@@ -39,7 +39,7 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini">
+	<body class="hold-transition skin-blue-light sidebar-mini">
 	<div class="wrapper">
 		<header class="main-header">
 			<!-- Logo -->
@@ -76,7 +76,7 @@
 									<img src="{$PAGE.ruta}img/logo.png" alt="User Image" style="background: white"/>
 									<p>
 										{$PAGE.usuario->getNombre()}
-										<small>{$PAGE.usuario->getTipo()}</small>
+										<small>{$PAGE.usuario->getNombrePerfil()}</small>
 									</p>
 								</li>
 								<!-- Menu Footer-->
@@ -102,11 +102,12 @@
 				<ul class="sidebar-menu">
 					<li class="header">MENÚ PRINCIPAL</li>
 					{if $PAGE.usuario->getPerfil() eq 1}
-					<li class="{if in_array($PAGE.modulo, array('admonUsuarios', 'estados', 'regiones'))}active{/if} treeview">
+					<li class="{if in_array($PAGE.modulo, array("empresas", "usuariosempresa", 'admonUsuarios', 'estados', 'regiones'))}active{/if} treeview">
 						<a href="#">
 							<span>Administración</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
+							<li {if in_array($PAGE.modulo, array('empresas', "usuariosempresa"))}class="active"{/if}><a href="empresas"><i class="fa fa-building-o" aria-hidden="true"></i> Empresas</a></li>
 							<li {if $PAGE.modulo eq 'admonUsuarios'}class="active"{/if}><a href="admonUsuarios"><i class="fa fa-users"></i> Usuarios</a></li>
 							<li {if $PAGE.modulo eq 'estados'}class="active"{/if}><a href="estados"><i class="fa fa-certificate"></i> Estados</a></li>
 							<li {if $PAGE.modulo eq 'regiones'}class="active"{/if}><a href="regiones"><i class="fa fa-map-pin"></i> Regiones</a></li>

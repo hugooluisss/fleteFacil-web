@@ -189,8 +189,8 @@ class TEmpresa{
 		$sql = "UPDATE empresa
 			SET
 				razonsocial = '".$this->getRazonSocial()."',
-				domicilio = '".$this->getDomicilio()."'
-				correo = '".$this->getCorreo()."'
+				domicilio = '".$this->getDomicilio()."',
+				correo = '".$this->getCorreo()."',
 				telefono = '".$this->getTelefono()."'
 			WHERE idEmpresa = ".$this->getId();
 			
@@ -212,6 +212,44 @@ class TEmpresa{
 		
 		$db = TBase::conectaDB();
 		$sql = "update empresa set visible = false where idEmpresa = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		return $rs?true:false;
+	}
+	
+	/**
+	* Agrega un usuario a la empresa
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function addUsuario($idUsuario = ''){
+		if ($this->getId() == '') return false;
+		if ($idUsuario == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "insert into usuarioempresa (idUsuario, idEmpresa) values(".$idUsuario.", ".$this->getId().")";
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		return $rs?true:false;
+	}
+	
+	/**
+	* Elimina a un usuario de la empresa
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function delUsuario($idUsuario = ''){
+		if ($this->getId() == '') return false;
+		if ($idUsuario == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "delete from usuarioempresa where idEmpresa = ".$this->getId()." and idUsuario = ".$idUsuario;
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return $rs?true:false;

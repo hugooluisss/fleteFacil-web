@@ -2,40 +2,41 @@
 global $objModulo;
 switch($objModulo->getId()){
 	case 'admonUsuarios':
+	case 'usuariosempresa':
 		$db = TBase::conectaDB();
 		global $sesion;
-		$usuario = new TUsuario($sesion['usuario']);
-
-		$rs = $db->query("select * from tipoUsuario");
-		$datos = array();
-		while($row = $rs->fetch_assoc()){
-			$datos[$row['idTipoUsuario']] = $row['nombre'];
+		
+		if ($objModulo->getId() == 'admonUsuarios')
+			$sql = "select * from perfil where rol = 1";
+		else{
+			$sql = "select * from perfil where rol = 2";
+			$smarty->assign("empresa", new TEmpresa($_GET['id']));
 		}
 		
-		$smarty->assign("tipos", $datos);
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$datos = array();
+		while($row = $rs->fetch_assoc()){
+			$datos[$row['idPerfil']] = $row['nombre'];
+		}
+		
+		$smarty->assign("perfiles", $datos);
 	break;
 	case 'listaUsuarios':
 		$db = TBase::conectaDB();
 		global $sesion;
-		$usuario = new TUsuario($sesion['usuario']);
-		$rs = $db->query("select * from usuario a where a.visible = true");
+		
+		$sql = "select * from usuario a where a.visible = true";
+		if (isset($_POST['empresa']))
+			$sql = "select * from usuario a join usuarioempresa b using(idUsuario) where a.visible = true and idEmpresa = ".$_POST['empresa'];
+		
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
-			$obj = new TUsuario($row['idUsuario']);
-			
-			$row['tipo'] = $obj->getTipo();
 			$row['json'] = json_encode($row);
 			
 			array_push($datos, $row);
 		}
 		$smarty->assign("lista", $datos);
-	break;
-	case 'usuarioDatosPersonales':
-		global $sesion;
-		$usuario = new TUsuario($sesion['usuario']);
-		$smarty->assign("nombre", $usuario->getNombre());
-		$smarty->assign("app", $usuario->getApp());
-		$smarty->assign("apm", $usuario->getApm());
 	break;
 	case 'notificaciones': case 'notificacionespanel':
 		$db = TBase::conectaDB();
@@ -77,9 +78,17 @@ switch($objModulo->getId()){
 				$obj->setNombre($_POST['nombre']);
 				$obj->setEmail($_POST['email']);
 				$obj->setPass($_POST['pass']);
-				$obj->setTipo($_POST['tipo']);
+				$obj->setPerfil($_POST['perfil']);
+				$band = $obj->guardar();
 				
-				$smarty->assign("json", array("band" => $obj->guardar()));
+				if($band){
+					if (isset($_POST['empresa']) and $_POST['id'] == ''){
+						$empresa = new TEmpresa($_POST['empresa']);
+						$empresa->addUsuario($obj->getId());
+					}
+				}
+				
+				$smarty->assign("json", array("band" => $band));
 			break;
 			case 'del':
 				$obj = new TUsuario($_POST['usuario']);
