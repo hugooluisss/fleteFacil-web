@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-07-20 10:59:28
+<?php /* Smarty version Smarty-3.1.11, created on 2017-10-04 15:05:06
          compiled from "templates/plantillas/layout/login.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5315466945909e5f57e7ae6-54594367%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c5b8753aeb60af718a5f9de931383e28721a5592' => 
     array (
       0 => 'templates/plantillas/layout/login.tpl',
-      1 => 1500566366,
+      1 => 1500686982,
       2 => 'file',
     ),
   ),
@@ -82,10 +82,10 @@ dist/css/skins/_all-skins.css" />
 			</div><!-- /.login-logo -->
 			<div class="login-box-body">
 				<div class="login-box-msg">
-					<center><img src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
-img/logo.png" class="img-responsive"/></center>
-					<br />
-					Identificate para iniciar sesión
+					<!--<center><img src="<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['ruta'];?>
+img/logo.png" class="img-responsive"/></center>-->
+					<br /><br /><br /><br /><br /><br />
+					<!--Identificate para iniciar sesión-->
 				</div>
 				<br />
 				<form action="#" id="frmLogin" method="post">

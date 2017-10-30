@@ -629,7 +629,7 @@ class TOrden{
 		$json = json_decode(file_get_contents("http://maps.google.com/maps/api/geocode/json?address=".$latitude.",".$longitude), true);
 		
 		$db = TBase::conectaDB();
-		$sql = "insert into posicion(idOrden, fecha, latitude, longitude, direccion) values (".$this->getId().", now(), '".$latitude."', '".$longitude."', '".$json['results'][0]['formatted_address']."')";
+		$sql = "insert into posicion(idOrden, fecha, latitude, longitude, direccion) values (".$this->getId().", now(), '".$latitude."', '".$longitude."', '".$db->real_escape_string($json['results'][0]['formatted_address'])."')";
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return true;

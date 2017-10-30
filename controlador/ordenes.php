@@ -80,11 +80,26 @@ switch($objModulo->getId()){
 		while($row = $rs->fetch_assoc()){
 			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
 			
+			/*
 			$sql = "select count(*) as total from interesado where idOrden = ".$row['idOrden'];
 			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
 			$row2 = $rs2->fetch_assoc();
 			
 			$row['interesados'] = $row2['total'] == ''?0:$row2['total'];
+			*/
+			$sql = "select * from interesado where idOrden = ".$row['idOrden']." order by registro desc";
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			$cont = 0;
+			$posicion = 0;
+			while($row2 = $rs2->fetch_assoc()){
+				$cont++;
+				if ($row2['idTransportista'] == $_POST['transportista'])
+					$posicion = $cont;
+			}
+			
+			$row['interesados'] = $cont;
+			$row['posicion'] = $posicion;
+			
 			$row['origen_json'] = json_decode($row['origen']);
 			$row['destino_json'] = json_decode($row['destino']);
 			$row['json'] = json_encode($row);
@@ -103,6 +118,19 @@ switch($objModulo->getId()){
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
 			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
+			
+			$sql = "select * from interesado where idOrden = ".$row['idOrden']." order by registro asc";
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			$cont = 0;
+			$posicion = 0;
+			while($row2 = $rs2->fetch_assoc()){
+				$cont++;
+				if ($row2['idTransportista'] == $_POST['transportista'])
+					$posicion = $cont;
+			}
+			
+			$row['interesados'] = $cont;
+			$row['posicion'] = $posicion;
 			
 			$row['origen_json'] = json_decode($row['origen']);
 			$row['destino_json'] = json_decode($row['destino']);
@@ -250,6 +278,7 @@ switch($objModulo->getId()){
 					saveImage($_POST['foto'.$i], "repositorio/ordenesTerminadas/orden_".$obj->getId()."/".date("Ymd_His")."_".$i.".jpg");
 					
 				$band = $obj->terminar($_POST['comentario']);
+				$result = false;
 				if ($band){
 					$notificacion = new TNotificacion();
 					$notificacion->setOrden($obj->getId());
@@ -273,7 +302,7 @@ switch($objModulo->getId()){
 					$email = new TMail();
 					$email->setTema("Orden terminada");
 					$email->addDestino($obj->usuario->getEmail(), utf8_decode($obj->usuario->getNombre()));
-					//$email->addDestino("hugooluisss@gmail.com", "Hugo Santiago");
+					#$email->addDestino("hugooluisss@gmail.com", "Hugo Santiago");
 					
 					$directorio = "repositorio/ordenesTerminadas/orden_".$obj->getId()."/";
 					$gestor_dir = opendir($directorio);
@@ -281,17 +310,18 @@ switch($objModulo->getId()){
 					$s = "";
 					while (false !== ($nombre_fichero = readdir($gestor_dir))){
 						if (!in_array($nombre_fichero, array(".", ".."))){
-							//array_push($email->adjuntos, array("nombre" => $nombre_fichero, "ruta" => $directorio.$nombre_fichero));
-							$s .= '<img src="'.$ini["sistema"]["url"].$directorio.$nombre_fichero.'" />';
+							$email->adjuntar($directorio.$nombre_fichero);
+							array_push($email->adjuntos, array("nombre" => $nombre_fichero, "ruta" => $directorio.$nombre_fichero));
+							#$s .= '<img src="'.$ini["sistema"]["url"].$directorio.$nombre_fichero.'" />';
 						}
 					}
 					closedir($gestor_dir);
 					
-					$email->setBodyHTML(utf8_decode($email->construyeMail(file_get_contents("repositorio/mail/OrdenTerminada.html"), $datos).$s));
-					$email->send();	
+					$email->setBodyHTML(utf8_decode($email->construyeMail(file_get_contents("repositorio/mail/OrdenTerminada.html"), $datos)));
+					$result = $email->send();	
 				}
 				
-				$smarty->assign("json", array("band" => $band));
+				$smarty->assign("json", array("band" => $band, "correo" => $result));
 			break;
 			case 'logPosicion':
 				$orden = new TOrden($_POST['orden']);

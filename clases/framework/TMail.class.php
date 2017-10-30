@@ -1,7 +1,7 @@
 <?php
 /**
 * TMail
-* Interfaz que permite conectar a un servidor SMTP
+* Interfaz que permite conectar a un servidor SMTP por medio de la libreria PHPMAILER
 * Extrae los datos del servidor
 * PHP 5
 * @author     Hugo Luis Santiago Altamirano hugooluisss@gmail.com
@@ -10,100 +10,143 @@
 **/
 
 class TMail{
+	private $phpMailer;
 	private $permitir = true;
-	private $destinos;
-	private $origen;
-	private $contestarA;
-	public $adjuntos;
-	private $tema;
-
+	private $pruebas = false;
+	
+/**
+* Metodo Constructor
+* Llama al constructor padre para hacer las conexiones
+*/
 	public function TMail(){
 		global $ini;
-		$this->destinos = array();
-		$this->contestarA = "";
-		$this->origen = array("nombre" => "Syncro", "correo" => "app@syncro.cl");
+		$this->phpMailer = new PHPMailer();
+		#$datos = $rs->fields;
+		#$this->phpMailer->CharSet("UTF8");
+		global $ini;
 		
+		$this->empresa['nombreCorto'] = utf8_decode($ini['sistema']['nombreEmpresa']);
+		#$this->phpMailer->IsSMTP();
+		$this->phpMailer->Port = $ini['mail']['puerto'];
+		$this->phpMailer->Host = $ini['mail']['server'];
+		#$this->phpMailer->Host = "localhost";
+		
+		$this->phpMailer->SMTPAuth = true;
+		$this->phpMailer->Username = $ini['mail']['user'];
+		$this->phpMailer->Password = $ini['mail']['pass'];
+		$this->phpMailer->IsHTML(true);
+		$this->phpMailer->FromName = utf8_decode($ini['sistema']['nombre']);
+		$this->setDirOrigen($ini['mail']['user']);
+		$this->phpMailer->SMTPSecure = 'tls';
+		$this->phpMailer->SMTPDebug  = 2;
+		if ($ini['mail']['contestarA'] <> '')
+			$this->phpMailer->AddReplyTo($ini['mail']['contestarA']);
+			
 		$this->permitir = true;
-	}
-	
-	public function setPermitir($band = true){
-		$this->permitir = $band;
-	}
-
-	public function setBodyHTML($msg = "Sin mensaje"){
-		$this->msg = $msg;
-	}
-
-	public function setTema($tema){
-		$this->tema = $tema;
-	}
-	
-	public function getTema(){
-		return $this->tema;
-	}
-	
-	public function setOrigen($nombre = '', $correo = ''){
-		$this->origen = array("nombre" => $nombre, "correo" => $mail);
-	}
-
-	public function addDestino($mail = "", $nombre = ""){
-		array_push($this->destinos, array("nombre" => $nombre, "correo" => $mail));
-		return true;
-	}
-	
-	public function setContestarA($contestar = ''){
-		$this->contestarA = $contestar;
 		
+		#if (file_exists("templates/img/logomail.png"))
+		#	$this->addLogo("templates/img/logomail.png");
 	}
 	
+	public function setUser($val){
+		$this->phpMailer->Username = $val;
+	}
+	
+	public function setPassword($val){
+		$this->phpMailer->Password = $val;
+	}
+
+/**
+* Establece el cuerpo del mensaje
+* @param string $msg Mensaje
+*/	
+	public function setBodyHTML($msg){
+		$this->phpMailer->MsgHTML = $msg;
+		$this->phpMailer->Body = $msg;
+		$this->phpMailer->AltBody = $msg;
+	}
+	
+	public function adjuntar($archivo){
+		return $this->phpMailer->addAttachment($archivo);
+	}
+
+/**
+* Establece el tema del correo
+* @param string $tema Tema
+*/		
+	public function setTema($tema){
+		$this->phpMailer->Subject = $this->empresa['nombreCorto'].': '.$tema;
+	}
+
+/**
+* Agrega una direccion de correo (Detinatario)
+* @param string $mail Direccion
+* @param string $nombre Nombre de la persona
+*/		
+	public function addDestino($mail, $nombre = ""){
+		if ($this->pruebas)
+			$this->phpMailer->AddAddress("hugooluisss@gmail.com", "Pruebas");
+		else
+			$this->phpMailer->AddAddress($mail, $nombre);
+	}
+
+/**
+* Envia el correo
+* @return Boolean True si lo envio
+*/		
 	public function send(){
 		if (!$this->permitir)
 			return true;
 		else{
-			$salto = "\r";
-			$random_hash = md5(date('r', time()));
-			
-			$headers = "MIME-Version: 1.0;\r\n";
-			$headers .= "From: ".$this->origen['nombre']."<".$this->origen['correo'].">;\r\n";
-			$headers .= "Reply-To: <".($this->contestarA == ''?$this->origen['correo']:$this->contestarA).">;\r\n";
-			$headers .= "Content-Type: multipart/mixed; boundary=\"PHP-mixed-".$random_hash."\"";
-			
-			#Esta es la parte del mensaje
-			$msg = "--PHP-mixed-".$random_hash.$salto;
-			$msg .= 'Content-Type: multipart/alternative; boundary="PHP-alt-'.$random_hash.'"'.$salto; 
-			$msg .= '--PHP-alt-'.$random_hash.$salto;
-			$msg .= 'Content-Type: text/html; charset="iso-8859-1"'.$salto;
-			$msg .= 'Content-Transfer-Encoding: 7bit'.$salto.$salto;
-			$msg .= $this->msg.$salto;
-			$msg .= '--PHP-alt-'.$random_hash.'--'.$salto;
-			#este es el fin del mensaje
-			
-			#por cada adjunto
-			foreach($this->adjuntos as $adjunto){
-				$msg .= '--PHP-mixed-'.$random_hash.$salto;
-		
-				$msg .= 'Content-Type: application/image-jpeg; name="'.$adjunto['nombre'].'"'.$salto;
-				$msg .= 'Content-Transfer-Encoding: base64'.$salto;
-				$msg .= 'Content-Disposition: attachment'.$salto;
-		
-				$msg .= chunk_split(base64_encode(file_get_contents($adjunto['ruta'])));
-				$msg .= '--PHP-mixed-'.$random_hash.'--'.$salto;
+			if ($this->phpMailer->Send())
+				return true;
+			else{
+				ErrorSistema($this->phpMailer->ErrorInfo);			
+				return false;
 			}
-			//file_put_contents("repositorio/email.txt", $msg);
-			$emailBand = true;
-			foreach($this->destinos as $destino)
-				if ($emailBand)
-					$emailBand = imap_mail($destino["correo"], $this->getTema(), $msg, $headers);
-				
-			return $emailBand;
 		}
 	}
-		
+
+/**
+* Remplaza las etiquetas declaradas en el texto por etiquetas validas de los datos
+* @param string $texto Cuerpo del texto/mensaje
+* @param Object $datos Datos a cambiar
+*/		
 	public function construyeMail($texto, $datos){
 		foreach($datos as $indice => $valor)
 			$texto = str_replace('[*'.$indice.'*]', $datos[$indice], $texto);
 			
-		return $texto;
+		return utf8_decode($texto);
+	}
+
+/**
+* Indica si se permite el envio de mails
+*/
+	
+	public function allowed(){
+		return $this->permitir;
+	}
+	
+/**
+* Establece la dirección de origen
+* @param String $dir Direccion de origen
+* @return boolean true Siempre
+*/
+	public function setDirOrigen($dir){
+		$this->phpMailer->From = $dir;
+		
+		return true;
+	}
+	
+	public function addLogo($file){
+		$this->phpMailer->AddEmbeddedImage($file, "logo", "logo.png");
+		return true;
+	}
+	
+	public function addImg($file, $nombre, $nombreArchivo){
+		$this->phpMailer->AddEmbeddedImage($file, $nombre, $nombreArchivo);
+		
+		return true;
 	}
 }
 ?>

@@ -6,7 +6,7 @@ switch($objModulo->getId()){
 		$orden = new TOrden($_POST['orden']);
 		$smarty->assign("estado", $orden->estado->getId());
 		
-		$rs = $db->query("select b.*, a.registro, a.idOrden from interesado a join transportista b using(idTransportista) where idOrden = ".$_POST['orden']);
+		$rs = $db->query("select b.*, a.registro, a.idOrden from interesado a join transportista b using(idTransportista) where idOrden = ".$_POST['orden']." order by registro");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
 			$row['asignado'] = false;
