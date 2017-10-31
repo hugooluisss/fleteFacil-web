@@ -16,6 +16,7 @@ class TTransportista{
 	private $pass;
 	private $visible;
 	public $regiones;
+	public $empresa;
 	
 	/**
 	* Constructor de la clase
@@ -27,6 +28,7 @@ class TTransportista{
 	public function TTransportista($id = ''){
 		$this->regiones = array();
 		$this->idSituacion = 1;
+		$this->empresa = new TEmpresa;
 		$this->setId($id);		
 		return true;
 	}
@@ -47,7 +49,13 @@ class TTransportista{
 		$rs = $db->query("select * from transportista where idTransportista = ".$id);
 		
 		foreach($rs->fetch_assoc() as $field => $val){
-			$this->$field = $val;
+			switch($field){
+				case 'idEmrpesa':
+					$this->empresa = new TEmpresa($val);
+				break;
+				default:
+					$this->$field = $val;
+			}
 		}
 		
 		$this->getRegiones();
@@ -253,12 +261,13 @@ class TTransportista{
 	*/
 	
 	public function guardar(){
+		if ($this->empresa->getId() == '') return false;
 		if ($this->getSituacion() == '')
 			$this->setSituacion(1);
 		$db = TBase::conectaDB();
 		
 		if ($this->getId() == ''){
-			$sql = "INSERT INTO transportista(idSituacion, visible) VALUES(".$this->getSituacion().", 1);";
+			$sql = "INSERT INTO transportista(idSituacion, idEmpresa, visible) VALUES(".$this->getSituacion().", ".$this->empresa->getId().", 1);";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);
 			
 			if (!$rs) return false;
@@ -276,7 +285,8 @@ class TTransportista{
 				email = '".$this->getEmail()."',
 				celular = '".$this->getCelular()."',
 				pass = '".$this->getPass()."',
-				idSituacion = ".$this->getSituacion()."
+				idSituacion = ".$this->getSituacion().",
+				idEmpresa = ".$this->empresa->getId()."
 			WHERE idTransportista = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);

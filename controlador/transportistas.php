@@ -11,10 +11,18 @@ switch($objModulo->getId()){
 		}
 		
 		$smarty->assign("regiones", $datos);
+		
+		$rs = $db->query("select * from empresa where visible = true");
+		$datos = array();
+		while($row = $rs->fetch_assoc()){
+			array_push($datos, $row);
+		}
+		
+		$smarty->assign("empresas", $datos);
 	break;
 	case 'listaTransportistas':
 		$db = TBase::conectaDB();
-		$rs = $db->query("select a.*, b.color, b.nombre as estado from transportista a join situacion b using(idSituacion) where a.visible = true");
+		$rs = $db->query("select a.*, b.color, b.nombre as estado, c.razonsocial as empresa from transportista a join situacion b using(idSituacion) join empresa c using(idEmpresa) where a.visible = true");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
 			$sql = "select idRegion from transportistaregion where idTransportista = ".$row['idTransportista'];
@@ -38,6 +46,7 @@ switch($objModulo->getId()){
 				$obj->setId($_POST['id']);
 				$obj->setNombre($_POST['nombre']);
 				$obj->setRepresentante($_POST['representante']);
+				$obj->empresa->setId($_POST['empresa']);
 				$obj->setEmail($_POST['email']);
 				$obj->setCelular($_POST['celular']);
 				$obj->setPass($_POST['pass']);

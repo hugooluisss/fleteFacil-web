@@ -25,8 +25,6 @@
 						<div class="col-lg-4">
 							<input type="text" id="txtFolio" name="txtFolio" class="form-control" placeholder="" />
 						</div>
-					</div>
-					<div class="form-group">
 						<label for="selTipo" class="col-lg-2">Estado</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selEstado" name="selEstado">
@@ -37,6 +35,14 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="selEmpresa" class="col-lg-2">Empresa</label>
+						<div class="col-lg-4">
+							<select class="form-control" id="selEmpresa" name="selEmpresa">
+								{foreach key=key item=item from=$empresas}
+									<option value="{$item.idEmpresa}" json="{json_encode($item.operadores)}">{$item.razonsocial}
+								{/foreach}
+							</select>
+						</div>
 						<label for="selTipo" class="col-lg-2">Operador</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selOperador" name="selOperador">

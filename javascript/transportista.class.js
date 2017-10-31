@@ -12,6 +12,7 @@ TTransportista = function(){
 				"celular": datos.celular,
 				"pass": datos.pass,
 				"regiones": datos.regiones,
+				"empresa": datos.empresa,
 				"action": "add"
 			}, function(data){
 				if (data.band == 'false')

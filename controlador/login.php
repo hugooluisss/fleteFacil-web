@@ -24,7 +24,7 @@ switch($objModulo->getId()){
 				else{
 					$obj = new TUsuario($row['idUsuario']);
 					if ($obj->getId() == '')
-						$result = array('band' => false, 'mensaje' => 'Acceso denegado', 'tipo' => $obj->getIdTipo());
+						$result = array('band' => false, 'mensaje' => 'Acceso denegado', 'tipo' => $obj->getPerfil());
 					else
 						$result = array('band' => true);
 				}
@@ -32,7 +32,7 @@ switch($objModulo->getId()){
 				if($result['band']){
 					$obj = new TUsuario($row['idUsuario']);
 					$sesion['usuario'] = $obj->getId();
-					$sesion['perfil'] = $obj->getIdTipo();
+					$sesion['perfil'] = $obj->getPerfil();
 					
 					$_SESSION[SISTEMA] = $sesion;
 				}
