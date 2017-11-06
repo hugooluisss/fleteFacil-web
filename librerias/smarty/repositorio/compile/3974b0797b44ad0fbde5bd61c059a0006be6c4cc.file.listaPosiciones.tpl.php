@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-07-20 12:17:07
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-06 11:49:27
          compiled from "templates/plantillas/modulos/ordenes/listaPosiciones.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:577270127596e3833bf55d2-30967530%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '3974b0797b44ad0fbde5bd61c059a0006be6c4cc' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/listaPosiciones.tpl',
-      1 => 1500570651,
+      1 => 1509384001,
       2 => 'file',
     ),
   ),

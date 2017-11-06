@@ -6,8 +6,8 @@ $conf['ordenes'] = array(
 	'vista' => 'ordenes/panel.tpl',
 	'descripcion' => 'Ordenes de trabajo',
 	'seguridad' => true,
-	'js' => array('orden.class.js', 'transportista.class.js'),
-	'jsTemplate' => array('ordenes.js', 'seguimiento.js'),
+	'js' => array('orden.class.js', 'transportista.class.js', 'punto.class.js'),
+	'jsTemplate' => array('ordenes.js', 'seguimiento.js', 'intermedios.js'),
 	'capa' => LAYOUT_DEFECTO);
 	
 $conf['listaOrdenes'] = array(
@@ -57,4 +57,11 @@ $conf['listaPosicionesOrden'] = array(
 	'descripcion' => 'Lista de posiciones de la orden',
 	'seguridad' => false,
 	'capa' => LAYOUT_AJAX);
+	
+$conf['listaPuntos'] = array(
+	'controlador' => 'ordenes.php',
+	'vista' => 'ordenes/lista.tpl',
+	'descripcion' => 'Lista de puntos',
+	'seguridad' => true,
+	'capa' => LAYOUT_JSON);
 ?>

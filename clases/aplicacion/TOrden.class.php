@@ -9,6 +9,7 @@ class TOrden{
 	private $idOrden;
 	private $folio;
 	public $estado;
+	public $empresa;
 	public $usuario;
 	private $descripcion;
 	private $requisitos;
@@ -17,7 +18,6 @@ class TOrden{
 	private $peso;
 	private $volumen;
 	private $origen;
-	private $destino;
 	private $presupuesto;
 	private $propuestas;
 	private $hora;
@@ -33,6 +33,7 @@ class TOrden{
 	public function TOrden($id = ''){
 		$this->estado = new TEstado(1);
 		$this->usuario = new TUsuario();
+		$this->empresa = new TEmpresa();
 		$this->regiones = array();
 		$this->setId($id);
 		
@@ -62,6 +63,9 @@ class TOrden{
 				break;
 				case 'idEstado':
 					$this->estado = new TEstado($val);
+				break;
+				case 'idEmpresa':
+					$this->empresa = new TEmpresa($val);
 				break;
 				default:
 					$this->$field = $val;
@@ -288,32 +292,6 @@ class TOrden{
 	}
 	
 	/**
-	* Establece el punto de destino en formato json
-	*
-	* @autor Hugo
-	* @access public
-	* @param string $val Valor a asignar
-	* @return boolean True si se realizó sin problemas
-	*/
-	
-	public function setDestino($val = ''){
-		$this->destino = $val;
-		return true;
-	}
-	
-	/**
-	* Retorna el punto de destino
-	*
-	* @autor Hugo
-	* @access public
-	* @return string Texto
-	*/
-	
-	public function getDestino(){
-		return $this->destino;
-	}
-	
-	/**
 	* Establece el presupuesto
 	*
 	* @autor Hugo
@@ -446,6 +424,7 @@ class TOrden{
 			SET
 				idUsuario = ".$this->usuario->getId().",
 				idEstado = ".$this->estado->getId().",
+				idEmpresa = ".$this->empresa->getId().",
 				descripcion = '".$this->getDescripcion()."',
 				requisitos = '".$this->getRequisitos()."',
 				fechaservicio = '".$this->getFechaServicio()."',
@@ -453,7 +432,6 @@ class TOrden{
 				peso = '".$this->getPeso()."',
 				volumen = '".$this->getVolumen()."',
 				origen = '".$this->getOrigen()."',
-				destino = '".$this->getDestino()."',
 				presupuesto = ".$this->getPresupuesto().",
 				propuestas = ".$this->getPropuestas().",
 				folio = '".$this->getFolio()."',

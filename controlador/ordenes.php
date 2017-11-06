@@ -197,6 +197,21 @@ switch($objModulo->getId()){
 		$row = $rs->fetch_assoc();
 		$smarty->assign("comentarios", $row['comentarios']);
 	break;
+	case 'listaPuntos':
+		$db = TBase::conectaDB();
+		
+		$sql = "select * from punto where idOrden = ".$_POST['orden'];
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		$datos = array();
+		while($row = $rs->fetch_assoc()){
+			$row['json'] = json_encode($row);
+			
+			array_push($datos, $row);
+		}
+		
+		$smarty->assign("json", $datos);
+	break;
 	case 'cordenes':
 		switch($objModulo->getAction()){
 			case 'add':
@@ -204,6 +219,7 @@ switch($objModulo->getId()){
 				$obj->setId($_POST['id']);
 				$obj->usuario = new TUsuario($_POST['usuario']);
 				$obj->estado = new TEstado($_POST['estado']);
+				$obj->empresa = new TEmpresa($_POST['empresa']);
 				
 				$obj->setDescripcion($_POST['descripcion']);
 				$obj->setRequisitos($_POST['requisitos']);
@@ -212,7 +228,6 @@ switch($objModulo->getId()){
 				$obj->setPeso($_POST['peso']);
 				$obj->setVolumen($_POST['volumen']);
 				$obj->setOrigen($_POST['origen']);
-				$obj->setDestino($_POST['destino']);
 				$obj->setPresupuesto($_POST['presupuesto']);
 				$obj->setPropuestas($_POST['propuestas']);
 				$obj->setFolio($_POST['folio']);
@@ -245,7 +260,7 @@ switch($objModulo->getId()){
 					}
 				}
 					
-				$smarty->assign("json", array("band" => $band));
+				$smarty->assign("json", array("band" => $band, "id" => $obj->getId()));
 			break;
 			case 'del':
 				$obj = new TOrden($_POST['id']);

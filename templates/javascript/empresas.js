@@ -1,12 +1,6 @@
 $(document).ready(function(){
 	getLista();
 	
-	function getOperadores(){
-		var operadorSeleccionado = $("#selOperador").val();
-		
-		
-	}
-	
 	$("#panelTabs li a[href=#add]").click(function(){
 		$("#frmAdd").get(0).reset();
 		$("#id").val("");

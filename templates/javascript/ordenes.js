@@ -40,16 +40,35 @@ $(document).ready(function(){
 		$("#winMapa").modal("hide");
 	});
 	
+	$("#selEmpresa").change(function(){
+		getOperadores();
+	});
+	
+	function getOperadores(){
+		var operadores = jQuery.parseJSON($("#selEmpresa").find("option:selected").attr("json"));
+		
+		$("#selOperador").find("option").remove();
+		
+		$.each(operadores, function(i, operador){
+			$("#selOperador").append($("<option />", {
+				value: operador.idUsuario,
+				text: operador.nombre,
+			}));
+		});
+	}
+	
+	getOperadores();
+	
 	$("#frmAdd").validate({
 		debug: true,
 		rules: {
 			txtFolio: "required",
 			selOperador: "required",
 			selEstado: "required",
+			selEmpresa: "required",
 			txtDescripcion: "required",
 			txtFechaServicio: "required",
 			txtOrigen: "required",
-			txtDestino: "required",
 			txtPresupuesto: {
 				required: true,
 				number: true
@@ -61,6 +80,7 @@ $(document).ready(function(){
 			obj.add({
 				id: $("#id").val(), 
 				estado: $("#selEstado").val(),
+				empresa: $("#selEmpresa").val(),
 				usuario: $("#selOperador").val(),
 				descripcion: $("#txtDescripcion").val(),
 				requisitos: $("#txtRequisitos").val(),
@@ -69,7 +89,6 @@ $(document).ready(function(){
 				peso: $("#txtPeso").val(),
 				volumen: $("#txtVolumen").val(),
 				origen: $("#txtOrigen").attr("json"),
-				destino: $("#txtDestino").attr("json"),
 				presupuesto: $("#txtPresupuesto").val(),
 				propuestas: $("#selPropuestas").val(),
 				folio: $("#txtFolio").val(),
@@ -81,6 +100,11 @@ $(document).ready(function(){
 							getLista();
 							$("#frmAdd").get(0).reset();
 							$('#panelTabs a[href="#listas"]').tab('show');
+							
+							if(confirm("¿Quieres definir los puntos de entrega?")){
+								$("#winIntermedios").attr("orden", datos.id)
+								$("#winIntermedios").modal();
+							}
 						}else{
 							alert("Upps... " + datos.mensaje);
 						}
@@ -110,14 +134,10 @@ $(document).ready(function(){
 				var el = jQuery.parseJSON($(this).attr("datos"));
 				
 				$("#id").val(el.idOrden);
-				$("#selOperador").val(el.idUsuario);
+				$("#selEmpresa").val(el.idEmpresa);
+				getOperadores();
 				$("#selEstado").val(el.idEstado);
-				/*
-				$("#selEstado").find("option").each(function(){
-					if ($(this).attr("value") < el.idEstado)
-						$(this).prop("disabled", true);
-				});
-				*/
+				
 				$("#txtDescripcion").val(el.descripcion);
 				$("#txtRequisitos").val(el.requisitos);
 				$("#txtFechaServicio").val(el.fechaservicio);
@@ -141,22 +161,13 @@ $(document).ready(function(){
 					});
 				}
 				
-				
+				$("#selOperador").val(el.idUsuario);
 				try{
 					var origen = jQuery.parseJSON(el.origen);
 					$("#txtOrigen").val(origen.direccion);
 				}catch(err){
 					alert("No se pudo determinar el punto de origen");
 					console.log(el.origen);
-				}
-				
-				$("#txtDestino").attr("json", el.destino);
-				try{
-					var destino = jQuery.parseJSON(el.destino);
-					$("#txtDestino").val(destino.direccion);
-				}catch(err){
-					alert("No se pudo determinar el punto de destino");
-					console.log(el.destino);
 				}
 				
 				

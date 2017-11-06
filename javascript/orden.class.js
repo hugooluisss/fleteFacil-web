@@ -21,6 +21,7 @@ TOrden = function(){
 				"folio": datos.folio,
 				"hora": datos.hora,
 				"regiones": datos.regiones,
+				"empresa": datos.empresa,
 				"action": "add"
 			}, function(data){
 				if (data.band == 'false')
