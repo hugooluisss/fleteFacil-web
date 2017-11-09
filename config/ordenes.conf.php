@@ -57,11 +57,4 @@ $conf['listaPosicionesOrden'] = array(
 	'descripcion' => 'Lista de posiciones de la orden',
 	'seguridad' => false,
 	'capa' => LAYOUT_AJAX);
-	
-$conf['listaPuntos'] = array(
-	'controlador' => 'ordenes.php',
-	'vista' => 'ordenes/lista.tpl',
-	'descripcion' => 'Lista de puntos',
-	'seguridad' => true,
-	'capa' => LAYOUT_JSON);
 ?>

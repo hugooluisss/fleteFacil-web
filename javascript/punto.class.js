@@ -4,7 +4,7 @@ TPunto = function(){
 	this.add = function(datos){
 		if (datos.fn.before !== undefined) datos.fn.before();
 		
-		$.post('cposicion', {
+		$.post('cpuntos', {
 				"id": datos.id,
 				"orden": datos.orden,
 				"direccion": datos.direccion,
@@ -12,7 +12,7 @@ TPunto = function(){
 				"longitude": datos.longitude,
 				"action": "add"
 			}, function(data){
-				if (data.band == 'false')
+				if (data.band == false)
 					console.log(data.mensaje);
 					
 				if (datos.fn.after !== undefined)
@@ -24,7 +24,7 @@ TPunto = function(){
 		if (datos.fn.before != undefined)
 			datos.fn.before();
 				
-		$.post('ctransportistas', {
+		$.post('cpuntos', {
 			"id": identificador,
 			"action": "del"
 		}, function(data){

@@ -82,7 +82,7 @@ class TPunto{
 	*/
 	
 	public function getOrden(){
-		return $this->orden;
+		return $this->idOrden;
 	}
 	
 	/**
@@ -177,7 +177,7 @@ class TPunto{
 		
 		if ($this->getId() == ''){
 			$sql = "INSERT INTO punto(idOrden) VALUES('".$this->getOrden()."');";
-			$rs = $db->query($sql) or errorMySQL($db, $sql);;
+			$rs = $db->query($sql) or errorMySQL($db, $sql);
 			if (!$rs) return false;
 			
 			$this->idPunto = $db->insert_id;
@@ -186,12 +186,12 @@ class TPunto{
 		if ($this->getId() == '')
 			return false;
 		
-		$sql = "UPDATE orden
+		$sql = "UPDATE punto
 			SET
 				direccion = '".$this->getDireccion()."',
 				json = '".$this->getJSON()."',
 				posicion = '".$this->getPosicion()."'
-			WHERE idEstado = ".$this->getId();
+			WHERE idPunto = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 			
@@ -210,7 +210,7 @@ class TPunto{
 		if ($this->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "delete from posicion where idPosicion = ".$this->getId();
+		$sql = "delete from punto where idPunto = ".$this->getId();
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return $rs?true:false;

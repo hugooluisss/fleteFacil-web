@@ -197,21 +197,6 @@ switch($objModulo->getId()){
 		$row = $rs->fetch_assoc();
 		$smarty->assign("comentarios", $row['comentarios']);
 	break;
-	case 'listaPuntos':
-		$db = TBase::conectaDB();
-		
-		$sql = "select * from punto where idOrden = ".$_POST['orden'];
-		$rs = $db->query($sql) or errorMySQL($db, $sql);
-		
-		$datos = array();
-		while($row = $rs->fetch_assoc()){
-			$row['json'] = json_encode($row);
-			
-			array_push($datos, $row);
-		}
-		
-		$smarty->assign("json", $datos);
-	break;
 	case 'cordenes':
 		switch($objModulo->getAction()){
 			case 'add':
