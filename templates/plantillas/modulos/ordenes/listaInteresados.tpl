@@ -6,6 +6,7 @@
 			<th>Representante</th>
 			<th>Email</th>
 			<th>Celular</th>
+			<th>Presupuesto</th>
 			{if $estado neq 4}
 				<th>Asignar</th>
 			{else}
@@ -21,6 +22,7 @@
 				<td>{$row.representante}</td>
 				<td>{$row.email}</td>
 				<td>{$row.celular}</td>
+				<td class="text-right">{$row.monto}</td>
 				{if $estado neq 4}
 					<td class="text-center">
 						<button type="button" class="btn btn-success" action="asignar" title="Asignar orden" datos='{$row.json}'><i class="fa fa-hand-o-right" aria-hidden="true"></i></button>

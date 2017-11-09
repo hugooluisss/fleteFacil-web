@@ -43,6 +43,7 @@ TTransportista = function(){
 		$.post('cordenes', {
 				"orden": datos.orden,
 				"transportista": datos.transportista,
+				"monto": datos.monto,
 				"action": "asignar"
 			}, function(data){
 				if (data.band == false)

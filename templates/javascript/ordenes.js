@@ -336,11 +336,12 @@ $(document).ready(function(){
 				
 				$("#dvListaInteresados").find("[action=asignar]").click(function(){
 					var el = jQuery.parseJSON($(this).attr("datos"));
-					if(confirm("¿Seguro de asignar la orden de transporte al transportista?")){
+					if(confirm("¿Seguro de asignar la orden de transporte al transportista por " + el.monto + "?")){
 						var obj = new TTransportista;
 						obj.asignar({
 							"orden": el.idOrden,
 							"transportista": el.idTransportista,
+							"monto": el.monto,
 							fn: {
 								after: function(resp){
 									if (resp.band){

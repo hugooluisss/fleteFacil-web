@@ -81,19 +81,17 @@ switch($objModulo->getId()){
 	break;
 	case 'listaOrdenesTransportista':
 		$db = TBase::conectaDB();
-		
-		$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado = 2 and idOrden not in (select idOrden  from interesado where idTransportista = ".$_POST['transportista'].") and idOrden in (select idOrden from transportistaregion join ordenregion using(idRegion) where idTransportista = ".$_POST['transportista'].")");
+		$sql = "select a.*, b.*, b.nombre as estado 
+from orden a join estado b using(idEstado) 
+	join empresatransportista c using(idEmpresa)
+where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
+	and not idOrden in (select idOrden  from interesado where idTransportista = ".$_POST['transportista'].")
+	and idOrden in (select idOrden from transportistaregion join ordenregion using(idRegion) where idTransportista = ".$_POST['transportista'].")";
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
-			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
+			$row['presupuestoFormat'] = number_format($row['presupuesto'], 0, "", ".");
 			
-			/*
-			$sql = "select count(*) as total from interesado where idOrden = ".$row['idOrden'];
-			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
-			$row2 = $rs2->fetch_assoc();
-			
-			$row['interesados'] = $row2['total'] == ''?0:$row2['total'];
-			*/
 			$sql = "select * from interesado where idOrden = ".$row['idOrden']." order by registro desc";
 			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
 			$cont = 0;
@@ -108,7 +106,15 @@ switch($objModulo->getId()){
 			$row['posicion'] = $posicion;
 			
 			$row['origen_json'] = json_decode($row['origen']);
-			$row['destino_json'] = json_decode($row['destino']);
+			//$row['destino_json'] = json_decode($row['destino']);
+			$row['destinos'] = array();
+			$sql = "select * from punto where idOrden = ".$row['idOrden'];
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			while($row2 = $rs2->fetch_assoc()){
+				$row2['posicion'] = json_decode($row2["json"]);
+				array_push($row['destinos'], $row2);
+			}
+				
 			$row['json'] = json_encode($row);
 			
 			array_push($datos, $row);
@@ -124,23 +130,34 @@ switch($objModulo->getId()){
 		
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
-			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
-			
 			$sql = "select * from interesado where idOrden = ".$row['idOrden']." order by registro asc";
 			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
 			$cont = 0;
 			$posicion = 0;
+			
 			while($row2 = $rs2->fetch_assoc()){
 				$cont++;
 				if ($row2['idTransportista'] == $_POST['transportista'])
 					$posicion = $cont;
 			}
 			
+			$sql = "select * from interesado where idOrden = ".$row['idOrden']." and idTransportista = ".$_POST['transportista']." order by registro asc";
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			$row2 = $rs2->fetch_assoc();
+			$row['presupuesto'] = number_format($row2['monto'], 0, "", ".");
+			
 			$row['interesados'] = $cont;
 			$row['posicion'] = $posicion;
 			
 			$row['origen_json'] = json_decode($row['origen']);
-			$row['destino_json'] = json_decode($row['destino']);
+			$row['destinos'] = array();
+			$sql = "select * from punto where idOrden = ".$row['idOrden'];
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			while($row2 = $rs2->fetch_assoc()){
+				$row2['posicion'] = json_decode($row2["json"]);
+				array_push($row['destinos'], $row2);
+			}
+			
 			$row['json'] = json_encode($row);
 			
 			array_push($datos, $row);
@@ -158,7 +175,13 @@ switch($objModulo->getId()){
 			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
 			
 			$row['origen_json'] = json_decode($row['origen']);
-			$row['destino_json'] = json_decode($row['destino']);
+			$row['destinos'] = array();
+			$sql = "select * from punto where idOrden = ".$row['idOrden'];
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			while($row2 = $rs2->fetch_assoc()){
+				$row2['posicion'] = json_decode($row2["json"]);
+				array_push($row['destinos'], $row2);
+			}
 			$row['json'] = json_encode($row);
 			
 			array_push($datos, $row);
@@ -253,7 +276,7 @@ switch($objModulo->getId()){
 			break;
 			case 'aceptar':
 				$obj = new TOrden($_POST['orden']);
-				$band = $obj->aceptar($_POST['transportista']);
+				$band = $obj->aceptar($_POST['transportista'], $_POST['monto']);
 				if ($band){
 					$transportista = new TTransportista($_POST['transportista']);
 					
@@ -266,7 +289,7 @@ switch($objModulo->getId()){
 			break;
 			case 'asignar':
 				$obj = new TOrden($_POST['orden']);
-				$band = $obj->asignar($_POST['transportista']);
+				$band = $obj->asignar($_POST['transportista'], $_POST['monto']);
 				
 				if($band){
 					$notificacion = new TNotificacion();

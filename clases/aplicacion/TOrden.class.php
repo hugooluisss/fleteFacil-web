@@ -500,13 +500,12 @@ class TOrden{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function aceptar($transportista = ''){
+	public function aceptar($transportista = '', $monto = 0){
 		if ($this->getId() == '') return false;
 		$obj = new TTransportista($transportista);
-		if ($obj->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "insert into interesado(idOrden, idTransportista) values (".$this->getId().", ".$obj->getId().")";
+		$sql = "insert into interesado(idOrden, idTransportista, monto) values (".$this->getId().", ".$obj->getId().", ".$monto.")";
 		$rs1 = $db->query($sql) or errorMySQL($db, $sql);
 		
 		$sql = "select count(*) as total from interesado where idOrden = ".$this->getId();
@@ -529,7 +528,7 @@ class TOrden{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function asignar($transportista = ''){
+	public function asignar($transportista = '', $monto = 0){
 		if ($this->getId() == '') return false;
 		$obj = new TTransportista($transportista);
 		if ($obj->getId() == '') return false;
@@ -537,7 +536,10 @@ class TOrden{
 		$db = TBase::conectaDB();
 		$sql = "insert into asignado(idOrden, idTransportista) values (".$this->getId().", ".$obj->getId().")";
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
-
+		
+		$sql = "update orden set presupuestofinal = ".$monto." where idOrden = ".$obj->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
 		$this->estado->setId(4);
 		$this->guardar();
 		
