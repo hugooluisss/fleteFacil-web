@@ -182,6 +182,11 @@ $(document).ready(function(){
 				$("#winSeguimiento").attr("datos", $(this).attr("datos"));
 			});
 			
+			$("[action=puntos]").click(function(){
+				var el = jQuery.parseJSON($(this).attr("datos"));
+				$("#winIntermedios").attr("orden", el.idOrden);
+			});
+			
 			var tabla = $("#tblDatos").DataTable({
 				"responsive": true,
 				"language": espaniol,

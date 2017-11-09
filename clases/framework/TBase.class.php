@@ -14,7 +14,7 @@ Class TBase{
 		
 		$db = new mysqli($server, $user, $pass, $baseDatos);
 		if ($db->connect_errno) {
-			echo "Falló la conexión a MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
+			echo "FallÃ³ la conexiÃ³n a MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
 			exit(-1);
 		}else
 			$db->query("SET NAMES utf8");

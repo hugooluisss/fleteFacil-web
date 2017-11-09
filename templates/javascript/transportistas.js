@@ -85,6 +85,10 @@ $(document).ready(function(){
 				$('#panelTabs a[href="#add"]').tab('show');
 			});
 			
+			$("[action=empresas]").click(function(){
+				$("#winEmpresas").attr("datos", $(this).attr("datos"));
+			});
+			
 			$("#tblDatos").DataTable({
 				"responsive": true,
 				"language": espaniol,
@@ -96,4 +100,54 @@ $(document).ready(function(){
 			});
 		});
 	}
+	
+	var ventana = $("#winEmpresas");
+	$("#winEmpresas").on('show.bs.modal', function(){
+		var transportista = jQuery.parseJSON($("#winEmpresas").attr("datos"));
+		ventana.attr("transportista", transportista.idTransportista);
+		ventana.find("[type=checkbox]").prop("checked", false);
+		$.post("getEmpresasTransportista", {
+			id: transportista.idTransportista
+		}, function(resp){
+			$.each(resp, function(i, empresa){
+				ventana.find("[value=" + empresa + "]").prop("checked", true);
+			});
+		}, "json");
+	});
+	
+	ventana.find("[type=checkbox]").click(function(){
+		var obj = new TTransportista;
+		if ($(this).is(":checked"))
+			obj.addEmpresa({
+				id: ventana.attr("transportista"),
+				empresa: $(this).val(),
+				fn: {
+					before: function(){
+						$(this).prop("disabled", true);
+					},
+					after: function(resp){
+						$(this).prop("disabled", false);
+						
+						if (!resp.band)
+							alert("No se pudo asignar");
+					}
+				}
+			});
+		else
+			obj.delEmpresa({
+				id: ventana.attr("transportista"),
+				empresa: $(this).val(),
+				fn: {
+					before: function(){
+						$(this).prop("disabled", true);
+					},
+					after: function(resp){
+						$(this).prop("disabled", false);
+						
+						if (!resp.band)
+							alert("No se pudo eliminar la asignación");
+					}
+				}
+			});
+	});
 });

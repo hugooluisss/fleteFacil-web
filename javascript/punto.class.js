@@ -25,7 +25,7 @@ TPunto = function(){
 			datos.fn.before();
 				
 		$.post('cpuntos', {
-			"id": identificador,
+			"id": datos.identificador,
 			"action": "del"
 		}, function(data){
 			if (datos.fn.after != undefined)

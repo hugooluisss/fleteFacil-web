@@ -15,7 +15,7 @@ TTransportista = function(){
 				"empresa": datos.empresa,
 				"action": "add"
 			}, function(data){
-				if (data.band == 'false')
+				if (data.band == false)
 					console.log(data.mensaje);
 					
 				if (datos.fn.after !== undefined)
@@ -31,7 +31,7 @@ TTransportista = function(){
 		}, function(data){
 			if (fn.after != undefined)
 				fn.after(data);
-			if (data.band == 'false'){
+			if (data.band == false){
 				console.log("No se pudo eliminar");
 			}
 		}, "json");
@@ -47,6 +47,38 @@ TTransportista = function(){
 			}, function(data){
 				if (data.band == false)
 					console.log(data.mensaje);
+					
+				if (datos.fn.after !== undefined)
+					datos.fn.after(data);
+			}, "json");
+	};
+	
+	this.addEmpresa = function(datos){
+		if (datos.fn.before !== undefined) datos.fn.before();
+		
+		$.post('ctransportistas', {
+				"id": datos.id,
+				"empresa": datos.empresa,
+				"action": "addEmpresa"
+			}, function(data){
+				if (data.band == false)
+					console.log("No se pudo agregar");
+					
+				if (datos.fn.after !== undefined)
+					datos.fn.after(data);
+			}, "json");
+	};
+	
+	this.delEmpresa = function(datos){
+		if (datos.fn.before !== undefined) datos.fn.before();
+		
+		$.post('ctransportistas', {
+				"id": datos.id,
+				"empresa": datos.empresa,
+				"action": "delEmpresa"
+			}, function(data){
+				if (data.band == false)
+					console.log("No se pudo eliminar");
 					
 				if (datos.fn.after !== undefined)
 					datos.fn.after(data);

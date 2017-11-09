@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-10-31 09:08:00
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-09 09:23:51
          compiled from "templates/plantillas/modulos/ordenes/winMapa.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6539918405909e61d3513a3-19922621%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19552210935a047307499824-25892331%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,15 +11,15 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6539918405909e61d3513a3-19922621',
+  'nocache_hash' => '19552210935a047307499824-25892331',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5909e61d354087_31525406',
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_5a04730749b9c3_47778211',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5909e61d354087_31525406')) {function content_5909e61d354087_31525406($_smarty_tpl) {?><div class="modal fade" id="winMapa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<?php if ($_valid && !is_callable('content_5a04730749b9c3_47778211')) {function content_5a04730749b9c3_47778211($_smarty_tpl) {?><div class="modal fade" id="winMapa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

@@ -48,13 +48,18 @@ $(document).ready(function(){
 			class: "list-group-item",
 			text: datos.direccion,
 			identificador: datos.idPunto
-		});
+		}).append('<span class="direccion">' + datos.direccion + '</span>');
 		var btnUbicar = $("<button />", {
 			class: "btn btn-default btn-xs",
 			html: '<i class="fa fa-map-marker" aria-hidden="true"></i>',
 			title: 'Ubicar en el mapa'
 		});
-		div.append(btnUbicar);
+		var btnBorrar = $("<button />", {
+			class: "btn btn-danger btn-xs",
+			html: '<i class="fa fa-times" aria-hidden="true"></i>',
+			title: 'Eliminar'
+		});
+		div.append(btnUbicar).append(btnBorrar);
 		
 		$("#dvListaIntermedios").append(div);
 		var posicion = jQuery.parseJSON(datos.json);
@@ -65,8 +70,30 @@ $(document).ready(function(){
 		marca.setPosition(LatLng);
 		marca.setMap(mapa);
 		
-		div.click(function(){
+		btnUbicar.click(function(){
 			mapa.setCenter(LatLng);
+		});
+		
+		btnBorrar.click(function(){
+			if(confirm("¿Seguro?")){
+				var punto = new TPunto;
+				punto.del({
+					identificador: datos.idPunto,
+					fn: {
+						before: function(){
+							btnBorrar.prop("disabled", true);
+						},
+						after: function(resp){
+							btnBorrar.prop("disabled", true);
+							if (resp.band){
+								btnBorrar.parent().remove();
+								marca.setMap(null);
+							}else
+								alert("No se pudo eliminar");
+						}
+					}
+				});
+			}
 		});
 		
 		google.maps.event.addListener(marca, 'dragend', function(event){
@@ -84,8 +111,7 @@ $(document).ready(function(){
 							direccion: results[0].formatted_address,
 							fn: {
 								after: function(resp){
-									//getPuntos();
-									div.text(results[0].formatted_address);
+									div.find(".direccion").text(results[0].formatted_address);
 								}
 							}
 						});
@@ -125,11 +151,9 @@ $(document).ready(function(){
 											showPuntoMapa({
 												"idPunto": resp.id,
 												"direccion": lugar.formatted_address,
-												"orden": ventana.attr("orden"),
+												"idOrden": ventana.attr("orden"),
 												"json": '{"latitude":"' + lugar.geometry.location.lat + '", "longitude":"' + lugar.geometry.location.lng + '"}'
 											});
-											
-											getPuntos();
 										}
 									}
 								}

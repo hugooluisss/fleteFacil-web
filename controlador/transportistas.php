@@ -37,6 +37,17 @@ switch($objModulo->getId()){
 		}
 		$smarty->assign("lista", $datos);
 	break;
+	case 'getEmpresasTransportista':
+		$db = TBase::conectaDB();
+		
+		$sql = "select * from empresatransportista where idTransportista = ".$_POST['id'];
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$empresas = array();
+		while($row = $rs->fetch_assoc())
+			array_push($empresas, $row['idEmpresa']);
+		
+		$smarty->assign("json", $empresas);
+	break;
 	case 'ctransportistas':
 		switch($objModulo->getAction()){
 			case 'add':
@@ -165,6 +176,20 @@ switch($objModulo->getId()){
 					saveImage($_POST['imagen'], "repositorio/transportistas/".$transportista->getId().".jpg");
 					$smarty->assign("json", array("band" => true));
 				}
+			break;
+			case 'addEmpresa':
+				$db = TBase::conectaDB();
+				$sql = "insert into empresatransportista(idEmpresa, idTransportista) values (".$_POST['empresa'].", ".$_POST['id'].")";
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+				$smarty->assign("json", array("band" => $rs?true:false));
+			break;
+			case 'delEmpresa':
+				$db = TBase::conectaDB();
+				$sql = "delete from empresatransportista where idEmpresa = ".$_POST['empresa']." and idTransportista =  ".$_POST['id'];
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				
+				$smarty->assign("json", array("band" => $rs?true:false));
 			break;
 		}
 	break;

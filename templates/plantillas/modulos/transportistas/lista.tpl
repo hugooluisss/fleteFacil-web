@@ -7,6 +7,7 @@
 					<th>Nombre</th>
 					<th>Representante</th>
 					<th>Empresa</th>
+					<th>Correo</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -17,7 +18,10 @@
 						<td>{$row.nombre}</td>
 						<td>{$row.representante}</td>
 						<td>{$row.empresa}</td>
+						<td>{$row.email}</td>
 						<td style="text-align: right">
+							<button type="button" class="btn btn-primary btn-xs" action="empresas" title="Empresas con las que participa" datos='{$row.json}' data-toggle="modal" data-target="#winEmpresas"><i class="fa fa-building-o" aria-hidden="true"></i>
+</button>
 							<button type="button" class="btn btn-primary btn-xs" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-edit"></i></button>
 							<button type="button" class="btn btn-danger btn-xs" action="eliminar" title="Eliminar" identificador="{$row.idTransportista}"><i class="fa fa-times"></i></button>
 						</td>

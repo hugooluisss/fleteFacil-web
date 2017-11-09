@@ -1,22 +1,22 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-08 10:33:49
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-09 09:54:57
          compiled from "templates/plantillas/modulos/ordenes/lista.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3359384658fe01128d1c32-60026005%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:6459117825a047309b710f4-65043190%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ccb83fbda49be8284838e579fad0d10480204fd4' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/lista.tpl',
-      1 => 1510158708,
+      1 => 1510242895,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3359384658fe01128d1c32-60026005',
+  'nocache_hash' => '6459117825a047309b710f4-65043190',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_58fe01129a03a2_31413564',
+  'unifunc' => 'content_5a047309bac637_71931859',
   'variables' => 
   array (
     'lista' => 0,
@@ -24,7 +24,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_58fe01129a03a2_31413564')) {function content_58fe01129a03a2_31413564($_smarty_tpl) {?><div class="box">
+<?php if ($_valid && !is_callable('content_5a047309bac637_71931859')) {function content_5a047309bac637_71931859($_smarty_tpl) {?><div class="box">
 	<div class="box-body">
 		<table id="tblDatos" class="table table-bordered table-hover">
 			<thead>
@@ -57,8 +57,10 @@ $_smarty_tpl->tpl_vars["row"]->_loop = true;
 </button>
 						</td>
 						<td class="text-right" style="width: 80px;">
+							<button type="button" class="btn btn-success btn-xs" action="puntos" title="Puntos de entrega" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
+' data-toggle="modal" data-target="#winIntermedios"><i class="fa fa-map-marker"></i></button>
 							<button type="button" class="btn btn-success btn-xs" action="modificar" title="Modificar" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
-'><i class="fa fa-pencil"></i></button>
+'"><i class="fa fa-pencil"></i></button>
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#winSeguimiento" action="mapa" title="Consultar transporte" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
 '><i class="fa fa-map-o"></i></button>
 						</td>

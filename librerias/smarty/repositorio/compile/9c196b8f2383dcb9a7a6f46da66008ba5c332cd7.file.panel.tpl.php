@@ -1,31 +1,32 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-10-31 08:50:14
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-09 10:50:51
          compiled from "templates/plantillas/modulos/transportistas/panel.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1733112260590a1123d0ba73-75725624%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13339871045a04841e275271-13779147%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9c196b8f2383dcb9a7a6f46da66008ba5c332cd7' => 
     array (
       0 => 'templates/plantillas/modulos/transportistas/panel.tpl',
-      1 => 1509461412,
+      1 => 1510246245,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1733112260590a1123d0ba73-75725624',
+  'nocache_hash' => '13339871045a04841e275271-13779147',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_590a1123ebbf43_83220768',
+  'unifunc' => 'content_5a04841e2cf6c2_42900818',
   'variables' => 
   array (
     'empresas' => 0,
     'item' => 0,
     'regiones' => 0,
+    'PAGE' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_590a1123ebbf43_83220768')) {function content_590a1123ebbf43_83220768($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_5a04841e2cf6c2_42900818')) {function content_5a04841e2cf6c2_42900818($_smarty_tpl) {?><div class="row">
 	<div class="col-sm-12">
 		<h1 class="page-header">Transportistas</h1>
 	</div>
@@ -123,4 +124,7 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 			</div>
 		</form>
 	</div>
-</div><?php }} ?>
+</div>
+
+<?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/transportistas/winEmpresas.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
+<?php }} ?>

@@ -22,4 +22,11 @@ $conf['ctransportistas'] = array(
 	'descripcion' => 'Controlador de transportistasx',
 	'seguridad' => true,
 	'capa' => LAYOUT_JSON);
+	
+$conf['getEmpresasTransportista'] = array(
+	'controlador' => 'transportistas.php',
+	#'vista' => 'transportistas/lista.tpl',
+	'descripcion' => 'Lista de empresas relacionadas con un transportista',
+	'seguridad' => true,
+	'capa' => LAYOUT_JSON);
 ?>
