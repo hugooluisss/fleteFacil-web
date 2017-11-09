@@ -6,7 +6,7 @@
 					<th>Id</th>
 					<th>Nombre</th>
 					<th>Representante</th>
-					<th>Celular</th>
+					<th>Empresa</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -16,10 +16,10 @@
 						<td style="border-left: 3px solid {$row.color}">{$row.idTransportista}</td>
 						<td>{$row.nombre}</td>
 						<td>{$row.representante}</td>
-						<td>{$row.celular}</td>
+						<td>{$row.empresa}</td>
 						<td style="text-align: right">
-							<button type="button" class="btn btn-primary" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-edit"></i></button>
-							<button type="button" class="btn btn-danger" action="eliminar" title="Eliminar" identificador="{$row.idTransportista}"><i class="fa fa-times"></i></button>
+							<button type="button" class="btn btn-primary btn-xs" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-edit"></i></button>
+							<button type="button" class="btn btn-danger btn-xs" action="eliminar" title="Eliminar" identificador="{$row.idTransportista}"><i class="fa fa-times"></i></button>
 						</td>
 					</tr>
 				{/foreach}

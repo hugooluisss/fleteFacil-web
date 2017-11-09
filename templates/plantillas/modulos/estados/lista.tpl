@@ -14,9 +14,9 @@
 						<td style="border-left: 2px solid {$row.color}">{$row.idEstado}</td>
 						<td>{$row.nombre}</td>
 						<td style="text-align: right">
-							<button type="button" class="btn btn-success" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-pencil"></i></button>
+							<button type="button" class="btn btn-success btn-xs" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-pencil"></i></button>
 							{if $row.eliminar eq 1}
-								<button type="button" class="btn btn-danger" action="eliminar" title="Eliminar" item="{$row.idEstado}"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-danger btn-xs" action="eliminar" title="Eliminar" item="{$row.idEstado}"><i class="fa fa-times"></i></button>
 							{/if}
 						</td>
 					</tr>

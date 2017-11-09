@@ -1,6 +1,6 @@
 <?php
-define('SISTEMA', 'FleteFacil');
-define('VERSION', 'v 1.0');
+define('SISTEMA', 'Syncro');
+define('VERSION', 'v 2.0');
 define('ALIAS', '');
 define('AUTOR', 'Hugo Luis Santiago Altamirano');
 define('EMAIL', 'hugooluisss@gmail.com');

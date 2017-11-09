@@ -14,23 +14,24 @@ $(document).ready(function(){
 	$("#frmAdd").validate({
 		debug: true,
 		rules: {
-			txtEmail: "required",
-			txtPass: "required",
-			txtClave: "required"
+			txtRazonSocial: "required"
 		},
 		wrapper: 'span', 
 		submitHandler: function(form){
-		
-			var obj = new TUsuario;
+			var obj = new TEmpresa;
 			obj.add({
-				id: $("#id").val(), 
-				nombre: $("#txtNombre").val(), 
-				email: $("#txtEmail").val(),
-				pass: $("#txtPass").val(),
-				perfil: $("#selPerfil").val(),
-				empresa: $("#empresa").val(),
+				id: $("#id").val(),
+				razonSocial: $("#txtRazonSocial").val(),
+				domicilio: $("#txtDomicilio").val(),
+				correo: $("#txtCorreo").val(),
+				telefono: $("#txtTelefono").val(),
 				fn: {
+					before: function(){
+						$("#frmAdd [type=submit]").prop("disabled", true);
+					},
 					after: function(datos){
+						$("#frmAdd [type=submit]").prop("disabled", false);
+						
 						if (datos.band){
 							getLista();
 							$("#frmAdd").get(0).reset();
@@ -46,17 +47,25 @@ $(document).ready(function(){
     });
 		
 	function getLista(){
-		$.post("listaUsuarios", {
-			empresa: $("#empresa").val()
-		}, function(data) {
+		$.get("listaEmpresas", function( data ) {
 			$("#dvLista").html(data);
 			
 			$("[action=eliminar]").click(function(){
 				if(confirm("¿Seguro?")){
-					var obj = new TUsuario;
-					obj.del($(this).attr("usuario"), {
-						after: function(data){
-							getLista();
+					var obj = new TEmpresa;
+					obj.del({
+						id: $(this).attr("item"), 
+						fn: {
+							before: function(){
+								$(this).prop("disabled", true);
+							},
+							after: function(data){
+								$(this).prop("disabled", false);
+								if (data.band)
+									getLista();
+								else
+									alert("No se pudo eliminar");
+							}
 						}
 					});
 				}
@@ -65,24 +74,23 @@ $(document).ready(function(){
 			$("[action=modificar]").click(function(){
 				var el = jQuery.parseJSON($(this).attr("datos"));
 				
-				$("#id").val(el.idUsuario);
-				$("#txtNombre").val(el.nombre);
-				$("#txtEmail").val(el.email);
-				$("#txtPass").val(el.pass);
-				$("#selPerfil").val(el.idPerfil);
-				
+				$("#id").val(el.idEmpresa);
+				$("#txtRazonSocial").val(el.razonsocial);
+				$("#txtDomicilio").val(el.domicilio);
+				$("#txtCorreo").val(el.correo);
+				$("#txtTelefono").val(el.telefono);
 				$('#panelTabs a[href="#add"]').tab('show');
 			});
 			
-			$("#tblUsuarios").DataTable({
+			$("#tblDatos").DataTable({
 				"responsive": true,
 				"language": espaniol,
-				"paging": true,
+				"paging": false,
 				"lengthChange": false,
 				"ordering": true,
 				"info": true,
 				"autoWidth": false
 			});
 		});
-	}
+	};
 });

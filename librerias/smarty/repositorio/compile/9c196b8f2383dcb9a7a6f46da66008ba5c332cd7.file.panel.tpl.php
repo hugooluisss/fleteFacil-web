@@ -1,4 +1,31 @@
-<div class="row">
+<?php /* Smarty version Smarty-3.1.11, created on 2017-10-31 08:50:14
+         compiled from "templates/plantillas/modulos/transportistas/panel.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:1733112260590a1123d0ba73-75725624%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '9c196b8f2383dcb9a7a6f46da66008ba5c332cd7' => 
+    array (
+      0 => 'templates/plantillas/modulos/transportistas/panel.tpl',
+      1 => 1509461412,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '1733112260590a1123d0ba73-75725624',
+  'function' => 
+  array (
+  ),
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_590a1123ebbf43_83220768',
+  'variables' => 
+  array (
+    'empresas' => 0,
+    'item' => 0,
+    'regiones' => 0,
+  ),
+  'has_nocache_code' => false,
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_590a1123ebbf43_83220768')) {function content_590a1123ebbf43_83220768($_smarty_tpl) {?><div class="row">
 	<div class="col-sm-12">
 		<h1 class="page-header">Transportistas</h1>
 	</div>
@@ -36,9 +63,17 @@
 						<label for="selEmpresa" class="col-sm-2">Empresa</label>
 						<div class="col-sm-4">
 							<select class="form-control" id="selEmpresa" name="selEmpresa">
-								{foreach key=key item=item from=$empresas}
-									<option value="{$item.idEmpresa}">{$item.razonsocial}
-								{/foreach}
+								<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['item']->_loop = false;
+ $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
+ $_from = $_smarty_tpl->tpl_vars['empresas']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
+$_smarty_tpl->tpl_vars['item']->_loop = true;
+ $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
+?>
+									<option value="<?php echo $_smarty_tpl->tpl_vars['item']->value['idEmpresa'];?>
+"><?php echo $_smarty_tpl->tpl_vars['item']->value['razonsocial'];?>
+
+								<?php } ?>
 							</select>
 						</div>
 					</div>
@@ -65,9 +100,17 @@
 						<label for="selRegion" class="col-sm-2">Regiones</label>
 						<div class="col-sm-4">
 							<select class="form-control" id="selRegion" name="selRegion" multiple="true">
-								{foreach key=key item=item from=$regiones}
-									<option value="{$item.idRegion}">{$item.nombre}</option>
-								{/foreach}
+								<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['item']->_loop = false;
+ $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
+ $_from = $_smarty_tpl->tpl_vars['regiones']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
+$_smarty_tpl->tpl_vars['item']->_loop = true;
+ $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
+?>
+									<option value="<?php echo $_smarty_tpl->tpl_vars['item']->value['idRegion'];?>
+"><?php echo $_smarty_tpl->tpl_vars['item']->value['nombre'];?>
+</option>
+								<?php } ?>
 							</select>
 						</div>
 					</div>
@@ -80,4 +123,4 @@
 			</div>
 		</form>
 	</div>
-</div>
+</div><?php }} ?>

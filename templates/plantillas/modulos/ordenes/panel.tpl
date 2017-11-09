@@ -25,8 +25,6 @@
 						<div class="col-lg-4">
 							<input type="text" id="txtFolio" name="txtFolio" class="form-control" placeholder="" />
 						</div>
-					</div>
-					<div class="form-group">
 						<label for="selTipo" class="col-lg-2">Estado</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selEstado" name="selEstado">
@@ -37,12 +35,17 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="selEmpresa" class="col-lg-2">Empresa</label>
+						<div class="col-lg-4">
+							<select class="form-control" id="selEmpresa" name="selEmpresa">
+								{foreach key=key item=item from=$empresas}
+									<option value="{$item.idEmpresa}" json='{json_encode($item.operadores)}'>{$item.razonsocial}
+								{/foreach}
+							</select>
+						</div>
 						<label for="selTipo" class="col-lg-2">Operador</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selOperador" name="selOperador">
-								{foreach key=key item=item from=$usuarios}
-									<option value="{$item.idUsuario}">{$item.nombre}
-								{/foreach}
 							</select>
 						</div>
 					</div>
@@ -99,14 +102,8 @@
 					<div class="form-group">
 						<label for="txtOrigen" class="col-lg-2">Origen</label>
 						<div class="col-lg-4">
-							<input type="text" id="txtOrigen" name="txtOrigen" class="form-control" readonly="true" />
+							<textarea id="txtOrigen" rows="4" name="txtOrigen" class="form-control" readonly="true"></textarea>
 						</div>
-						<label for="txtDestino" class="col-lg-2">Destino</label>
-						<div class="col-lg-4">
-							<input type="text" id="txtDestino" name="txtDestino" class="form-control" readonly="true" />
-						</div>
-					</div>
-					<div class="form-group">
 						<label for="selRegion" class="col-lg-2">Transportistas de las regiones</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selRegion" name="selRegion" multiple="true">
@@ -133,3 +130,4 @@
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winMapa.tpl"}
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winInteresados.tpl"}
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winSeguimiento.tpl"}
+{include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winIntermedios.tpl"}

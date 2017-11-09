@@ -4,18 +4,9 @@ switch($objModulo->getId()){
 	case 'ordenes':
 		$db = TBase::conectaDB();
 		
-		$rs = $db->query("select * from usuario where visible = 1 and idTipo = 2 order by nombre");
-		$datos = array();
-		while($row = $rs->fetch_assoc()){
-			$row['json'] = json_encode($row);
-			
-			array_push($datos, $row);
-		}
-		
-		$smarty->assign("usuarios", $datos);
 		
 		global $userSesion;
-		if ($userSesion->getIdTipo() == 1)
+		if ($userSesion->getPerfil() == 1)
 			$rs = $db->query("select * from estado");
 		else
 			$rs = $db->query("select * from estado where idEstado not in (6, 7)");
@@ -37,12 +28,28 @@ switch($objModulo->getId()){
 		}
 		
 		$smarty->assign("regiones", $datos);
+		
+		$rs = $db->query("select * from empresa where visible = true");
+		$datos = array();
+		while($row = $rs->fetch_assoc()){
+			$rsUser = $db->query("select * from usuario a join usuarioempresa b using(idUsuario) where visible = true and idEmpresa = ".$row['idEmpresa']);
+			$row['operadores'] = array();
+			while($row2 = $rsUser->fetch_assoc())
+				array_push($row['operadores'], $row2);
+			
+			$row['json'] = json_encode($row);
+			
+			array_push($datos, $row);
+		}
+		
+		$smarty->assign("empresas", $datos);
+		
 		$smarty->assign("orden", $_GET['id']);
 	break;
 	case 'listaOrdenes':
 		$db = TBase::conectaDB();
 		global $userSesion;
-		if ($userSesion->getIdTipo() == 1)
+		if ($userSesion->getPerfil() == 1)
 			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5)");
 		else
 			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5) and idUsuario = ".$userSesion->getId());
@@ -197,6 +204,7 @@ switch($objModulo->getId()){
 				$obj->setId($_POST['id']);
 				$obj->usuario = new TUsuario($_POST['usuario']);
 				$obj->estado = new TEstado($_POST['estado']);
+				$obj->empresa = new TEmpresa($_POST['empresa']);
 				
 				$obj->setDescripcion($_POST['descripcion']);
 				$obj->setRequisitos($_POST['requisitos']);
@@ -205,7 +213,6 @@ switch($objModulo->getId()){
 				$obj->setPeso($_POST['peso']);
 				$obj->setVolumen($_POST['volumen']);
 				$obj->setOrigen($_POST['origen']);
-				$obj->setDestino($_POST['destino']);
 				$obj->setPresupuesto($_POST['presupuesto']);
 				$obj->setPropuestas($_POST['propuestas']);
 				$obj->setFolio($_POST['folio']);
@@ -238,7 +245,7 @@ switch($objModulo->getId()){
 					}
 				}
 					
-				$smarty->assign("json", array("band" => $band));
+				$smarty->assign("json", array("band" => $band, "id" => $obj->getId()));
 			break;
 			case 'del':
 				$obj = new TOrden($_POST['id']);

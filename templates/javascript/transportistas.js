@@ -20,6 +20,7 @@ $(document).ready(function(){
 			},
 			txtNombre: "required",
 			txtRepresentante: "required",
+			selEmpresa: "required",
 			txtCelular: {
 				required: true,
 				digits: true
@@ -38,6 +39,7 @@ $(document).ready(function(){
 				celular: $("#txtCelular").val(),
 				pass: $("#txtPass").val(),
 				regiones: $("#selRegion").val(),
+				empresa: $("#selEmpresa").val(),
 				fn: {
 					after: function(datos){
 						if (datos.band){
@@ -79,6 +81,7 @@ $(document).ready(function(){
 				$("#txtCelular").val(el.celular);
 				$("#txtPass").val(el.pass);
 				$("#selRegion").val(el.regiones);
+				$("#selEmpresa").val(el.idEmpresa);
 				$('#panelTabs a[href="#add"]').tab('show');
 			});
 			

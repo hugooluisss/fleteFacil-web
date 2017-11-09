@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php /* Smarty version Smarty-3.1.11, created on 2017-11-09 09:13:17
+=======
+<?php /* Smarty version Smarty-3.1.11, created on 2017-10-30 11:25:20
+>>>>>>> 0517bc5e1ca3bb7e0019c31d5509176e5cac2e22
          compiled from "templates/plantillas/modulos/ordenes/winSeguimiento.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:20802293225a04708db49fe9-87729803%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (

@@ -6,7 +6,6 @@
 					<th>Folio</th>
 					<th>Estado</th>
 					<th>Origen</th>
-					<th>Destino</th>
 					<th>Interesados</th>
 					<th>&nbsp;</th>
 				</tr>
@@ -17,7 +16,6 @@
 						<td style="border-left: 2px solid {$row.color}">{$row.folio}</td>
 						<td>{$row.nombre}</td>
 						<td>{$row.origen_json->direccion}</td>
-						<td>{$row.destino_json->direccion}</td>
 						<td class="text-center">
 							<button type="button" class="btn btn-warning btn-xs" action="interesados" title="Transportistas interesados" datos='{$row.json}' data-toggle="modal" data-target="#winInteresados">{$row.interesados} / {$row.propuestas}</button>
 						</td>

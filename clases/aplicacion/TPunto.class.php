@@ -1,18 +1,15 @@
 <?php
 /**
-* TUsuario
-* Usuarios del sistema
+* TPunto
 * @package aplicacion
 * @autor Hugo Santiago hugooluisss@gmail.com
 **/
 
-class TUsuario{
-	private $idUsuario;
-	private $idPerfil;
-	private $nombre;
-	private $email;
-	private $pass;
-	private $visible;
+class TPunto{
+	private $idPunto;
+	private $idOrden;
+	private $direccion;
+	private $json;
 	
 	/**
 	* Constructor de la clase
@@ -21,8 +18,10 @@ class TUsuario{
 	* @access public
 	* @param int $id identificador del objeto
 	*/
-	public function TUsuario($id = ''){
-		$this->setId($id);		
+	public function TPunto($id = ''){
+		$this->posicion = 0;
+		$this->setId($id);
+		
 		return true;
 	}
 	
@@ -39,74 +38,29 @@ class TUsuario{
 		if ($id == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "select * from usuario where idUsuario = ".$id;
+		$sql = "select * from punto where idPunto = ".$id;
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
-		foreach($rs->fetch_assoc() as $field => $val){
+		foreach($rs->fetch_assoc() as $field => $val)
 			$this->$field = $val;
-		}
 		
 		return true;
 	}
 	
 	/**
-	* Retorna el identificador del objeto
+	* Retorna el id
 	*
 	* @autor Hugo
 	* @access public
-	* @return integer identificador
+	* @return string Texto
 	*/
 	
 	public function getId(){
-		return $this->idUsuario;
+		return $this->idPunto;
 	}
 	
 	/**
-	* Establece el valor del perfil
-	*
-	* @autor Hugo
-	* @access public
-	* @param string $val Valor a asignar por default es 2 que hace referencia a doctor
-	* @return boolean True si se realizó sin problemas
-	*/
-	
-	public function setPerfil($val = 2){
-		$this->idPerfil = $val;
-		return true;
-	}
-	
-	/**
-	* Retorna las el identificador del tipo de usuario
-	*
-	* @autor Hugo
-	* @access public
-	* @return string Texto
-	*/
-	
-	public function getPerfil(){
-		return $this->idPerfil;
-	}
-	
-	/**
-	* Retorna el tipo
-	*
-	* @autor Hugo
-	* @access public
-	* @return string Texto
-	*/
-	
-	public function getNombrePerfil(){
-		if ($this->getPerfil() == '') return false;
-		
-		$db = TBase::conectaDB();
-		$sql = "select nombre from perfil where idPerfil = ".$this->getPerfil();
-		$rs = $db->query($sql) or errorMySQL($db, $sql);
-		$row = $rs->fetch_assoc();
-		return $row['nombre'];
-	}
-		
-	/**
-	* Establece el nombre
+	* Establece la orden
 	*
 	* @autor Hugo
 	* @access public
@@ -114,25 +68,25 @@ class TUsuario{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function setNombre($val = ''){
-		$this->nombre = $val;
+	public function setOrden($val = ''){
+		$this->idOrden = $val;
 		return true;
 	}
 	
 	/**
-	* Retorna el nombre
+	* Retorna la orden
 	*
 	* @autor Hugo
 	* @access public
 	* @return string Texto
 	*/
 	
-	public function getNombre(){
-		return $this->nombre;
+	public function getOrden(){
+		return $this->idOrden;
 	}
 	
 	/**
-	* Establece el email
+	* Establece la direccion
 	*
 	* @autor Hugo
 	* @access public
@@ -140,25 +94,25 @@ class TUsuario{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function setEmail($val = ''){
-		$this->email = $val;
+	public function setDireccion($val = ''){
+		$this->direccion = $val;
 		return true;
 	}
 	
 	/**
-	* Retorna el email
+	* Retorna la direccion
 	*
 	* @autor Hugo
 	* @access public
 	* @return string Texto
 	*/
 	
-	public function getEmail(){
-		return $this->email;
+	public function getDireccion(){
+		return $this->direccion;
 	}
 	
 	/**
-	* Establece el valor del password
+	* Establece el objeto json de la ubicacion
 	*
 	* @autor Hugo
 	* @access public
@@ -166,21 +120,47 @@ class TUsuario{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function setPass($val = ''){
-		$this->pass = $val;
+	public function setJSON($val = ''){
+		$this->json = $val;
 		return true;
 	}
 	
 	/**
-	* Retorna el password
+	* Retorna la posición en json
 	*
 	* @autor Hugo
 	* @access public
 	* @return string Texto
 	*/
 	
-	public function getPass(){
-		return $this->pass;
+	public function getJSON(){
+		return $this->json;
+	}
+	
+	/**
+	* Establece la posición
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setPosicion($val = 0){
+		$this->posicion = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna la posición
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getPosicion(){
+		return $this->posicion;
 	}
 	
 	/**
@@ -192,36 +172,34 @@ class TUsuario{
 	*/
 	
 	public function guardar(){
-		if ($this->getPerfil() == '') return false;
-		
+		if ($this->getOrden() == '') return false;
 		$db = TBase::conectaDB();
 		
 		if ($this->getId() == ''){
-			$sql = "INSERT INTO usuario(idPerfil, visible) VALUES(".$this->getPerfil().", true);";
-			
+			$sql = "INSERT INTO punto(idOrden) VALUES('".$this->getOrden()."');";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);
 			if (!$rs) return false;
-				
-			$this->idUsuario = $db->insert_id;
-		}		
+			
+			$this->idPunto = $db->insert_id;
+		}
 		
 		if ($this->getId() == '')
 			return false;
 		
-		$sql = "UPDATE usuario
+		$sql = "UPDATE punto
 			SET
-				idPerfil = ".$this->getPerfil().",
-				nombre = '".$this->getNombre()."',
-				email = '".$this->getEmail()."',
-				pass = '".$this->getPass()."'
-			WHERE idUsuario = ".$this->getId();
+				direccion = '".$this->getDireccion()."',
+				json = '".$this->getJSON()."',
+				posicion = '".$this->getPosicion()."'
+			WHERE idPunto = ".$this->getId();
+			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 			
 		return $rs?true:false;
 	}
 	
 	/**
-	* Elimina el objeto de la base de datos
+	* Elimina el objeto
 	*
 	* @autor Hugo
 	* @access public
@@ -232,7 +210,7 @@ class TUsuario{
 		if ($this->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "update usuario set visible = false where idUsuario = ".$this->getId();
+		$sql = "delete from punto where idPunto = ".$this->getId();
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return $rs?true:false;

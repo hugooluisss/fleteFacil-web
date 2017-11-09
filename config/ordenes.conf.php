@@ -6,8 +6,8 @@ $conf['ordenes'] = array(
 	'vista' => 'ordenes/panel.tpl',
 	'descripcion' => 'Ordenes de trabajo',
 	'seguridad' => true,
-	'js' => array('orden.class.js', 'transportista.class.js'),
-	'jsTemplate' => array('ordenes.js', 'seguimiento.js'),
+	'js' => array('orden.class.js', 'transportista.class.js', 'punto.class.js'),
+	'jsTemplate' => array('ordenes.js', 'seguimiento.js', 'intermedios.js'),
 	'capa' => LAYOUT_DEFECTO);
 	
 $conf['listaOrdenes'] = array(

@@ -1,6 +1,11 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Administración de usuarios</h1>
+		<h1 class="page-header">
+			Usuarios
+			{if $PAGE.modulo eq 'usuariosempresa'}
+				de "{$empresa->getRazonSocial()}"
+			{/if}
+		</h1>
 	</div>
 </div>
 
@@ -21,10 +26,10 @@
 			<div class="box">
 				<div class="box-body">
 					<div class="form-group">
-						<label for="selTipo" class="col-lg-2">Tipo</label>
+						<label for="selTipo" class="col-lg-2">Perfil</label>
 						<div class="col-lg-4">
-							<select class="form-control" id="selTipo" name="selTipo">
-								{foreach key=key item=item from=$tipos}
+							<select class="form-control" id="selPerfil" name="selPerfil">
+								{foreach key=key item=item from=$perfiles}
 									<option value="{$key}">{$item}
 								{/foreach}
 							</select>
@@ -53,6 +58,9 @@
 					<button type="reset" id="btnReset" class="btn btn-default">Cancelar</button>
 					<button type="submit" class="btn btn-info pull-right">Guardar</button>
 					<input type="hidden" id="id"/>
+					{if $PAGE.modulo eq 'usuariosempresa'}
+						<input type="hidden" id="empresa" value="{$empresa->getId()}"/>
+					{/if}
 				</div>
 			</div>
 		</form>
