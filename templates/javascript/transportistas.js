@@ -24,8 +24,7 @@ $(document).ready(function(){
 			txtCelular: {
 				required: true,
 				digits: true
-			},
-			txtPass: "required"
+			}
 		},
 		wrapper: 'span', 
 		submitHandler: function(form){
@@ -37,7 +36,6 @@ $(document).ready(function(){
 				representante: $("#txtRepresentante").val(), 
 				email: $("#txtEmail").val(),
 				celular: $("#txtCelular").val(),
-				pass: $("#txtPass").val(),
 				regiones: $("#selRegion").val(),
 				empresa: $("#selEmpresa").val(),
 				fn: {
@@ -79,7 +77,6 @@ $(document).ready(function(){
 				$("#txtEmail").val(el.email);
 				$("#txtRepresentante").val(el.representante);
 				$("#txtCelular").val(el.celular);
-				$("#txtPass").val(el.pass);
 				$("#selRegion").val(el.regiones);
 				$("#selEmpresa").val(el.idEmpresa);
 				$('#panelTabs a[href="#add"]').tab('show');

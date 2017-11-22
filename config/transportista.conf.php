@@ -19,7 +19,13 @@ $conf['listaTransportistas'] = array(
 	
 $conf['ctransportistas'] = array(
 	'controlador' => 'transportistas.php',
-	'descripcion' => 'Controlador de transportistasx',
+	'descripcion' => 'Controlador de transportistas',
+	'seguridad' => true,
+	'capa' => LAYOUT_JSON);
+	
+$conf['cchofer'] = array(
+	'controlador' => 'chofer.php',
+	'descripcion' => 'Controlador de chofere',
 	'seguridad' => true,
 	'capa' => LAYOUT_JSON);
 	

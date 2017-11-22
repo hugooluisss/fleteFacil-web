@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-20 08:35:33
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-22 12:57:21
          compiled from "templates/plantillas/modulos/usuarios/lista.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:18360804365a12e835948289-50381668%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0792779071f81e2ec50c2a73a57f2de0982f47da' => 
     array (
       0 => 'templates/plantillas/modulos/usuarios/lista.tpl',
-      1 => 1509393450,
+      1 => 1511377036,
       2 => 'file',
     ),
   ),
@@ -15,17 +15,19 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_5a12e8359e9a93_05536402',
   'variables' => 
   array (
     'lista' => 0,
     'row' => 0,
+    'modulo' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5a12e8359e9a93_05536402',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5a12e8359e9a93_05536402')) {function content_5a12e8359e9a93_05536402($_smarty_tpl) {?><div class="box">
 	<div class="box-body">
+	
 		<table id="tblUsuarios" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -40,9 +42,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 foreach ($_from as $_smarty_tpl->tpl_vars["row"]->key => $_smarty_tpl->tpl_vars["row"]->value){
 $_smarty_tpl->tpl_vars["row"]->_loop = true;
 ?>
-					<tr>
-						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['nombre'];?>
+					<tr title="<?php echo $_smarty_tpl->tpl_vars['row']->value['estado'];?>
+">
+						<?php if ($_smarty_tpl->tpl_vars['modulo']->value=='usuariostransportista'){?>
+							<td style="border-left: 3px solid <?php echo $_smarty_tpl->tpl_vars['row']->value['color'];?>
+"><?php echo $_smarty_tpl->tpl_vars['row']->value['nombre'];?>
 </td>
+						<?php }else{ ?>
+							<td><?php echo $_smarty_tpl->tpl_vars['row']->value['nombre'];?>
+</td>
+						<?php }?>
 						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['email'];?>
 </td>
 						<td style="text-align: right">

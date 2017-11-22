@@ -22,7 +22,7 @@ switch($objModulo->getId()){
 	break;
 	case 'listaTransportistas':
 		$db = TBase::conectaDB();
-		$rs = $db->query("select a.*, b.color, b.nombre as estado, c.razonsocial as empresa from transportista a join situacion b using(idSituacion) join empresa c using(idEmpresa) where a.visible = true");
+		$rs = $db->query("select a.*, c.razonsocial as empresa from transportista a join empresa c using(idEmpresa) where a.visible = true");
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
 			$sql = "select idRegion from transportistaregion where idTransportista = ".$row['idTransportista'];
@@ -60,7 +60,6 @@ switch($objModulo->getId()){
 				$obj->empresa->setId($_POST['empresa']);
 				$obj->setEmail($_POST['email']);
 				$obj->setCelular($_POST['celular']);
-				$obj->setPass($_POST['pass']);
 				
 				$band = $obj->guardar();
 				if ($band){
@@ -78,6 +77,7 @@ switch($objModulo->getId()){
 				$obj = new TTransportista($_POST['id']);
 				$smarty->assign("json", array("band" => $obj->eliminar()));
 			break;
+			/*
 			case 'login':
 				$db = TBase::conectaDB();
 				$sql = "select idTransportista, pass from transportista where upper(email) = upper('".$_POST['usuario']."') and visible = true";
@@ -100,6 +100,7 @@ switch($objModulo->getId()){
 				}
 				$smarty->assign("json", $result);
 			break;
+			
 			case 'recuperarPass':
 				$db = TBase::conectaDB();
 				global $ini;
@@ -127,6 +128,7 @@ switch($objModulo->getId()){
 				}else
 					echo json_encode(array("band" => false));
 			break;
+			
 			case 'getData':
 				$db = TBase::conectaDB();
 				
@@ -159,9 +161,10 @@ switch($objModulo->getId()){
 				$row["empresas"] = $datos;
 				$smarty->assign("json", $row);
 			break;
+			*/
 			case 'addRegion':
 				$transportista = new TTransportista($_POST['transportista']);
-				$transportista->regiones[$_POST['region']] = new TRegion($_POST['region']);
+				$transportista->regiones[$_POST['region']] = array("region" => new TRegion($_POST['region'], "empresa" => $_POST['empresa']);
 				$smarty->assign("json", array("band" => $transportista->guardarRegiones()));
 			break;
 			case 'delRegion':
@@ -170,20 +173,6 @@ switch($objModulo->getId()){
 				unset($transportista->regiones[$_POST['region']]);
 				
 				$smarty->assign("json", array("band" => $transportista->guardarRegiones()));
-			break;
-			case 'setSituacion':
-				$transportista = new TTransportista($_POST['transportista']);
-				$transportista->setSituacion($_POST['situacion']);
-				$smarty->assign("json", array("band" => $transportista->guardar()));
-			break;
-			case 'setImagenPerfil':
-				$transportista = new TTransportista($_POST['transportista']);
-				if ($transportista->getId() == '')
-					$smarty->assign("json", array("band" => false));
-				else{
-					saveImage($_POST['imagen'], "repositorio/transportistas/".$transportista->getId().".jpg");
-					$smarty->assign("json", array("band" => true));
-				}
 			break;
 			case 'addEmpresa':
 				$db = TBase::conectaDB();

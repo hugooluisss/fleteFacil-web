@@ -41,4 +41,5 @@ $conf['notificacionespanel'] = array(
 	
 	
 $conf['usuariosempresa'] = $conf['admonUsuarios'];
+$conf['usuariostransportista'] = $conf['admonUsuarios'];
 ?>

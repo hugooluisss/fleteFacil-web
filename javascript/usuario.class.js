@@ -11,10 +11,15 @@ TUsuario = function(){
 				"pass": datos.pass,
 				"perfil": datos.perfil,
 				"empresa": datos.empresa,
+				"transportista": datos.transportista,
+				"nit": datos.nit,
+				"celular": datos.celular,
+				"patentecamion": datos.patentecamion,
+				"patenterampla": datos.patenterampla,
 				"action": "add"
 			}, function(data){
-				if (data.band == 'false')
-					console.log(data.mensaje);
+				if (data.band == false)
+					console.log("No se guardó el registro");
 					
 				if (datos.fn.after !== undefined)
 					datos.fn.after(data);

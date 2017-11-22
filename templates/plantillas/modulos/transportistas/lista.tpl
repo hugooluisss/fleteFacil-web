@@ -14,12 +14,13 @@
 			<tbody>
 				{foreach from=$lista item="row"}
 					<tr title="{$row.estado}">
-						<td style="border-left: 3px solid {$row.color}">{$row.idTransportista}</td>
+						<td>{$row.idTransportista}</td>
 						<td>{$row.nombre}</td>
 						<td>{$row.representante}</td>
 						<td>{$row.empresa}</td>
 						<td>{$row.email}</td>
 						<td style="text-align: right">
+							<a href="usuariostransportista/{$row.idTransportista}/" class="btn btn-primary btn-xs" title="Usuarios de la empresa"><i class="fa fa-users"></i></a>
 							<button type="button" class="btn btn-primary btn-xs" action="empresas" title="Empresas con las que participa" datos='{$row.json}' data-toggle="modal" data-target="#winEmpresas"><i class="fa fa-building-o" aria-hidden="true"></i>
 </button>
 							<button type="button" class="btn btn-primary btn-xs" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-edit"></i></button>

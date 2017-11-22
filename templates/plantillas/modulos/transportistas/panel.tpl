@@ -50,12 +50,6 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="txtPass" class="col-sm-2">Contraseña</label>
-						<div class="col-sm-2">
-							<input class="form-control" id="txtPass" name="txtPass" type="password">
-						</div>
-					</div>
-					<div class="form-group">
 						<label for="txtCelular" class="col-sm-2">Celular</label>
 						<div class="col-sm-3">
 							<input class="form-control" id="txtCelular" name="txtCelular" type="text">

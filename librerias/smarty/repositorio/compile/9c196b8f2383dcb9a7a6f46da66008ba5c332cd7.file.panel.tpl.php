@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-20 08:37:12
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-22 08:55:38
          compiled from "templates/plantillas/modulos/transportistas/panel.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:13339871045a04841e275271-13779147%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '9c196b8f2383dcb9a7a6f46da66008ba5c332cd7' => 
     array (
       0 => 'templates/plantillas/modulos/transportistas/panel.tpl',
-      1 => 1510257710,
+      1 => 1511362516,
       2 => 'file',
     ),
   ),
@@ -83,12 +83,6 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 						<label for="txtEmail" class="col-sm-2">Correo electrónico</label>
 						<div class="col-sm-3">
 							<input class="form-control" id="txtEmail" name="txtEmail" type="email">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="txtPass" class="col-sm-2">Contraseña</label>
-						<div class="col-sm-2">
-							<input class="form-control" id="txtPass" name="txtPass" type="password">
 						</div>
 					</div>
 					<div class="form-group">

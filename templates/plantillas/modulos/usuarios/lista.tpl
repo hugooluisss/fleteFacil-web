@@ -1,5 +1,6 @@
 <div class="box">
 	<div class="box-body">
+	
 		<table id="tblUsuarios" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -10,8 +11,12 @@
 			</thead>
 			<tbody>
 				{foreach from=$lista item="row"}
-					<tr>
-						<td>{$row.nombre}</td>
+					<tr title="{$row.estado}">
+						{if $modulo eq 'usuariostransportista'}
+							<td style="border-left: 3px solid {$row.color}">{$row.nombre}</td>
+						{else}
+							<td>{$row.nombre}</td>
+						{/if}
 						<td>{$row.email}</td>
 						<td style="text-align: right">
 							<button type="button" class="btn btn-primary btn-xs" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-edit"></i></button>

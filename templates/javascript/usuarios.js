@@ -14,11 +14,28 @@ $(document).ready(function(){
 	$("#frmAdd").validate({
 		debug: true,
 		rules: {
-			txtEmail: "required",
+			txtEmail: {
+				"required": true,
+				"remote": {
+					url: "cusuarios",
+					type: "post",
+					data: {
+						"action": "validarEmail",
+						"id": function(){
+							return $("#id").val();
+						}
+					}
+				}
+			},
 			txtPass: "required",
 			txtClave: "required"
 		},
-		wrapper: 'span', 
+		wrapper: 'span',
+		messages: {
+			txtEmail: {
+				remote: "El correo ya existe para otro, usa otro"
+			}
+		}, 
 		submitHandler: function(form){
 		
 			var obj = new TUsuario;
@@ -29,6 +46,11 @@ $(document).ready(function(){
 				pass: $("#txtPass").val(),
 				perfil: $("#selPerfil").val(),
 				empresa: $("#empresa").val(),
+				transportista: $("#transportista").val(),
+				nit: $("#txtNit").val(),
+				celular: $("#txtCelular").val(),
+				patentecamion: $("#txtPatenteCamion").val(),
+				patenterampla: $("#txtPatenteRampla").val(),
 				fn: {
 					after: function(datos){
 						if (datos.band){
@@ -36,7 +58,7 @@ $(document).ready(function(){
 							$("#frmAdd").get(0).reset();
 							$('#panelTabs a[href="#listas"]').tab('show');
 						}else{
-							alert("Upps... " + datos.mensaje);
+							alert("No se guardó el registro, ocurrió un error");
 						}
 					}
 				}
@@ -47,7 +69,8 @@ $(document).ready(function(){
 		
 	function getLista(){
 		$.post("listaUsuarios", {
-			empresa: $("#empresa").val()
+			empresa: $("#empresa").val(),
+			transportista: $("#transportista").val()
 		}, function(data) {
 			$("#dvLista").html(data);
 			
@@ -70,6 +93,12 @@ $(document).ready(function(){
 				$("#txtEmail").val(el.email);
 				$("#txtPass").val(el.pass);
 				$("#selPerfil").val(el.idPerfil);
+				
+				
+				$("#txtNit").val(el.nit);
+				$("#txtCelular").val(el.celular);
+				$("#txtPatenteCamion").val(el.patentecamion);
+				$("#txtPatenteRampla").val(el.patenterampla);
 				
 				$('#panelTabs a[href="#add"]').tab('show');
 			});

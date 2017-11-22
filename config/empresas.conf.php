@@ -1,7 +1,7 @@
 <?php
 global $conf;
 
-/* Estados */
+/* Empresas */
 $conf['empresas'] = array(
 	'controlador' => 'empresas.php',
 	'vista' => 'empresas/panel.tpl',

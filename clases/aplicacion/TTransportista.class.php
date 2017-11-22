@@ -13,7 +13,6 @@ class TTransportista{
 	private $representante;
 	private $email;
 	private $celular;
-	private $pass;
 	private $visible;
 	public $regiones;
 	public $empresa;
@@ -50,7 +49,7 @@ class TTransportista{
 		
 		foreach($rs->fetch_assoc() as $field => $val){
 			switch($field){
-				case 'idEmrpesa':
+				case 'idEmpresa':
 					$this->empresa = new TEmpresa($val);
 				break;
 				default:
@@ -201,32 +200,6 @@ class TTransportista{
 	}
 	
 	/**
-	* Establece el password
-	*
-	* @autor Hugo
-	* @access public
-	* @param string $val Valor a asignar
-	* @return boolean True si se realizó sin problemas
-	*/
-	
-	public function setPass($val = ""){
-		$this->pass = $val;
-		return true;
-	}
-	
-	/**
-	* Retorna el password
-	*
-	* @autor Hugo
-	* @access public
-	* @return string Texto
-	*/
-	
-	public function getPass(){
-		return $this->pass;
-	}
-	
-	/**
 	* Establece la situacion
 	*
 	* @autor Hugo
@@ -284,8 +257,6 @@ class TTransportista{
 				representante = '".$this->getRepresentante()."',
 				email = '".$this->getEmail()."',
 				celular = '".$this->getCelular()."',
-				pass = '".$this->getPass()."',
-				idSituacion = ".$this->getSituacion().",
 				idEmpresa = ".$this->empresa->getId()."
 			WHERE idTransportista = ".$this->getId();
 			
@@ -332,7 +303,7 @@ class TTransportista{
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		foreach($this->regiones as $region){
-			$sql = "insert into transportistaregion (idTransportista, idRegion) values (".$this->getId().", ".$region->getId().")";
+			$sql = "insert into transportistaregion (idTransportista, idRegion, idEmpresa) values (".$this->getId().", ".$region["region"]->getId().", ".$region["empresa"].")";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);
 		}
 		

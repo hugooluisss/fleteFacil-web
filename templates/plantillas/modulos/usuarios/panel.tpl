@@ -5,6 +5,9 @@
 			{if $PAGE.modulo eq 'usuariosempresa'}
 				de "{$empresa->getRazonSocial()}"
 			{/if}
+			{if $PAGE.modulo eq 'usuariostransportista'}
+				de "{$transportista->getNombre()}"
+			{/if}
 		</h1>
 	</div>
 </div>
@@ -53,6 +56,32 @@
 							<input class="form-control" id="txtPass" name="txtPass" type="password">
 						</div>
 					</div>
+					{if $PAGE.modulo eq 'usuariostransportista'}
+						<div class="form-group">
+							<label for="txtPass" class="col-lg-2">NIT</label>
+							<div class="col-lg-6">
+								<input class="form-control" id="txtNit" name="txtNit" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="txtCelular" class="col-lg-2">Celular</label>
+							<div class="col-lg-3">
+								<input class="form-control" id="txtCelular" name="txtCelular" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="txtPatenteCamion" class="col-lg-2">Patente camión</label>
+							<div class="col-lg-6">
+								<input class="form-control" id="txtPatenteCamion" name="txtPatenteCamion" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="txtPatenteRampla" class="col-lg-2">Patente rampla</label>
+							<div class="col-lg-6">
+								<input class="form-control" id="txtPatenteRampla" name="txtPatenteRampla" type="text">
+							</div>
+						</div>
+					{/if}
 				</div>
 				<div class="box-footer">
 					<button type="reset" id="btnReset" class="btn btn-default">Cancelar</button>
@@ -60,6 +89,9 @@
 					<input type="hidden" id="id"/>
 					{if $PAGE.modulo eq 'usuariosempresa'}
 						<input type="hidden" id="empresa" value="{$empresa->getId()}"/>
+					{/if}
+					{if $PAGE.modulo eq 'usuariostransportista'}
+						<input type="hidden" id="transportista" value="{$transportista->getId()}"/>
 					{/if}
 				</div>
 			</div>

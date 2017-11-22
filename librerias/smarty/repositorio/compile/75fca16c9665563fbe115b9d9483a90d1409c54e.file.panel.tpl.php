@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-20 08:35:32
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-22 09:19:38
          compiled from "templates/plantillas/modulos/usuarios/panel.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17638709285a12e834a33b92-34853586%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '75fca16c9665563fbe115b9d9483a90d1409c54e' => 
     array (
       0 => 'templates/plantillas/modulos/usuarios/panel.tpl',
-      1 => 1509393450,
+      1 => 1511363976,
       2 => 'file',
     ),
   ),
@@ -15,17 +15,18 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_5a12e834b1e511_89162846',
   'variables' => 
   array (
     'PAGE' => 0,
     'empresa' => 0,
+    'transportista' => 0,
     'perfiles' => 0,
     'key' => 0,
     'item' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5a12e834b1e511_89162846',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5a12e834b1e511_89162846')) {function content_5a12e834b1e511_89162846($_smarty_tpl) {?><div class="row">
 	<div class="col-lg-12">
@@ -33,6 +34,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 			Usuarios
 			<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='usuariosempresa'){?>
 				de "<?php echo $_smarty_tpl->tpl_vars['empresa']->value->getRazonSocial();?>
+"
+			<?php }?>
+			<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='usuariostransportista'){?>
+				de "<?php echo $_smarty_tpl->tpl_vars['transportista']->value->getNombre();?>
 "
 			<?php }?>
 		</h1>
@@ -91,6 +96,32 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 							<input class="form-control" id="txtPass" name="txtPass" type="password">
 						</div>
 					</div>
+					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='usuariostransportista'){?>
+						<div class="form-group">
+							<label for="txtPass" class="col-lg-2">NIT</label>
+							<div class="col-lg-6">
+								<input class="form-control" id="txtNit" name="txtNit" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="txtCelular" class="col-lg-2">Celular</label>
+							<div class="col-lg-3">
+								<input class="form-control" id="txtCelular" name="txtCelular" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="txtPatenteCamion" class="col-lg-2">Patente camión</label>
+							<div class="col-lg-6">
+								<input class="form-control" id="txtPatenteCamion" name="txtPatenteCamion" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="txtPatenteRampla" class="col-lg-2">Patente rampla</label>
+							<div class="col-lg-6">
+								<input class="form-control" id="txtPatenteRampla" name="txtPatenteRampla" type="text">
+							</div>
+						</div>
+					<?php }?>
 				</div>
 				<div class="box-footer">
 					<button type="reset" id="btnReset" class="btn btn-default">Cancelar</button>
@@ -98,6 +129,10 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 					<input type="hidden" id="id"/>
 					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='usuariosempresa'){?>
 						<input type="hidden" id="empresa" value="<?php echo $_smarty_tpl->tpl_vars['empresa']->value->getId();?>
+"/>
+					<?php }?>
+					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='usuariostransportista'){?>
+						<input type="hidden" id="transportista" value="<?php echo $_smarty_tpl->tpl_vars['transportista']->value->getId();?>
 "/>
 					<?php }?>
 				</div>
