@@ -137,18 +137,26 @@ switch($objModulo->getId()){
 				$row['imagenPerfil'] = file_exists($ruta)?$ruta:"";
 				
 				
-				$sql = "select * from region";
-				$rs2 = $db->query($sql) or errorMySQL($db, $sql);
-				
-				$row['regiones'] = array();
-				while($row2 = $rs2->fetch_assoc()){
-					$rs3 = $db->query("select idTransportista from transportistaregion where idRegion = ".$row2['idRegion']." and idTransportista = ".$_POST['id']) or errorMySQL($db, $sql);
+				$sql = "select b.* from empresatransportista a join empresa b using(idEmpresa) where b.visible = true and idTransportista = ".$_POST['id'];
+				$rsEmpresa = $db->query($sql) or errorMySQL($db, $sql);
+				$datos = array();
+				while($rowEmpresa = $rsEmpresa->fetch_assoc()){
+					$sql = "select * from region";
+					$rsRegion = $db->query($sql) or errorMySQL($db, $sql);
 					
-					$row2["checked"] = $rs3->num_rows > 0?1:0;
+					$regiones = array();
+					while($rowRegion = $rsRegion->fetch_assoc()){
+						$rs = $db->query("select idTransportista from transportistaregion where idRegion = ".$rowRegion['idRegion']." and idTransportista = ".$_POST['id']) or errorMySQL($db, $sql);
+						
+						$rowRegion["checked"] = $rs->num_rows > 0?1:0;
+						
+						array_push($regiones, $rowRegion);
+					}
+					$rowEmpresa['regiones'] = $regiones;
 					
-					array_push($row['regiones'], $row2);
+					array_push($datos, $rowEmpresa);
 				}
-					
+				$row["empresas"] = $datos;
 				$smarty->assign("json", $row);
 			break;
 			case 'addRegion':

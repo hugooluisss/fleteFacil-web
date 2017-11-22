@@ -172,7 +172,7 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
-			$row['presupuesto'] = number_format($row['presupuesto'], 0, "", ".");
+			$row['presupuesto'] = number_format($row['presupuestofinal'], 0, "", ".");
 			
 			$row['origen_json'] = json_decode($row['origen']);
 			$row['destinos'] = array();
@@ -299,6 +299,9 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 				}
 						
 				$smarty->assign("json", array("band" => $band));
+			break;
+			case 'setEnRuta':
+				
 			break;
 			case 'terminar':
 				$obj = new TOrden($_POST['orden']);
