@@ -116,10 +116,9 @@
 					<div id="dvReporteFinal">
 					</div>
 				</div>
-				<div class="box-footer">
-					<button type="reset" id="btnReset" class="btn btn-default">Cancelar</button>
-					<button type="submit" class="btn btn-info pull-right">Guardar</button>
-					<input type="hidden" id="id"/>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-primary" id="btnUbicacion">Seleccionar</button>
 				</div>
 			</div>
 		</form>

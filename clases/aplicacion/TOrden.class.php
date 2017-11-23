@@ -442,11 +442,11 @@ class TOrden{
 		
 		switch($this->estado->getId()){
 			case 5: case 6: case 7:
-				$sql = "select idOrden, idTransportista from asignado a join orden b using(idOrden) where b.idEstado = 4 and idTransportista in (select idTransportista from asignado where idOrden = ".$this->getId().")";
+				$sql = "select idOrden, idTransportista from asignadotransportista a join orden b using(idOrden) where b.idEstado = 4 and idTransportista in (select idTransportista from asignadotransportista where idOrden = ".$this->getId().")";
 				$rs = $db->query($sql) or errorMySQL($db, $sql);
 				
 				if ($rs->num_rows == 0){
-					$sql = "select idTransportista from asignado where idOrden = ".$this->getId();
+					$sql = "select idTransportista from asignadotransportista where idOrden = ".$this->getId();
 					$rs = $db->query($sql) or errorMySQL($db, $sql);
 				
 					$row = $rs->fetch_array();
@@ -456,11 +456,11 @@ class TOrden{
 				}
 			break;
 			case 4: #orden asignada
-				$sql = "select idOrden, idTransportista from asignado a join orden b using(idOrden) where b.idEstado = 4 and idTransportista in (select idTransportista from asignado where idOrden = ".$this->getId().")";
+				$sql = "select idOrden, idTransportista from asignadotransportista a join orden b using(idOrden) where b.idEstado = 4 and idTransportista in (select idTransportista from asignadotransportista where idOrden = ".$this->getId().")";
 				$rs = $db->query($sql) or errorMySQL($db, $sql);
 				
 				if ($rs->num_rows == 0){
-					$sql = "select idTransportista from asignado where idOrden = ".$this->getId();
+					$sql = "select idTransportista from asignadotransportista where idOrden = ".$this->getId();
 					$rs = $db->query($sql) or errorMySQL($db, $sql);
 				
 					$row = $rs->fetch_array();
@@ -534,10 +534,10 @@ class TOrden{
 		if ($obj->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "insert into asignado(idOrden, idTransportista) values (".$this->getId().", ".$obj->getId().")";
+		$sql = "insert into asignadotransportista(idOrden, idTransportista) values (".$this->getId().", ".$obj->getId().")";
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
-		$sql = "update orden set presupuestofinal = ".$monto." where idOrden = ".$obj->getId();
+		$sql = "update orden set presupuestofinal = ".$monto." where idOrden = ".$this->getId();
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		$this->estado->setId(4);

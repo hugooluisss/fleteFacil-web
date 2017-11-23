@@ -25,7 +25,7 @@
 				<td class="text-right">{$row.monto}</td>
 				{if $estado neq 4}
 					<td class="text-center">
-						<button type="button" class="btn btn-success" action="asignar" title="Asignar orden" datos='{$row.json}'><i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+						<button type="button" class="btn btn-success" action="asignar" title="Asignar orden a transportista" datos='{$row.json}'><i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
 					</td>
 				{else}
 					<td class="text-center">

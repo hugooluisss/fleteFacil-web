@@ -168,7 +168,7 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 	case 'listaOrdenesAdjudicadas':
 		$db = TBase::conectaDB();
 		
-		$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) join asignado c using(idOrden) where idEstado in (4, 5) and c.idTransportista = ".$_POST['transportista'];
+		$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) join asignadotransportista c using(idOrden) where idEstado in (4, 5) and c.idTransportista = ".$_POST['transportista'];
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
@@ -215,7 +215,7 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 		
 		$db = TBase::conectaDB();
 		
-		$sql = "select comentarios from asignado where idOrden = ".$_POST['idOrden'];
+		$sql = "select comentarios from asignadotransportista where idOrden = ".$_POST['idOrden'];
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$row = $rs->fetch_assoc();
 		$smarty->assign("comentarios", $row['comentarios']);

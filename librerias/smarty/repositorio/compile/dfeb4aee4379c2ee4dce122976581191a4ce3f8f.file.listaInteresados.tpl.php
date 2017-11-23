@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-20 09:00:53
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-23 09:11:23
          compiled from "templates/plantillas/modulos/ordenes/listaInteresados.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:8557491035a04b1895664a1-50219368%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dfeb4aee4379c2ee4dce122976581191a4ce3f8f' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/listaInteresados.tpl',
-      1 => 1510257710,
+      1 => 1511449877,
       2 => 'file',
     ),
   ),
@@ -62,7 +62,7 @@ $_smarty_tpl->tpl_vars["row"]->_loop = true;
 </td>
 				<?php if ($_smarty_tpl->tpl_vars['estado']->value!=4){?>
 					<td class="text-center">
-						<button type="button" class="btn btn-success" action="asignar" title="Asignar orden" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
+						<button type="button" class="btn btn-success" action="asignar" title="Asignar orden a transportista" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
 '><i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
 					</td>
 				<?php }else{ ?>

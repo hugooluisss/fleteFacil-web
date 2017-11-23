@@ -346,6 +346,7 @@ $(document).ready(function(){
 								after: function(resp){
 									if (resp.band){
 										alert("La orden fué asignada");
+										getLista();
 										$("#winInteresados").modal("hide");
 									}
 								}

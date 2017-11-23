@@ -188,6 +188,18 @@ switch($objModulo->getId()){
 				
 				$smarty->assign("json", array("band" => $rs?true:false));
 			break;
+			case 'getChoferes':
+				$db = TBase::conectaDB();
+				$sql = "select * from chofer a join usuario b using(idUsuario) where idTransportista = ".$_POST['id']." and idSituacion = 1";
+				$rs = $db->query($sql) or errorMySQL($db, $sql);
+				$datos = array();
+				while($row = $rs->fetch_assoc()){
+					$row['json'] = json_encode($row);
+					array_push($datos, $row);
+				}
+				
+				$smarty->assign("json", $datos);
+			break;
 		}
 	break;
 }
