@@ -46,7 +46,7 @@ switch($objModulo->getId()){
 				$smarty->assign("json", $chofer);
 			break;
 			case 'setSituacion':
-				$chofer = new TChofer($_POST['transportista']);
+				$chofer = new TChofer($_POST['chofer']);
 				$chofer->setSituacion($_POST['situacion']);
 				$smarty->assign("json", array("band" => $chofer->guardar()));
 			break;

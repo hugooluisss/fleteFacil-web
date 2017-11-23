@@ -74,11 +74,11 @@ class TTransportista{
 		if ($this->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
-		$sql = "select idRegion from transportistaregion where idTransportista = ".$this->getId();
+		$sql = "select idRegion, idEmpresa from transportistaregion where idTransportista = ".$this->getId();
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$this->regiones = array();
 		while($row = $rs->fetch_assoc()){
-			array_push($this->regiones, new TRegion($row['idRegion']));
+			$this->regiones[$row['idRegion']."-".$row['idEmpresa']] = array("region" => new TRegion($row['idRegion']), "empresa" => $row['idEmpresa']);
 		}
 		return true;
 	}

@@ -164,13 +164,13 @@ switch($objModulo->getId()){
 			*/
 			case 'addRegion':
 				$transportista = new TTransportista($_POST['transportista']);
-				$transportista->regiones[$_POST['region']] = array("region" => new TRegion($_POST['region'], "empresa" => $_POST['empresa']);
+				$transportista->regiones[$_POST['region']."-".$_POST['empresa']] = array("region" => new TRegion($_POST['region']), "empresa" => $_POST['empresa']);
 				$smarty->assign("json", array("band" => $transportista->guardarRegiones()));
 			break;
 			case 'delRegion':
 				$transportista = new TTransportista($_POST['transportista']);
 				
-				unset($transportista->regiones[$_POST['region']]);
+				unset($transportista->regiones[$_POST['region']."-".$_POST['empresa']]);
 				
 				$smarty->assign("json", array("band" => $transportista->guardarRegiones()));
 			break;

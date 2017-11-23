@@ -86,7 +86,7 @@ from orden a join estado b using(idEstado)
 	join empresatransportista c using(idEmpresa)
 where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 	and not idOrden in (select idOrden  from interesado where idTransportista = ".$_POST['transportista'].")
-	and idOrden in (select idOrden from transportistaregion join ordenregion using(idRegion) where idTransportista = ".$_POST['transportista'].")";
+	and idOrden in (select distinct idOrden from transportistaregion join empresatransportista using(idTransportista, idEmpresa) join ordenregion using(idRegion) where idTransportista = ".$_POST['transportista'].")";
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
