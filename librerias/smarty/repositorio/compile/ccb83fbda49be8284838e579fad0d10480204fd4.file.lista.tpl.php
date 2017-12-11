@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-20 08:38:03
+<?php /* Smarty version Smarty-3.1.11, created on 2017-12-10 12:27:27
          compiled from "templates/plantillas/modulos/ordenes/lista.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:6459117825a047309b710f4-65043190%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'ccb83fbda49be8284838e579fad0d10480204fd4' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/lista.tpl',
-      1 => 1510257710,
+      1 => 1512930445,
       2 => 'file',
     ),
   ),
@@ -56,9 +56,14 @@ $_smarty_tpl->tpl_vars["row"]->_loop = true;
  / <?php echo $_smarty_tpl->tpl_vars['row']->value['propuestas'];?>
 </button>
 						</td>
-						<td class="text-right" style="width: 80px;">
+						<td class="text-right" style="width: 120px;">
 							<button type="button" class="btn btn-success btn-xs" action="puntos" title="Puntos de entrega" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
 ' data-toggle="modal" data-target="#winIntermedios"><i class="fa fa-map-marker"></i></button>
+							<?php if ($_smarty_tpl->tpl_vars['row']->value['idEstado']==5){?>
+							<button type="button" class="btn btn-success btn-xs" action="reporte" title="Reporte" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
+' data-toggle="modal" data-target="#winReporte"><i class="fa fa-book"></i></button>
+							<?php }?>
+							
 							<button type="button" class="btn btn-success btn-xs" action="modificar" title="Modificar" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
 '"><i class="fa fa-pencil"></i></button>
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#winSeguimiento" action="mapa" title="Consultar transporte" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>

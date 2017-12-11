@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-22 08:36:19
+<?php /* Smarty version Smarty-3.1.11, created on 2017-12-11 13:43:52
          compiled from "templates/plantillas/modulos/inicio.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:18260477015a0c6dc705d980-04078925%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '4dd97137c284ab0e063fd62794520df2227c9f0c' => 
     array (
       0 => 'templates/plantillas/modulos/inicio.tpl',
-      1 => 1493040030,
+      1 => 1513021431,
       2 => 'file',
     ),
   ),
@@ -31,4 +31,30 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 		<?php echo $_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getNombre();?>
 
 	</div>
-</div><?php }} ?>
+</div>
+<!--
+<div class="box">
+	<div class="row">
+		<div class="col-sm-6">
+			<h4>Moviles hoy</h4>
+			<div class="row">
+				<div class="col-xs-4 text-center">
+					<h2 class="text-primary text-center">36</h2>
+					<span>totales</span>
+				</div>
+				<div class="col-xs-4 text-center">
+					<h2 class="text-primary text-center">36</h2>
+					<span>En ruta</span>
+				</div>
+				<div class="col-xs-4 text-center">
+					<h2 class="text-primary">36</h2>
+					<span>Finalizados</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<h4>Entregas hoy</h4>
+		</div>
+	</div>
+</div>
+--><?php }} ?>

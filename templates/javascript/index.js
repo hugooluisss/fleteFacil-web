@@ -4,7 +4,7 @@ $(document).ready(function(){
 	setInterval(function(){
 		if ($("#notificacionesmodulo").val() != 'notificaciones')
 			getNotificaciones();
-	}, 5 * 1000);
+	}, 10 * 1000);
 	
 	function getNotificaciones(){
 		$.get("chome", {

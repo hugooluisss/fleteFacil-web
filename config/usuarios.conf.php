@@ -38,7 +38,15 @@ $conf['notificacionespanel'] = array(
 	'descripcion' => 'Lista de notificaciones',
 	'seguridad' => true,
 	'capa' => LAYOUT_AJAX);
-	
+
+$conf['usuarios'] = array(
+	'controlador' => 'usuarios.php',
+	'vista' => 'usuarios/panel.tpl',
+	'descripcion' => 'Administración de usuarios',
+	'seguridad' => true,
+	'js' => array('usuario.class.js'),
+	'jsTemplate' => array('usuarios.js'),
+	'capa' => LAYOUT_DEFECTO);	
 	
 $conf['usuariosempresa'] = $conf['admonUsuarios'];
 $conf['usuariostransportista'] = $conf['admonUsuarios'];

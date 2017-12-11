@@ -6,6 +6,7 @@
 				<tr>
 					<th>Nombre</th>
 					<th>Correo</th>
+					<th>Perfil</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -18,6 +19,7 @@
 							<td>{$row.nombre}</td>
 						{/if}
 						<td>{$row.email}</td>
+						<td>{$row.perfil}</td>
 						<td style="text-align: right">
 							<button type="button" class="btn btn-primary btn-xs" action="modificar" title="Modificar" datos='{$row.json}'><i class="fa fa-edit"></i></button>
 							<button type="button" class="btn btn-danger btn-xs" action="eliminar" title="Eliminar" usuario="{$row.idUsuario}"><i class="fa fa-times"></i></button>

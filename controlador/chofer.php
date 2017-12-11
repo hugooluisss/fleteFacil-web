@@ -10,7 +10,7 @@ switch($objModulo->getId()){
 				$rs = $db->query($sql) or errorMySQL($db, $sql);
 				
 				$chofer = $rs->fetch_assoc();
-				$chofer['transportista'] = array();
+				//$chofer['transportista'] = array();
 				
 				$sql = "select * from transportista where idTransportista = ".$chofer['idTransportista'];
 				$rs = $db->query($sql) or errorMySQL($db, $sql);
@@ -51,7 +51,7 @@ switch($objModulo->getId()){
 				$smarty->assign("json", array("band" => $chofer->guardar()));
 			break;
 			case 'setImagenPerfil':
-				$chofer = new TChofer($_POST['transportista']);
+				$chofer = new TChofer($_POST['chofer']);
 				if ($chofer->getId() == '')
 					$smarty->assign("json", array("band" => false));
 				else{

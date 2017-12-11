@@ -20,7 +20,7 @@ class PushBots
 
 	public function __construct() {
 		//set Default Push values
-		//$this->pushData['title'] = "Syncro";
+		$this->pushData['title'] = "Syncro";
 		$this->pushData['msg'] = "Notification Message";
 		$this->pushData['badge'] = "+1";
 		$this->pushData['sound'] = "ping.aiff";

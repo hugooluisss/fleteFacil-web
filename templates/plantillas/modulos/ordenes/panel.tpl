@@ -35,6 +35,7 @@
 						</div>
 					</div>
 					<div class="form-group">
+						{if $PAGE.usuario->getPerfil() neq 2}
 						<label for="selEmpresa" class="col-lg-2">Empresa</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selEmpresa" name="selEmpresa">
@@ -43,6 +44,9 @@
 								{/foreach}
 							</select>
 						</div>
+						{else}
+							<input type="hidden" id="selEmpresa" value="{$empresa.idEmpresa}" json='{$empresa.operadores}'/>
+						{/if}
 						<label for="selTipo" class="col-lg-2">Operador</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selOperador" name="selOperador">
@@ -116,9 +120,10 @@
 					<div id="dvReporteFinal">
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<button type="button" class="btn btn-primary" id="btnUbicacion">Seleccionar</button>
+				<div class="box-footer">
+					<button type="reset" id="btnReset" class="btn btn-default">Cancelar</button>
+					<button type="submit" class="btn btn-info pull-right">Guardar</button>
+					<input type="hidden" id="id"/>
 				</div>
 			</div>
 		</form>
@@ -130,3 +135,5 @@
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winInteresados.tpl"}
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winSeguimiento.tpl"}
 {include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winIntermedios.tpl"}
+{include file=$PAGE.rutaModulos|cat:"modulos/ordenes/winReporte.tpl"}
+{include file=$PAGE.rutaModulos|cat:"modulos/puntos/winDetalleReporte.tpl"}

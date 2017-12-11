@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-22 12:48:40
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-30 12:51:19
          compiled from "templates/plantillas/modulos/transportistas/lista.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:9929836085a0484200619a9-80366464%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '12261acf79315cdd6b9eb20b927e635d5b714bff' => 
     array (
       0 => 'templates/plantillas/modulos/transportistas/lista.tpl',
-      1 => 1511376517,
+      1 => 1512067876,
       2 => 'file',
     ),
   ),
@@ -19,6 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'unifunc' => 'content_5a0484200b8562_60244060',
   'variables' => 
   array (
+    'PAGE' => 0,
     'lista' => 0,
     'row' => 0,
   ),
@@ -32,7 +33,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 					<th>Id</th>
 					<th>Nombre</th>
 					<th>Representante</th>
+					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()!=2){?>
 					<th>Empresa</th>
+					<?php }?>
 					<th>Correo</th>
 					<th>&nbsp;</th>
 				</tr>
@@ -51,16 +54,19 @@ $_smarty_tpl->tpl_vars["row"]->_loop = true;
 </td>
 						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['representante'];?>
 </td>
+						<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()!=2){?>
 						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['empresa'];?>
 </td>
+						<?php }?>
 						<td><?php echo $_smarty_tpl->tpl_vars['row']->value['email'];?>
 </td>
 						<td style="text-align: right">
 							<a href="usuariostransportista/<?php echo $_smarty_tpl->tpl_vars['row']->value['idTransportista'];?>
 /" class="btn btn-primary btn-xs" title="Usuarios de la empresa"><i class="fa fa-users"></i></a>
+							<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()!=2){?>
 							<button type="button" class="btn btn-primary btn-xs" action="empresas" title="Empresas con las que participa" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
-' data-toggle="modal" data-target="#winEmpresas"><i class="fa fa-building-o" aria-hidden="true"></i>
-</button>
+' data-toggle="modal" data-target="#winEmpresas"><i class="fa fa-building-o" aria-hidden="true"></i></button>
+							<?php }?>
 							<button type="button" class="btn btn-primary btn-xs" action="modificar" title="Modificar" datos='<?php echo $_smarty_tpl->tpl_vars['row']->value['json'];?>
 '><i class="fa fa-edit"></i></button>
 							<button type="button" class="btn btn-danger btn-xs" action="eliminar" title="Eliminar" identificador="<?php echo $_smarty_tpl->tpl_vars['row']->value['idTransportista'];?>

@@ -28,6 +28,7 @@
 												<th>Representante</th>
 												<th>Celular</th>
 												<th>Email</th>
+												<th>Chofer</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -37,6 +38,7 @@
 													<td>{$transportista.representante}</td>
 													<td>{$transportista.celular}</td>
 													<td>{$transportista.email}</td>
+													<td>{$transportista.chofer}</td>
 												</tr>
 											{foreachelse}
 												<tr><td colspan="4">Sin transportistas en este estado</td></tr>

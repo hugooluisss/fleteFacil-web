@@ -4,17 +4,23 @@ switch($objModulo->getId()){
 	case 'admonUsuarios':
 	case 'usuariosempresa':
 	case 'usuariostransportista':
+	case 'usuarios':
 		$db = TBase::conectaDB();
 		global $sesion;
 		
-		if ($objModulo->getId() == 'admonUsuarios')
-			$sql = "select * from perfil where rol = 1";
-		else if ($objModulo->getId() == 'usuariostransportista'){
-			$sql = "select * from perfil where rol = 3";
-			$smarty->assign("transportista", new TTransportista($_GET['id']));
-		}else{
-			$sql = "select * from perfil where rol = 2";
-			$smarty->assign("empresa", new TEmpresa($_GET['id']));
+		switch($objModulo->getId()){
+			case 'admonUsuarios':
+				$sql = "select * from perfil where rol = 1";
+			break;
+			case 'usuariostransportista':
+				$sql = "select * from perfil where rol = 3";
+				$smarty->assign("transportista", new TTransportista($_GET['id']));
+			break;
+			case 'usuarios':
+			default:
+				$sql = "select * from perfil where rol = 2";
+				$smarty->assign("empresa", new TEmpresa($_GET['id']));
+			break;
 		}
 		
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
@@ -28,10 +34,15 @@ switch($objModulo->getId()){
 	case 'listaUsuarios':
 		$db = TBase::conectaDB();
 		global $sesion;
-		
-		$sql = "select * from usuario a where a.visible = true";
+		global $userSesion;
+		if ($userSesion->getPerfil() == 1)
+			$sql = "select a.*, b.nombre as perfil from usuario a join perfil b using(idPerfil) where a.visible = true";
+		else{
+			$sql = "select a.*, b.*, c.nombre as perfil from usuario a join usuarioempresa b using(idUsuario) join perfil c using(idPerfil) where a.visible = true and idEmpresa = ".$userSesion->getEmpresa();
+		}
+			
 		if (isset($_POST['empresa']))
-			$sql = "select * from usuario a join usuarioempresa b using(idUsuario) where a.visible = true and idEmpresa = ".$_POST['empresa'];
+			$sql = "select a.*, b.*, c.nombre as perfil from usuario a join usuarioempresa b using(idUsuario) join perfil c using(idPerfil) where a.visible = true and idEmpresa = ".$_POST['empresa'];
 		elseif (isset($_POST['transportista'])){
 			$sql = "select a.*, b.*, c.color, c.nombre as estado from usuario a join chofer b using(idUsuario) join situacion c using(idSituacion)  where a.visible = true and idTransportista = ".$_POST['transportista'];
 			$smarty->assign("modulo", "usuariostransportista");
@@ -142,7 +153,7 @@ switch($objModulo->getId()){
 			case 'recuperarPass':
 				$db = TBase::conectaDB();
 				global $ini;
-				$sql = "select idUsuario from usuario where email = upper('".$_POST['correo']."') and visible = true";
+				$sql = "select idUsuario from usuario where upper(email) = upper('".$_POST['correo']."') and visible = true";
 				$rs = $db->query($sql) or errorMySQL($db, $sql);
 				
 				if ($rs->num_rows >= 1){

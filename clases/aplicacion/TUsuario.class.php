@@ -237,5 +237,38 @@ class TUsuario{
 		
 		return $rs?true:false;
 	}
+	
+	/**
+	* Es visible
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function isVisible(){
+		if ($this->getId() == '') return false;
+		return $this->visible == 1?true:false;
+	}
+	
+	/**
+	* Si el usuario es de perfil empresa entonces retorna el id de la empresa
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function getEmpresa(){
+		if ($this->getId() == '') return false;
+		if (!in_array($this->getPerfil(), array(2, 3))) return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "select idEmpresa from usuarioempresa where idUsuario = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$row = $rs->fetch_assoc();
+		
+		return $row['idEmpresa'];
+	}
 }
 ?>

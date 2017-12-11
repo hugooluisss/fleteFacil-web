@@ -32,6 +32,7 @@
 							<input class="form-control" id="txtRepresentante" name="txtRepresentante">
 						</div>
 					</div>
+					{if $PAGE.usuario->getPerfil() neq 2}
 					<div class="form-group">
 						<label for="selEmpresa" class="col-sm-2">Empresa</label>
 						<div class="col-sm-4">
@@ -42,7 +43,7 @@
 							</select>
 						</div>
 					</div>
-
+					{/if}
 					<div class="form-group">
 						<label for="txtEmail" class="col-sm-2">Correo electrónico</label>
 						<div class="col-sm-3">

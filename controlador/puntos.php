@@ -1,7 +1,7 @@
 <?php
 global $objModulo;
 switch($objModulo->getId()){
-	case 'listaPuntos':
+	case 'listaPuntos': case 'listaPuntosReporte':
 		$db = TBase::conectaDB();
 		
 		$sql = "select * from punto where idOrden = ".$_POST['orden'];
@@ -15,6 +15,33 @@ switch($objModulo->getId()){
 		}
 		
 		$smarty->assign("json", $datos);
+		$smarty->assign("lista", $datos);
+		$orden = new TOrden($_POST['orden']);
+		
+		$smarty->assign("chofer", $orden->getChofer());
+	break;
+	case 'reporteFinal':
+		$directorio = "repositorio/reportes/punto_".$_POST['punto']."/";
+		$ficheros = array();
+		
+		if (is_dir($directorio)){
+			$gestor_dir = opendir($directorio);
+			
+			while (false !== ($nombre_fichero = readdir($gestor_dir))) {
+				if (!in_array($nombre_fichero, array(".", "..")))
+					$ficheros[] = $directorio.$nombre_fichero;
+			}
+			echo 'asdf';
+		}
+		$smarty->assign("fotos", $ficheros);
+		
+		$db = TBase::conectaDB();
+		
+		$sql = "select * from punto where idPunto = ".$_POST['punto'];
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$row = $rs->fetch_assoc();
+		
+		$smarty->assign("comentarios", $row['comentario']);
 	break;
 	case 'cpuntos':
 		switch($objModulo->getAction()){

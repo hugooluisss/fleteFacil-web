@@ -4,6 +4,10 @@ RewriteBase /fleteFacil-web/
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
 
+php_value memory_limit 700M
+php_value upload_max_filesize 500M
+php_value post_max_size 700M
+
 RewriteRule ^([0-9a-zA-Z]*)\/?$ index.php?mod=$1 [QSA,L]
 RewriteRule ^([0-9a-zA-Z]*)/$ index.php?mod=$1 [QSA,L]
 RewriteRule ^([0-9a-zA-Z]*)/(\d*)\/$ index.php?mod=$1&id=$2 [QSA,L]

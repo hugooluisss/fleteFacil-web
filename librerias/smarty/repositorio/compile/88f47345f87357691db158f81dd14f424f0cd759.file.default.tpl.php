@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-09 09:23:51
+<?php /* Smarty version Smarty-3.1.11, created on 2017-12-08 11:13:08
          compiled from "templates/plantillas/layout/default.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:9957513595a0473071d7822-16624940%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '88f47345f87357691db158f81dd14f424f0cd759' => 
     array (
       0 => 'templates/plantillas/layout/default.tpl',
-      1 => 1510240465,
+      1 => 1512753187,
       2 => 'file',
     ),
   ),
@@ -15,14 +15,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_5a0473073e1d60_19069781',
   'variables' => 
   array (
     'PAGE' => 0,
     'script' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5a0473073e1d60_19069781',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5a0473073e1d60_19069781')) {function content_5a0473073e1d60_19069781($_smarty_tpl) {?><!DOCTYPE html>
 <html>
@@ -162,6 +162,17 @@ img/logo.png" alt="User Image" style="background: white"/>
 							<li <?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='regiones'){?>class="active"<?php }?>><a href="regiones"><i class="fa fa-map-pin"></i> Regiones</a></li>
 						</ul>
 					</li>
+					<?php }?>
+					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()==2){?>
+						<li class="<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array('usuarios','transportistas','usuariostransportista'))){?>active<?php }?> treeview">
+							<a href="#">
+								<span>Administración</span> <i class="fa fa-angle-left pull-right"></i>
+							</a>
+							<ul class="treeview-menu">
+								<li <?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['modulo'],array('usuarios'))){?>class="active"<?php }?>><a href="usuarios"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>
+								<li <?php if ($_smarty_tpl->tpl_vars['PAGE']->value['modulo']=='transportistas'){?>class="active"<?php }?>><a href="transportistas"><i class="fa fa-truck" aria-hidden="true"></i> Transportistas</a></li>	
+							</ul>
+						</li>
 					<?php }?>
 					
 					<?php if (in_array($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil(),array(1))){?>

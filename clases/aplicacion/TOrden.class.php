@@ -406,12 +406,14 @@ class TOrden{
 	public function guardar(){
 		if ($this->usuario->getId() == '') return false;
 		if ($this->estado->getId() == '') return false;
+		if ($this->empresa->getId() == '') return false;
 		
 		$db = TBase::conectaDB();
 		
 		if ($this->getId() == ''){
-			$sql = "INSERT INTO orden(idUsuario, idEstado) VALUES(".$this->usuario->getId().", ".$this->estado->getId().");";
+			$sql = "INSERT INTO orden(idUsuario, idEstado, idEmpresa) VALUES(".$this->usuario->getId().", ".$this->estado->getId().", ".$this->empresa->getId().");";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);;
+			
 			if (!$rs) return false;
 			
 			$this->idOrden = $db->insert_id;
@@ -419,7 +421,7 @@ class TOrden{
 		
 		if ($this->getId() == '')
 			return false;
-		
+			
 		$sql = "UPDATE orden
 			SET
 				idUsuario = ".$this->usuario->getId().",
@@ -451,7 +453,7 @@ class TOrden{
 				
 					$row = $rs->fetch_array();
 					$transportista = new TTransportista($row['idTransportista']);
-					$transportista->setSituacion(1);
+					//$transportista->setSituacion(1);
 					$transportista->guardar();
 				}
 			break;
@@ -465,7 +467,7 @@ class TOrden{
 				
 					$row = $rs->fetch_array();
 					$transportista = new TTransportista($row['idTransportista']);
-					$transportista->setSituacion(2);
+					//$transportista->setSituacion(2);
 					$transportista->guardar();
 				}
 			break;
@@ -543,11 +545,49 @@ class TOrden{
 		$this->estado->setId(4);
 		$this->guardar();
 		
-		$obj->setSituacion(2);
+		//$obj->setSituacion(2);
 		$obj->guardar();
 		
 		return $rs?true:false;
 	}
+	
+	/**
+	* Asigna la orden a un transportista
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function asignarChofer($chofer = ''){
+		if ($this->getId() == '') return false;
+		$obj = new TChofer($chofer);
+		if ($obj->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "insert into ordenchofer(idOrden, idUsuario) values (".$this->getId().", ".$obj->getId().")";
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		
+		return $rs?true:false;
+	}
+	
+	/**
+	* Indica si la orden fue entregada en todos sus puntos, si si
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function contarPuntosSinEntregar(){
+		if ($this->getId() == '') return false;
+		
+		$db = TBase::conectaDB();
+		$sql = "select * from punto where idOrden = ".$this->getId()." and estado = 0";
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		return $rs->num_rows;
+	}
+
 	
 	/**
 	* Termina la orden
@@ -557,12 +597,8 @@ class TOrden{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function terminar($comentario = ''){
+	public function setTerminar(){
 		if ($this->getId() == '') return false;
-		
-		$db = TBase::conectaDB();
-		$sql = "update asignado set comentarios = '".$comentario."' where idOrden = ".$this->getId();
-		$rs = $db->query($sql) or errorMySQL($db, $sql);
 
 		$this->estado->setId(5);
 		$this->guardar();
@@ -613,6 +649,23 @@ class TOrden{
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		
 		return true;
+	}
+	
+	/**
+	* Se selecciona la última orden
+	*
+	* @autor Hugo
+	* @access public
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function getChofer(){
+		if ($this->getId() == '') return false;
+		$db = TBase::conectaDB();
+		$sql = "select c.nombre from ordenchofer a join chofer b using(idUsuario) join usuario c using(idUsuario) where idOrden = ".$this->getId();
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
+		$row = $rs->fetch_assoc();
+		return $row['nombre'];
 	}
 }
 ?>

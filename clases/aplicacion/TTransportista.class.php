@@ -8,7 +8,6 @@
 
 class TTransportista{
 	private $idTransportista;
-	private $situacion;
 	private $nombre;
 	private $representante;
 	private $email;
@@ -26,7 +25,6 @@ class TTransportista{
 	*/
 	public function TTransportista($id = ''){
 		$this->regiones = array();
-		$this->idSituacion = 1;
 		$this->empresa = new TEmpresa;
 		$this->setId($id);		
 		return true;
@@ -200,32 +198,6 @@ class TTransportista{
 	}
 	
 	/**
-	* Establece la situacion
-	*
-	* @autor Hugo
-	* @access public
-	* @param string $val Valor a asignar
-	* @return boolean True si se realizó sin problemas
-	*/
-	
-	public function setSituacion($val = 1){
-		$this->idSituacion = $val;
-		return true;
-	}
-	
-	/**
-	* Retorna el id de la situacion
-	*
-	* @autor Hugo
-	* @access public
-	* @return string Texto
-	*/
-	
-	public function getSituacion(){
-		return $this->idSituacion;
-	}
-	
-	/**
 	* Guarda los datos en la base de datos, si no existe un identificador entonces crea el objeto
 	*
 	* @autor Hugo
@@ -235,17 +207,18 @@ class TTransportista{
 	
 	public function guardar(){
 		if ($this->empresa->getId() == '') return false;
-		if ($this->getSituacion() == '')
-			$this->setSituacion(1);
 		$db = TBase::conectaDB();
 		
 		if ($this->getId() == ''){
-			$sql = "INSERT INTO transportista(idSituacion, idEmpresa, visible) VALUES(".$this->getSituacion().", ".$this->empresa->getId().", 1);";
+			$sql = "INSERT INTO transportista(idEmpresa, visible) VALUES(".$this->empresa->getId().", 1);";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);
 			
 			if (!$rs) return false;
-				
+			
 			$this->idTransportista = $db->insert_id;
+			
+			$sql = "INSERT INTO empresatransportista(idEmpresa, idTransportista) VALUES(".$this->empresa->getId().", ".$this->idTransportista.");";
+			$rs = $db->query($sql) or errorMySQL($db, $sql);
 		}
 
 		if ($this->getId() == '')
@@ -301,9 +274,8 @@ class TTransportista{
 		$db = TBase::conectaDB();
 		$sql = "delete from transportistaregion where idTransportista = ".$this->getId();
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
-		
 		foreach($this->regiones as $region){
-			$sql = "insert into transportistaregion (idTransportista, idRegion, idEmpresa) values (".$this->getId().", ".$region["region"]->getId().", ".$region["empresa"].")";
+			$sql = "insert into transportistaregion (idTransportista, idRegion, idEmpresa) values (".$this->getId().", ".$region->getId().", ".$this->empresa->getId().")";
 			$rs = $db->query($sql) or errorMySQL($db, $sql);
 		}
 		

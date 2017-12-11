@@ -29,30 +29,49 @@ switch($objModulo->getId()){
 		
 		$smarty->assign("regiones", $datos);
 		
-		$rs = $db->query("select * from empresa where visible = true");
-		$datos = array();
-		while($row = $rs->fetch_assoc()){
-			$rsUser = $db->query("select * from usuario a join usuarioempresa b using(idUsuario) where visible = true and idEmpresa = ".$row['idEmpresa']);
-			$row['operadores'] = array();
+		if (!in_array($userSesion->getPerfil(), array(2, 3))){
+			$rs = $db->query("select * from empresa where visible = true");
+			$datos = array();
+			while($row = $rs->fetch_assoc()){
+				$rsUser = $db->query("select * from usuario a join usuarioempresa b using(idUsuario) where visible = true and idEmpresa = ".$row['idEmpresa']);
+				$row['operadores'] = array();
+				while($row2 = $rsUser->fetch_assoc())
+					array_push($row['operadores'], $row2);
+				
+				$row['json'] = json_encode($row);
+				
+				array_push($datos, $row);
+			}
+			
+			$smarty->assign("empresas", $datos);
+		}else{
+			$rsUser = $db->query("select * from usuario a join usuarioempresa b using(idUsuario) where visible = true and idEmpresa = ".$userSesion->getEmpresa());
+			$operadores = array();
 			while($row2 = $rsUser->fetch_assoc())
-				array_push($row['operadores'], $row2);
+				array_push($operadores, $row2);
 			
-			$row['json'] = json_encode($row);
-			
-			array_push($datos, $row);
+			$smarty->assign("empresa", array("idEmpresa" => $userSesion->getEmpresa(), "operadores" => json_encode($operadores)));
 		}
-		
-		$smarty->assign("empresas", $datos);
 		
 		$smarty->assign("orden", $_GET['id']);
 	break;
 	case 'listaOrdenes':
 		$db = TBase::conectaDB();
 		global $userSesion;
-		if ($userSesion->getPerfil() == 1)
-			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5)");
-		else
-			$rs = $db->query("select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5) and idUsuario = ".$userSesion->getId());
+		
+		switch($userSesion->getPerfil()){
+			case 1:
+				$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5)";
+			break;
+			case 2:
+				$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5) and idEmpresa = ".$userSesion->getEmpresa();
+			break;
+			default:
+				$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) where idEstado in (1, 2, 3, 4, 5) and idUsuario = ".$userSesion->getId();
+			break;
+		}
+		
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 			
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
@@ -72,6 +91,13 @@ switch($objModulo->getId()){
 			$row['regiones'] = array();
 			while($row2 = $rs2->fetch_assoc())
 				array_push($row['regiones'], $row2['idRegion']);
+			
+			$sql = "select c.nombre as transportista, d.nombre as chofer from ordenchofer a join chofer b using(idUsuario) join usuario d using(idUsuario) join transportista c using(idTransportista);";
+			$rs2 = $db->query($sql) or errorMySQL($db, $sql);
+			$row2 = $rs2->fetch_assoc();
+			
+			$row['transportista'] = $row2["transportista"];
+			$row['chofer'] = $row2["chofer"];
 			
 			$row['json'] = json_encode($row);
 			array_push($datos, $row);
@@ -168,7 +194,7 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 	case 'listaOrdenesAdjudicadas':
 		$db = TBase::conectaDB();
 		
-		$sql = "select a.*, b.*, b.nombre as estado from orden a join estado b using(idEstado) join asignadotransportista c using(idOrden) where idEstado in (4, 5) and c.idTransportista = ".$_POST['transportista'];
+		$sql = "select a.*, b.*, b.nombre as estado, d.idUsuario as chofer from orden a join estado b using(idEstado) join asignadotransportista c using(idOrden) left join ordenchofer d using(idOrden) where idEstado in (4, 5) and c.idTransportista = ".$_POST['transportista'];
 		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
@@ -203,23 +229,6 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 		
 		$smarty->assign("lista", $datos);
 	break;
-	case 'reporteFinal':
-		$directorio = "repositorio/ordenesTerminadas/orden_".$_POST['idOrden']."/";
-		$gestor_dir = opendir($directorio);
-		while (false !== ($nombre_fichero = readdir($gestor_dir))) {
-			if (!in_array($nombre_fichero, array(".", "..")))
-				$ficheros[] = $directorio.$nombre_fichero;
-		}
-		
-		$smarty->assign("fotos", $ficheros);
-		
-		$db = TBase::conectaDB();
-		
-		$sql = "select comentarios from asignadotransportista where idOrden = ".$_POST['idOrden'];
-		$rs = $db->query($sql) or errorMySQL($db, $sql);
-		$row = $rs->fetch_assoc();
-		$smarty->assign("comentarios", $row['comentarios']);
-	break;
 	case 'cordenes':
 		switch($objModulo->getAction()){
 			case 'add':
@@ -252,19 +261,21 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 					
 					if ($obj->estado->getId() == 2){ #publicada
 						$db = TBase::conectaDB();
-						$sql = "select distinct idTransportista from ordenregion join transportistaregion using(idRegion) where idOrden = ".$obj->getId();
+						
+						$sql = "select distinct idUsuario from ordenregion join transportistaregion using(idRegion) join chofer c using(idTransportista) join usuario using(idUsuario) where idOrden = ".$obj->getId()." and idPerfil = 4 and idEmpresa = ".$obj->empresa->getId();
 						$rs = $db->query($sql) or errorMySQL($db, $sql);
 						
 						$notificacion = new TNotificacion();
 						$notificacion->setOrden($obj->getId());
 						
-						if ($_POST['id'] == '') #Es una nueva orden
-							$notificacion->setMensaje("Hay una nueva orden para ti, esta es la ".$obj->getFolio().", entra para consultar los detalles");
-						else
-							$notificacion->setMensaje("Creemos que te puede interesar la orden ".$obj->getFolio());
-							
-						while($row = $rs->fetch_assoc())
-							$notificacion->guardar($row['idTransportista'], 'T');
+						while($row = $rs->fetch_assoc()){
+							if ($_POST['id'] == '') #Es una nueva orden
+								$notificacion->setMensaje("Hay una nueva orden para ti, esta es la ".$obj->getFolio().", entra para consultar los detalles");
+							else
+								$notificacion->setMensaje("Creemos que te puede interesar la orden ".$obj->getFolio());
+								
+							$notificacion->guardar($row['idUsuario']);
+						}
 					}
 				}
 					
@@ -283,7 +294,7 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 					$notificacion = new TNotificacion();
 					$notificacion->setOrden($obj->getId());
 					$notificacion->setMensaje($transportista->getNombre()." se interesó en la orden".$obj->getFolio()."");
-					$notificacion->guardar($obj->usuario->getId(), 'U');
+					$notificacion->guardar($obj->usuario->getId());
 				}
 				$smarty->assign("json", array("band" => $band));
 			break;
@@ -292,52 +303,85 @@ where idEstado = 2 and c.idTransportista = ".$_POST['transportista']."
 				$band = $obj->asignar($_POST['transportista'], $_POST['monto']);
 				
 				if($band){
+					$db = TBase::conectaDB();
+						
+					$sql = "select distinct idUsuario from ordenregion join transportistaregion using(idRegion) join chofer c using(idTransportista) join usuario using(idUsuario) where idOrden = ".$obj->getId()." and idPerfil = 4 and idEmpresa = ".$obj->empresa->getId();
+					$rs = $db->query($sql) or errorMySQL($db, $sql);
+					
 					$notificacion = new TNotificacion();
 					$notificacion->setOrden($obj->getId());
-					$notificacion->setMensaje("¡¡¡ Felicidades !!! te asignaron la orden de trabajo con folio ".$obj->getFolio().", consulta los detalles de la orden y prepárate");
-					$notificacion->guardar($_POST['transportista'], 'T');
+					
+					while($row = $rs->fetch_assoc()){
+						$notificacion->setMensaje("¡¡¡ Felicidades !!! asignaron la ordende trabajo con folio ".$obj->getFolio()." a tu empresa, consulta los detalles de la orden y asignasela a un chofer");
+							
+						$notificacion->guardar($row['idUsuario']);
+					}
 				}
 						
 				$smarty->assign("json", array("band" => $band));
 			break;
+			case 'asignarChofer':
+				$obj = new TOrden($_POST['orden']);
+				$band = $obj->asignarChofer($_POST['chofer']);
+				$chofer = new TChofer($_POST['chofer']);
+				$chofer->setPatenteCamion($_POST['patenteCamion']);
+				$chofer->setPatenteRampla($_POST['patenteRampla']);
+				
+				$notificacion = new TNotificacion();
+				$notificacion->setOrden($obj->getId());
+				$notificacion->setMensaje("La carga de la orden ".$obj->getFolio()." te fue asignada, consulta los detalles para iniciar el trabajo");
+				$notificacion->guardar($_POST['chofer']);
+				
+				$smarty->assign("json", array("band" => $band));
+			break;
+
 			case 'setEnRuta':
 				
 			break;
 			case 'terminar':
-				$obj = new TOrden($_POST['orden']);
-				mkdir("repositorio/ordenesTerminadas/orden_".$obj->getId()."/", 0777, true);
+				$obj = new TPunto($_POST['punto']);
+				mkdir("repositorio/reportes/punto_".$obj->getId()."/", 0777, true);
 				
 				for($i = 1 ; $i < 5 ; $i++)
-					saveImage($_POST['foto'.$i], "repositorio/ordenesTerminadas/orden_".$obj->getId()."/".date("Ymd_His")."_".$i.".jpg");
-					
-				$band = $obj->terminar($_POST['comentario']);
-				$result = false;
+					saveImage($_POST['foto'.$i], "repositorio/ordenesTerminadas/punto_".$obj->getId()."/".date("Ymd_His")."_".$i.".jpg");
+				
+				$obj->setEstado(1);
+				$obj->setComentario($_POST['comentario']);
+				$band = $obj->guardar();
+				
+				$orden = new TOrden($obj->getOrden());
+				if ($orden->contarPuntosSinEntregar() <= 0)
+					$orden->setTerminar();
+				
+				
+				$result = $band;
+				
 				if ($band){
 					$notificacion = new TNotificacion();
-					$notificacion->setOrden($obj->getId());
-					$notificacion->setMensaje("Han entregado la orden ".$obj->getFolio()."");
-					$notificacion->guardar($obj->usuario->getId(), 'U');
+					$notificacion->setOrden($orden->getId());
+					$notificacion->setMensaje("Han entregado el servicio en el punto ".$obj->getDireccion()." de la orden ".$orden->getFolio()."");
+					$notificacion->guardar($orden->usuario->getId());
 					
 					$db = TBase::conectaDB();
-					$sql = "select * from asignado where idOrden = ".$obj->getId();
+					$sql = "select * from asignadotransportista where idOrden = ".$obj->getId();
 					$rs = $db->query($sql) or errorMySQL($db, $sql);
 					$row = $rs->fetch_assoc();
 					
 					$transportista = new TTransportista($row['idTransportista']);
 					$datos = array();
 					$datos['transportista.nombre'] = $transportista->getNombre();
-					$datos['orden.folio'] = $obj->getFolio();
-					$datos['usuario.nombre'] = $obj->usuario->getNombre();
+					$datos['orden.folio'] = $orden->getFolio();
+					$datos['usuario.nombre'] = $orden->usuario->getNombre();
 					$datos['orden.comentario'] = utf8_decode($_POST['comentario']);
 					
 					$datos['sitio.url'] = $ini["sistema"]["url"];
 					
 					$email = new TMail();
 					$email->setTema("Orden terminada");
-					$email->addDestino($obj->usuario->getEmail(), utf8_decode($obj->usuario->getNombre()));
+					$email->addDestino($orden->usuario->getEmail(), utf8_decode($orden->usuario->getNombre()));
 					#$email->addDestino("hugooluisss@gmail.com", "Hugo Santiago");
 					
-					$directorio = "repositorio/ordenesTerminadas/orden_".$obj->getId()."/";
+					$directorio = "repositorio/reportes/punto_".$obj->getId()."/";
 					$gestor_dir = opendir($directorio);
 					//$email->adjuntos = array();
 					$s = "";

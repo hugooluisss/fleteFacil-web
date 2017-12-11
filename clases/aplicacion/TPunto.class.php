@@ -9,6 +9,7 @@ class TPunto{
 	private $idPunto;
 	private $idOrden;
 	private $direccion;
+	private $estado;
 	private $json;
 	
 	/**
@@ -164,6 +165,58 @@ class TPunto{
 	}
 	
 	/**
+	* Establece el comentario
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setComentario($val = ''){
+		$this->comentario = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna la posición
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getComentario(){
+		return $this->comentario == ''?0:$this->comentario;
+	}
+	
+	/**
+	* Establece el estado
+	*
+	* @autor Hugo
+	* @access public
+	* @param string $val Valor a asignar
+	* @return boolean True si se realizó sin problemas
+	*/
+	
+	public function setEstado($val = 0){
+		$this->estado = $val;
+		return true;
+	}
+	
+	/**
+	* Retorna la posición
+	*
+	* @autor Hugo
+	* @access public
+	* @return string Texto
+	*/
+	
+	public function getEstado(){
+		return $this->estado == ''?0:$this->estado;
+	}
+	
+	/**
 	* Guarda los datos en la base de datos, si no existe un identificador entonces crea el objeto
 	*
 	* @autor Hugo
@@ -190,7 +243,9 @@ class TPunto{
 			SET
 				direccion = '".$this->getDireccion()."',
 				json = '".$this->getJSON()."',
-				posicion = '".$this->getPosicion()."'
+				posicion = '".$this->getPosicion()."',
+				comentario = '".$this->getComentario()."',
+				estado = ".$this->getEstado()."
 			WHERE idPunto = ".$this->getId();
 			
 		$rs = $db->query($sql) or errorMySQL($db, $sql);

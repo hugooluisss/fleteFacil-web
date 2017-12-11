@@ -114,6 +114,17 @@
 						</ul>
 					</li>
 					{/if}
+					{if $PAGE.usuario->getPerfil() eq 2}
+						<li class="{if in_array($PAGE.modulo, array('usuarios', 'transportistas', 'usuariostransportista'))}active{/if} treeview">
+							<a href="#">
+								<span>Administración</span> <i class="fa fa-angle-left pull-right"></i>
+							</a>
+							<ul class="treeview-menu">
+								<li {if in_array($PAGE.modulo, array('usuarios'))}class="active"{/if}><a href="usuarios"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>
+								<li {if $PAGE.modulo eq 'transportistas'}class="active"{/if}><a href="transportistas"><i class="fa fa-truck" aria-hidden="true"></i> Transportistas</a></li>	
+							</ul>
+						</li>
+					{/if}
 					
 					{if in_array($PAGE.usuario->getPerfil(), array(1))}
 					<li class="{if in_array($PAGE.modulo, array('transportistas'))}active{/if} treeview">

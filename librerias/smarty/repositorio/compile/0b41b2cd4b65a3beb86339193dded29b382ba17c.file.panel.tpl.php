@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-09 09:23:51
+<?php /* Smarty version Smarty-3.1.11, created on 2017-12-11 09:43:18
          compiled from "templates/plantillas/modulos/ordenes/panel.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17360874265a04730740fc78-06788376%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0b41b2cd4b65a3beb86339193dded29b382ba17c' => 
     array (
       0 => 'templates/plantillas/modulos/ordenes/panel.tpl',
-      1 => 1510240465,
+      1 => 1513006996,
       2 => 'file',
     ),
   ),
@@ -15,20 +15,21 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_5a0473074949a4_85235519',
   'variables' => 
   array (
     'estados' => 0,
     'item' => 0,
+    'PAGE' => 0,
     'empresas' => 0,
+    'empresa' => 0,
     'start' => 0,
     'cont' => 0,
     'regiones' => 0,
     'orden' => 0,
-    'PAGE' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5a0473074949a4_85235519',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5a0473074949a4_85235519')) {function content_5a0473074949a4_85235519($_smarty_tpl) {?><div class="row">
 	<div class="col-lg-12">
@@ -75,6 +76,7 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 						</div>
 					</div>
 					<div class="form-group">
+						<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()!=2){?>
 						<label for="selEmpresa" class="col-lg-2">Empresa</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selEmpresa" name="selEmpresa">
@@ -92,6 +94,11 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 								<?php } ?>
 							</select>
 						</div>
+						<?php }else{ ?>
+							<input type="hidden" id="selEmpresa" value="<?php echo $_smarty_tpl->tpl_vars['empresa']->value['idEmpresa'];?>
+" json='<?php echo $_smarty_tpl->tpl_vars['empresa']->value['operadores'];?>
+'/>
+						<?php }?>
 						<label for="selTipo" class="col-lg-2">Operador</label>
 						<div class="col-lg-4">
 							<select class="form-control" id="selOperador" name="selOperador">
@@ -197,4 +204,8 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 <?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/ordenes/winSeguimiento.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
 
 <?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/ordenes/winIntermedios.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
+
+<?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/ordenes/winReporte.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
+
+<?php echo $_smarty_tpl->getSubTemplate (($_smarty_tpl->tpl_vars['PAGE']->value['rutaModulos']).("modulos/puntos/winDetalleReporte.tpl"), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
 <?php }} ?>

@@ -45,7 +45,11 @@ $(document).ready(function(){
 	});
 	
 	function getOperadores(){
-		var operadores = jQuery.parseJSON($("#selEmpresa").find("option:selected").attr("json"));
+		var elemento = $("#selEmpresa");
+		if (elemento[0].tagName == 'INPUT')
+			var operadores = jQuery.parseJSON($("#selEmpresa").attr("json"));
+		else
+			var operadores = jQuery.parseJSON($("#selEmpresa").find("option:selected").attr("json"));
 		
 		$("#selOperador").find("option").remove();
 		
@@ -152,15 +156,6 @@ $(document).ready(function(){
 				
 				$("#selRegion").val(el.regiones);
 				
-				$("#dvReporteFinal").html("");
-				if(el.idEstado == 5){
-					$.post("reporteFinal", {
-						"idOrden": el.idOrden
-					}, function(codigo){
-						$("#dvReporteFinal").html(codigo);
-					});
-				}
-				
 				$("#selOperador").val(el.idUsuario);
 				try{
 					var origen = jQuery.parseJSON(el.origen);
@@ -176,6 +171,9 @@ $(document).ready(function(){
 			
 			$("[action=interesados]").click(function(){
 				$("#winInteresados").attr("datos", $(this).attr("datos"));
+			});
+			$("[action=reporte]").click(function(){
+				$("#winReporte").attr("datos", $(this).attr("datos"));
 			});
 			
 			$("[action=mapa]").click(function(){
@@ -358,5 +356,45 @@ $(document).ready(function(){
 		}catch(e){
 			alert("No se pudo obtener la lista de interesados");
 		}
-	})
+	});
+	
+	
+	$("#winReporte").on('show.bs.modal', function(e){
+		var el = jQuery.parseJSON($("#winReporte").attr("datos"));
+		
+		$.each(el, function(i, valor){
+			$("#winReporte").find("[campo=" + i + "]").val(valor);
+			$("#winReporte").find("[campo=" + i + "]").text(valor);
+		});
+		
+		$.post("listaPuntosReporte", {
+			"orden": el.idOrden
+		}, function(resp){
+			$("#winReporte").find("#dvEntregas").html(resp);
+			
+			$("#winReporte").find("#dvEntregas").find("[action=detalle]").click(function(){
+				$("#winDetalleReporte").attr("datos", $("#winReporte").find("#dvEntregas").find("[action=detalle]").attr("datos"));
+				$("#winDetalleReporte").modal();
+			});
+		});
+	});
+	
+	
+	$("#winDetalleReporte").on('show.bs.modal', function(e){
+		var el = jQuery.parseJSON($("#winDetalleReporte").attr("datos"));
+		$("[campo=direccion]").text(el.direccion);
+		$.post("reporteFinal", {
+			"punto": el.idPunto
+		}, function(codigo){
+			$("#winDetalleReporte").find(".modal-body").html(codigo);
+		});
+		
+		$("#winReporte").modal("hide");
+	});
+	
+	$("#winDetalleReporte").on('hide.bs.modal', function(e){
+		$("#winDetalleReporte").attr("datos", "");
+					
+		$("#winReporte").modal();
+	});
 });

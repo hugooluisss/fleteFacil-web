@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2017-11-22 08:55:38
+<?php /* Smarty version Smarty-3.1.11, created on 2017-11-30 12:56:02
          compiled from "templates/plantillas/modulos/transportistas/panel.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:13339871045a04841e275271-13779147%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '9c196b8f2383dcb9a7a6f46da66008ba5c332cd7' => 
     array (
       0 => 'templates/plantillas/modulos/transportistas/panel.tpl',
-      1 => 1511362516,
+      1 => 1512068083,
       2 => 'file',
     ),
   ),
@@ -19,10 +19,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'unifunc' => 'content_5a04841e2cf6c2_42900818',
   'variables' => 
   array (
+    'PAGE' => 0,
     'empresas' => 0,
     'item' => 0,
     'regiones' => 0,
-    'PAGE' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -60,6 +60,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 							<input class="form-control" id="txtRepresentante" name="txtRepresentante">
 						</div>
 					</div>
+					<?php if ($_smarty_tpl->tpl_vars['PAGE']->value['usuario']->getPerfil()!=2){?>
 					<div class="form-group">
 						<label for="selEmpresa" class="col-sm-2">Empresa</label>
 						<div class="col-sm-4">
@@ -78,7 +79,7 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 							</select>
 						</div>
 					</div>
-
+					<?php }?>
 					<div class="form-group">
 						<label for="txtEmail" class="col-sm-2">Correo electrónico</label>
 						<div class="col-sm-3">

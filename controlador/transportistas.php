@@ -22,7 +22,13 @@ switch($objModulo->getId()){
 	break;
 	case 'listaTransportistas':
 		$db = TBase::conectaDB();
-		$rs = $db->query("select a.*, c.razonsocial as empresa from transportista a join empresa c using(idEmpresa) where a.visible = true");
+		$sql = "select a.*, c.razonsocial as empresa from transportista a join empresa c using(idEmpresa) where a.visible = true";
+		global $userSesion;
+		if ($userSesion->getPerfil() == 2){
+			$sql = "select a.*, c.razonsocial as empresa from transportista a join empresa c using(idEmpresa) where idEmpresa = ".$userSesion->getEmpresa()." and a.visible = true";
+		}
+		
+		$rs = $db->query($sql) or errorMySQL($db, $sql);
 		$datos = array();
 		while($row = $rs->fetch_assoc()){
 			$sql = "select idRegion from transportistaregion where idTransportista = ".$row['idTransportista'];
@@ -57,7 +63,14 @@ switch($objModulo->getId()){
 				$obj->setId($_POST['id']);
 				$obj->setNombre($_POST['nombre']);
 				$obj->setRepresentante($_POST['representante']);
-				$obj->empresa->setId($_POST['empresa']);
+				
+				if ($userSesion->getPerfil() <> 2)
+					$obj->empresa->setId($_POST['empresa']);
+				else{
+					$objTransportista = new TTransportista($userSesion->getId());
+					$obj->empresa->setId($objTransportista->empresa->getId());
+				}
+					
 				$obj->setEmail($_POST['email']);
 				$obj->setCelular($_POST['celular']);
 				

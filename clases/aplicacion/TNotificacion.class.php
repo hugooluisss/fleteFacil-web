@@ -119,18 +119,18 @@ class TNotificacion{
 	* @return boolean True si se realizó sin problemas
 	*/
 	
-	public function guardar($receptor, $tipo = 'T'){
+	public function guardar($receptor){
 		if ($this->getOrden() == '') return false;
-		
-		switch($tipo){
-			case 'U':
+		$usuario = new TUsuario($receptor);
+		switch($usuario->getPerfil()){
+			case 1: case 2:
 				$receptor = new TUsuario($receptor);
 				
 				if ($receptor->getId() == '') return false;
 				
 				$db = TBase::conectaDB();
 				if ($this->getId() == ''){
-					$sql = "INSERT INTO notificacion(idOrden, mensaje, tipoemisor, fecha) VALUES(".$this->getOrden().", '".$this->getMensaje()."', '".$tipo."', now());";
+					$sql = "INSERT INTO notificacion(idOrden, mensaje, fecha) VALUES(".$this->getOrden().", '".$this->getMensaje()."', now());";
 					$rs = $db->query($sql) or errorMySQL($db, $sql);;
 					if (!$rs) return false;
 					
@@ -149,9 +149,8 @@ class TNotificacion{
 				
 				return $rs?true:false;
 			break;
-			case 'T':
-				$this->tipoemisor = $tipo;
-				$this->receptor = new TTransportista($receptor);
+			case 3: case 4:
+				$this->receptor = new TChofer($receptor);
 				if ($this->receptor->isVisible() and $this->receptor->getSituacion() <> 3)
 					return $this->enviar();
 				else
@@ -179,14 +178,17 @@ class TNotificacion{
 		$pb->App($ini['pushbot']['aplication_id'], $ini['pushbot']['secret']);
 		$pb->Alert($this->getMensaje());
 		$pb->Platform(array("0","1"));
+		$pb->Alias("usuario_".$this->receptor->getId());
 		
-		if ($this->tipoemisor == 'T'){
+		$pb->Push();
+		
+		/*if ($this->tipoemisor == 'T'){
 			$pb->Tags("transportista_".$this->receptor->getId());
 			$pb->Push();
 		}else{
 			$pb->Tags("usuario_".$this->receptor->getId());
 		}
-		
+		*/
 		return true;
 	}
 	

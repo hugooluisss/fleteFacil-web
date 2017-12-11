@@ -43,13 +43,6 @@ $conf['cordenes'] = array(
 	'descripcion' => 'Controlador de ordenes',
 	'seguridad' => false,
 	'capa' => LAYOUT_JSON);
-	
-$conf['reporteFinal'] = array(
-	'controlador' => 'ordenes.php',
-	'vista' => 'ordenes/reporte.tpl',
-	'descripcion' => 'Reporte enviado por el usuario al finalizar la orden',
-	'seguridad' => true,
-	'capa' => LAYOUT_AJAX);
 
 $conf['listaPosicionesOrden'] = array(
 	'controlador' => 'ordenes.php',
